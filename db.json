@@ -1,276 +1,272 @@
 {
-   "categorias": [
-      { "id": "1","value": "BERMUDA"},
-      { "id": "2","value": "BOLSA"  },
-      { "id": "3","value": "CALÇA"  },
-      { "id": "4","value": "CALÇADO"},
-      { "id": "5","value": "CAMISA" },
-      { "id": "6","value": "CAMISA DE TIME"  },
-      { "id": "7","value": "CASACO"  },
-      { "id": "8","value": "COPA DO MUNDO"  },
-      { "id": "9","value": "JEANS"  },
-      { "id": "10","value": "JÓIA"  },
-      { "id": "11","value": "LONG"  },
-      { "id": "12","value": "NIKE"  },
-      { "id": "13","value": "ÓCULOS"}
+   "marcas": [
+      { "id": "1","value": "TAMO JUNTO"},
+      { "id": "2","value": "B&B"  },
+      { "id": "3","value": "NIKE"  },
+      { "id": "4","value": "ADIDAS"},
+      { "id": "5","value": "OAKLEY" },
+      { "id": "6","value": "TOOMMY"  },
+      { "id": "7","value": "LACOSTE"  }
    ],
-   "produtos": [
+    "p2":[
       {
-         "id": 1,
-         "nome": "Chef Hat 20cm",
-         "categorias": [
-            "NIKE",
-            "JÓIA",
-            "ÓCULOS",
-            "BOLSA"
-         ],
-         "produtos": 5,
-         "unidades": 37
+        "marca": "TAMO JUNTO",
+        "produtos": 1,
+        "unidades": 33
       },
       {
-         "id": 2,
-         "nome": "Wine - Sherry Dry Sack, William",
-         "categorias": [
-            "LONG"
-         ],
-         "produtos": 4,
-         "unidades": 23
+        "marca": "LACOSTE",
+        "produtos": 1,
+        "unidades": 18
       },
       {
-         "id": 3,
-         "nome": "Salad Dressing",
-         "categorias": [
-            "CAMISA"
-         ],
-         "produtos": 5,
-         "unidades": 38
+        "marca": "NIKE",
+        "produtos": 2,
+        "unidades": 28
       },
       {
-         "id": 4,
-         "nome": "Trueblue - Blueberry",
-         "categorias": [
-            "BOLSA",
-            "JÓIA"
-         ],
-         "produtos": 9,
-         "unidades": 17
+        "marca": "KENNER",
+        "produtos": 1,
+        "unidades": 36
       },
       {
-         "id": 5,
-         "nome": "Cucumber - English",
-         "categorias": [
-            "CAMISA DE TIME",
-            "CASACO"
-         ],
-         "produtos": 6,
-         "unidades": 37
+        "marca": "OAKLEY",
+        "produtos": 2,
+        "unidades": 16
       },
       {
-         "id": 6,
-         "nome": "Octopus - Baby, Cleaned",
-         "categorias": [
-            "BOLSA",
-            "JÓIA"
-         ],
-         "produtos": 4,
-         "unidades": 16
+        "marca": "BOLSA S.A",
+        "produtos": 2,
+        "unidades": 6
       },
       {
-         "id": 7,
-         "nome": "Tomatoes - Heirloom",
-         "categorias": [
-            "ÓCULOS"
-         ],
-         "produtos": 5,
-         "unidades": 22
+        "marca": "SHEIN",
+        "produtos": 1,
+        "unidades": 6
       },
       {
-         "id": 8,
-         "nome": "Sage Derby",
-         "categorias": [
-            "LONG",
-            "COPA DO MUNDO",
-            "JÓIA"
-         ],
-         "produtos": 9,
-         "unidades": 23
+        "marca": "ADIDAS",
+        "produtos": 2,
+        "unidades": 17
       },
       {
-         "id": 9,
-         "nome": "Apricots - Halves",
-         "categorias": [
-            "COPA DO MUNDO"
-         ],
-         "produtos": 7,
-         "unidades": 19
+        "marca": "COCA-COLA",
+        "produtos": 1,
+        "unidades": 0
       },
       {
-         "id": 10,
-         "nome": "Cake - Mini Potato Pancake",
-         "categorias": [
-            "BOLSA"
-         ],
-         "produtos": 8,
-         "unidades": 24
+        "marca": "CELINE",
+        "produtos": 1,
+        "unidades": 4
       },
       {
-         "id": 11,
-         "nome": "Coffee Cup 8oz 5338cd",
-         "categorias": [
-            "JÓIA",
-            "CALÇADO",
-            "CAMISA",
-            "ÓCULOS"
-         ],
-         "produtos": 8,
-         "unidades": 26
-      },
-      {
-         "id": 12,
-         "nome": "Cheese Cloth",
-         "categorias": [
-            "JEANS",
-            "ÓCULOS",
-            "CALÇADO",
-            "NIKE"
-         ],
-         "produtos": 5,
-         "unidades": 27
-      },
-      {
-         "id": 13,
-         "nome": "Appetizer - Seafood Assortment",
-         "categorias": [
-            "CALÇA",
-            "ÓCULOS",
-            "BOLSA"
-         ],
-         "produtos": 10,
-         "unidades": 36
-      },
-      {
-         "id": 14,
-         "nome": "Corn Syrup",
-         "categorias": [
-            "ÓCULOS"
-         ],
-         "produtos": 7,
-         "unidades": 1
-      },
-      {
-         "id": 15,
-         "nome": "Chinese Foods - Chicken",
-         "categorias": [
-            "BOLSA",
-            "CALÇADO",
-            "COPA DO MUNDO",
-            "JÓIA"
-         ],
-         "produtos": 3,
-         "unidades": 14
-      },
-      {
-         "id": 16,
-         "nome": "Kellogs Cereal In A Cup",
-         "categorias": [
-            "CASACO",
-            "ÓCULOS",
-            "COPA DO MUNDO",
-            "BERMUDA"
-         ],
-         "produtos": 1,
-         "unidades": 18
-      },
-      {
-         "id": 17,
-         "nome": "Lychee - Canned",
-         "categorias": [
-            "CASACO",
-            "CAMISA DE TIME"
-         ],
-         "produtos": 1,
-         "unidades": 25
-      },
-      {
-         "id": 18,
-         "nome": "Beef - Diced",
-         "categorias": [
-            "BOLSA",
-            "JEANS"
-         ],
-         "produtos": 7,
-         "unidades": 21
-      },
-      {
-         "id": 19,
-         "nome": "Huck Towels White",
-         "categorias": [
-            "ÓCULOS",
-            "NIKE"
-         ],
-         "produtos": 9,
-         "unidades": 10
-      },
-      {
-         "id": 20,
-         "nome": "Bamboo Shoots - Sliced",
-         "categorias": [
-            "BOLSA",
-            "CALÇA"
-         ],
-         "produtos": 5,
-         "unidades": 40
-      },
-      {
-         "id": 21,
-         "nome": "Pomegranates",
-         "categorias": [
-            "CAMISA"
-         ],
-         "produtos": 5,
-         "unidades": 27
-      },
-      {
-         "id": 22,
-         "nome": "Everfresh Products",
-         "categorias": [
-            "NIKE",
-            "ÓCULOS"
-         ],
-         "produtos": 6,
-         "unidades": 29
-      },
-      {
-         "id": 23,
-         "nome": "Oil - Peanut",
-         "categorias": [
-            "CAMISA DE TIME",
-            "CALÇA",
-            "CALÇADO"
-         ],
-         "produtos": 5,
-         "unidades": 12
-      },
-      {
-         "id": 24,
-         "nome": "Island Oasis - Pina Colada",
-         "categorias": [
-            "LONG",
-            "CALÇA"
-         ],
-         "produtos": 4,
-         "unidades": 2
-      },
-      {
-         "id": 25,
-         "nome": "Lamb - Shoulder",
-         "categorias": [
-            "CAMISA",
-            "CALÇADO",
-            "NIKE"
-         ],
-         "produtos": 4,
-         "unidades": 3
+        "marca": "null",
+        "produtos": 4,
+        "unidades": 80
       }
-   ]
+    ],
+
+   "produtos":[{
+      "id": 1,
+      "nome": "Hold Up Tool Storage Rack",
+      "Marca": "TAMO JUNTO",
+      "categorias": [
+        "BERMUDA"
+      ],
+      "produtos": 4,
+      "unidades": 29
+    }, {
+      "id": 2,
+      "nome": "Mousse - Passion Fruit",
+      "Marca": "B&B",
+      "categorias": [
+        "BERMUDA",
+        "CALÇADO"
+      ],
+      "produtos": 6,
+      "unidades": 26
+    }, {
+      "id": 3,
+      "nome": "Silicone Paper",
+      "Marca": "B&B",
+      "categorias": [
+        "CAMISA DE TIME",
+        "LONG",
+        "BOLSA"
+      ],
+      "produtos": 9,
+      "unidades": 21
+    }, {
+      "id": 4,
+      "nome": "Wine La Vielle Ferme Cote Du",
+      "Marca": "NIKE",
+      "categorias": [
+        "BOLSA"
+      ],
+      "produtos": 2,
+      "unidades": 21
+    }, {
+      "id": 5,
+      "nome": "Godiva White Chocolate",
+      "Marca": "TAMO JUNTO",
+      "categorias": [
+        "BOLSA"
+      ],
+      "produtos": 6,
+      "unidades": 14
+    }, {
+      "id": 6,
+      "nome": "Trout - Rainbow, Frozen",
+      "Marca": "TOMMY",
+      "categorias": [
+        "CALÇADO",
+        "BERMUDA",
+        "ÓCULOS"
+      ],
+      "produtos": 7,
+      "unidades": 17
+    }, {
+      "id": 7,
+      "nome": "Creamers - 10%",
+      "Marca": "ADIDAS",
+      "categorias": [
+        "BOLSA"
+      ],
+      "produtos": 2,
+      "unidades": 28
+    }, {
+      "id": 8,
+      "nome": "Vermouth - White, Cinzano",
+      "Marca": "TOMMY",
+      "categorias": [
+        "BOLSA",
+        "CALÇADO"
+      ],
+      "produtos": 5,
+      "unidades": 22
+    }, {
+      "id": 9,
+      "nome": "Lamb - Pieces, Diced",
+      "Marca": "TAMO JUNTO",
+      "categorias": [
+        "CUECA"
+      ],
+      "produtos": 8,
+      "unidades": 19
+    }, {
+      "id": 10,
+      "nome": "Fish - Artic Char, Cold Smoked",
+      "Marca": "NIKE",
+      "categorias": [
+        "CAMISA DE TIME",
+        "BOLSA",
+        "CALÇADO"
+      ],
+      "produtos": 7,
+      "unidades": 31
+    }, {
+      "id": 11,
+      "nome": "Lid - 3oz Med Rec",
+      "Marca": "NIKE",
+      "categorias": [
+        "BOLSA"
+      ],
+      "produtos": 9,
+      "unidades": 28
+    }, {
+      "id": 12,
+      "nome": "Russian Prince",
+      "Marca": "TAMO JUNTO",
+      "categorias": [
+        "CALÇA",
+        "CALÇADO",
+        "CUECA"
+      ],
+      "produtos": 9,
+      "unidades": 14
+    }, {
+      "id": 13,
+      "nome": "Coffee - Espresso",
+      "Marca": "LACOSTE",
+      "categorias": [
+        "CUECA"
+      ],
+      "produtos": 2,
+      "unidades": 2
+    }, {
+      "id": 14,
+      "nome": "Pepper - Red, Finger Hot",
+      "Marca": "ADIDAS",
+      "categorias": [
+        "CALÇADO",
+        "JÓIAM",
+        "LONG"
+      ],
+      "produtos": 4,
+      "unidades": 18
+    }, {
+      "id": 15,
+      "nome": "Artichokes - Jerusalem",
+      "Marca": "NIKE",
+      "categorias": [
+        "BERMUDA"
+      ],
+      "produtos": 5,
+      "unidades": 25
+    }, {
+      "id": 16,
+      "nome": "Wine - Sauvignon Blanc Oyster",
+      "Marca": "ADIDAS",
+      "categorias": [
+        "CAMISA",
+        "LONG",
+        "CASACO"
+      ],
+      "produtos": 9,
+      "unidades": 4
+    }, {
+      "id": 17,
+      "nome": "Honey - Lavender",
+      "Marca": "TOMMY",
+      "categorias": [
+        "BOLSA",
+        "CASACO",
+        "JEANS"
+      ],
+      "produtos": 5,
+      "unidades": 13
+    }, {
+      "id": 18,
+      "nome": "Turnip - White, Organic",
+      "Marca": "TOMMY",
+      "categorias": [
+        "JEANS",
+        "CUECA",
+        "BOLSA"
+      ],
+      "produtos": 8,
+      "unidades": 16
+    }, {
+      "id": 19,
+      "nome": "Harrow Estates",
+      "Marca": "ADIDAS",
+      "categorias": [
+        "CAMISA DE TIME",
+        "JÓIAM",
+        "JEANS"
+      ],
+      "produtos": 2,
+      "unidades": 5
+    }, {
+      "id": 20,
+      "nome": "Breakfast Quesadillas",
+      "Marca": "NIKE",
+      "categorias": [
+        "CAMISA",
+        "CUECA"
+      ],
+      "produtos": 2,
+      "unidades": 30
+    }]
+
 }

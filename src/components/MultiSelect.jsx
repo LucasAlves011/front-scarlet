@@ -3,7 +3,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
-export default function Tags({dados}) {
+export default function Tags({dados,placeholder}) {
 
 
   return (
@@ -18,7 +18,7 @@ export default function Tags({dados}) {
           <TextField
             {...params}
             variant="standard"
-            label="Categorias"
+            label={placeholder}
             placeholder="Categorias"
           />
         )}
