@@ -4,6 +4,7 @@ import Home from "./pages/Home.jsx";
 import Estoque from "./pages/Estoque1.jsx";
 import TabelaTeste from "./pages/TabelaTeste.jsx";
 import Estoque2 from './pages/Estoque2';
+import Teste from './pages/Teste';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/estoque/:marca" element={<Estoque2/>}/>
         <Route path="/estoque" element={<Estoque/>} />
         <Route path="/tabela" element={<TabelaTeste/>} />
+        <Route path="/teste" element={<Teste />} />
       </Routes>
     </Router>
 
