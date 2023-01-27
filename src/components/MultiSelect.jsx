@@ -5,8 +5,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { FormControl, InputLabel } from '@mui/material';
+import { useEffect } from 'react';
 
-export default function MultipleSelect({ dados, placeholder }) {
+export default function MultipleSelect({ dados, placeholder, reciever }) {
   const [selected, setSelected] = useState([]);
 
   const handleChange = (event) => {
@@ -17,6 +18,8 @@ export default function MultipleSelect({ dados, placeholder }) {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
+
+  useEffect(() => { reciever(selected) }, [selected])
 
   return (
     <div>
@@ -49,10 +52,7 @@ export default function MultipleSelect({ dados, placeholder }) {
             </MenuItem>
           ))}
         </Select>
-
       </FormControl>
-
-      <button onClick={() => console.log(selected)}> asd</button>
     </div>
   );
 }

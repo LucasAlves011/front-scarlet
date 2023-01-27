@@ -1,6 +1,6 @@
 import MultiSelect from "../components/MultiSelect";
 import { useState, useEffect } from "react";
-import { Box, Container, FormControlLabel, List, Radio } from "@mui/material";
+import { Box, Container, FormControlLabel, List, Radio, Typography } from "@mui/material";
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { useNavigate, Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 function Estoque1() {
   const navigate = useNavigate()
   let [marcas, setMarcas] = useState();
+  let [marcasSelecionadas, setMarcasSelecionadas] = useState([]);
   let [tabela, setTabela] = useState();
   let [tabela2, setTabela2] = useState();
   let [select, setSelect] = useState("");
@@ -19,6 +20,14 @@ function Estoque1() {
       setTabela2(val.map((a) => { return { ...a, cor: "white" } }))
     })
   }, [])
+
+  useEffect(() => {
+    if (marcasSelecionadas !== undefined && marcasSelecionadas.length > 0) {
+      setTabela2(tabela.filter(p => marcasSelecionadas.includes(p.marca)))
+    } else if( marcasSelecionadas.length === 0){
+      setTabela2(tabela)
+    }
+  }, [marcasSelecionadas])
 
   useEffect(() => {
     if (tabela !== undefined) {
@@ -33,7 +42,7 @@ function Estoque1() {
         case "realçar":
           setTabela2(tabela.map(tabela => {
             if (tabela.unidades <= 0) {
-              tabela.cor = "#ffe9e8"
+              tabela.cor = "#ffc2bf"
               return tabela
             } else
               return tabela
@@ -59,30 +68,34 @@ function Estoque1() {
   return (
 
     <Box>
-      <MultiSelect dados={marcas !== undefined ? marcas : []} placeholder="Marcas" label="Categorias"></MultiSelect>
+      <Typography variant="h2" align="center" style={{ margin: "auto" }} sx={{ padding: 2 }}>Estoque</Typography>
 
-      <FormControlLabel
-        control={<Radio
-          checked={select === 'ocultar'}
-          onClick={() => select === "ocultar" ? setSelect("") : setSelect('ocultar')}
-          value="ocultar"
-          name="radio-buttons"
-          inputProps={{ 'aria-label': 'A' }}
+      <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-around", width: "95%", marginBottom: 25 }}>
+        <MultiSelect dados={marcas !== undefined ? marcas : []} placeholder="Marcas" label="Categorias" reciever={setMarcasSelecionadas}></MultiSelect>
 
-        />}
-        label="Ocultar marcas sem estoque."
-      />
-
-      <FormControlLabel
-        control={<Radio
-          checked={select === 'realçar'}
-          onClick={() => select === "realçar" ? setSelect("") : setSelect('realçar')}
-          value="realçar"
-          name="radio-buttons"
-          inputProps={{ 'aria-label': 'B' }}
-        />}
-        label="Realçar marcas sem estoque."
-      />
+        <div style={{ display: 'flex', flexDirection: "row", justifyContent: "center" }}>
+          <FormControlLabel
+            control={<Radio
+              checked={select === 'ocultar'}
+              onClick={() => select === "ocultar" ? setSelect("") : setSelect('ocultar')}
+              value="ocultar"
+              name="radio-buttons"
+              inputProps={{ 'aria-label': 'A' }}
+            />}
+            label="Ocultar marcas sem estoque."
+          />
+          <FormControlLabel
+            control={<Radio
+              checked={select === 'realçar'}
+              onClick={() => select === "realçar" ? setSelect("") : setSelect('realçar')}
+              value="realçar"
+              name="radio-buttons"
+              inputProps={{ 'aria-label': 'B' }}
+            />}
+            label="Realçar marcas sem estoque."
+          />
+        </div>
+      </div>
 
       <List sx={{ width: 1050 }}>
         {tabela2 !== undefined && tabela2.map((row) => {
@@ -91,15 +104,15 @@ function Estoque1() {
               <Link to={"produto/" + row.marca}> </Link>
               <ListItemButton style={{ backgroundColor: row.cor }} onClick={() => mudarRota(row.marca)} sx={{ padding: 1.8, border: '1px solid #e0e0e0', borderRadius: '5px', }} itemID={row.marca}>
                 <Container width={600}> {row.marca} </Container>
-                <Container width={100}> {row.produtos} {row.produtos > 1 ? 'produtos' : 'produto'} </Container>
-                <Container width={100}> {row.unidades} {row.unidades > 1 ? 'unidades' : 'unidade'} </Container>
+                <Container width={100}> {row.produtos} {row.produtos > 1 || row.produtos === 0 ? 'produtos' : 'produto'} </Container>
+                <Container width={100}> {row.unidades} {row.unidades > 1 || row.unidades === 0 ? 'unidades' : 'unidade'} </Container>
               </ListItemButton>
             </ListItem>
           )
         }
         )}
       </List>
-
+      <button onClick={() => console.log(marcasSelecionadas)}>ver marcas selecionadas</button>
     </Box>
   );
 }

@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from "react";
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
@@ -15,11 +13,11 @@ export default function MediaCard({ produto }) {
     switch (tipoTamanho) {
       case 'avulso':
         return (
-          <Container >
+          <Container style={{marginTop: "10px"}}>
 
             <Stack direction="row" gap={4} sx={{ padding: "0px 0px 0px 0px" }} >
-              <Typography variant="body1" color="text.secondary" >{produto.quantidade} un.</Typography>
-              <Typography variant="body1" color="text.secondary" >R$ {produto.valor},00</Typography>
+              <Typography variant="body1" color="default" >{produto.quantidade} un.</Typography>
+              <Typography variant="body1" color="default" >R$ {produto.valor},00</Typography>
             </Stack>
 
           </Container>
@@ -28,14 +26,14 @@ export default function MediaCard({ produto }) {
       case 'nominal':
         return (
           <>
-            <Stack fontSize={20} direction="row" gap={2} sx={{ padding: "0px", justifyContent: 'center' }} >
+            <Stack fontSize={20} direction="row" gap={2} sx={{ padding: "0px", justifyContent: 'center' , marginTop: 1}} >
               <Typography variant="body1"  >{produto.quantidade} <Typography variant='caption' fontSize={14}>un.</Typography> </Typography>
 
               <Typography variant="body1"  >R$ {produto.valor},00</Typography>
 
             </Stack>
 
-            <Stack direction="row" spacing={1} style={{ justifyContent: 'space-evenly' }}>
+            <Stack direction="row" spacing={1} style={{ justifyContent: 'space-evenly' , marginTop: "10px"}}>
               <Chip color={produto.p > 0 ? 'default' : 'error'} label={produto.p} size="small" avatar={<Avatar>P</Avatar>} />
 
               <Chip color={produto.m > 0 ? 'default' : 'error'} label={produto.m} size="small" avatar={<Avatar>M</Avatar>} />
@@ -93,7 +91,7 @@ export default function MediaCard({ produto }) {
       <CardMedia
         sx={{ height: 260, width: 300 }}
         image={"http://localhost:8080/produto/imagem/" + produto.imagem}
-        title="green iguana"
+        title={produto.nome}
       />
 
       <CardContent style={{ padding: 0, alignContent: 'center', width: 250, height: 110 }} >
