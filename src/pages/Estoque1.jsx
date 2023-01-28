@@ -14,7 +14,7 @@ function Estoque1() {
   let [select, setSelect] = useState("");
 
   useEffect(() => {
-    fetch(" http://localhost:8080/produto/quantidade-marcas").then((data) => data.json()).then((val) => {
+    fetch(" http://192.168.1.110:8080/produto/quantidade-marcas").then((data) => data.json()).then((val) => {
       setMarcas(val.map((x, key) => { return { id: key, value: x.marca } }))
       setTabela(val.map((a) => { return { ...a, cor: "white" } }))
       setTabela2(val.map((a) => { return { ...a, cor: "white" } }))
@@ -24,7 +24,7 @@ function Estoque1() {
   useEffect(() => {
     if (marcasSelecionadas !== undefined && marcasSelecionadas.length > 0) {
       setTabela2(tabela.filter(p => marcasSelecionadas.includes(p.marca)))
-    } else if( marcasSelecionadas.length === 0){
+    } else if (marcasSelecionadas.length === 0) {
       setTabela2(tabela)
     }
   }, [marcasSelecionadas])

@@ -1,0 +1,44 @@
+.geral {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #6558f5;
+  height: 300px;
+  width: 300px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.oculto {
+  display: none;
+}
+
+.comImagem {
+  display: flex;
+  border: 2px dashed #6558f5;
+  height: 300px;
+  width: 300px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.uploadedRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 0;
+  align-items: center;
+  padding: 15px 10px;
+  border-radius: 5px;
+  background-color: #e9f0ff;
+  width: 285px;
+}
+
+.uploadContent {
+  margin: auto;
+  display: flex;
+  align-items: center;
+}

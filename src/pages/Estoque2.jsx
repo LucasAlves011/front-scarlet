@@ -18,7 +18,7 @@ function Estoque2() {
    let [selectedCategorias, setSelectedCategorias] = useState();
 
    useEffect(() => {
-      fetch(" http://localhost:8080/produto/marca/" + marca).then((response) => response.json()).then((x) => {
+      fetch(" http://192.168.1.110:8080/produto/marca/" + marca).then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
          // console.log(x)
@@ -39,7 +39,7 @@ function Estoque2() {
             auxProd.push(...produtos.filter((x) => x.categorias.includes(e)))
          })
          setProdutos2([...new Set(auxProd)])
-      } else if (selectedCategorias.length === 0) {
+      } else if (selectedCategorias !== undefined && selectedCategorias.length === 0) {
          setProdutos2(produtos)
       }
 
@@ -99,7 +99,7 @@ function Estoque2() {
             }
          })
          setProdutos2([...new Set(auxProd)])
-      } else if (filtros.length === 0) {
+      } else if (filtros !== undefined && filtros.length === 0) {
          setProdutos2(produtos)
       }
    }, [filtros])

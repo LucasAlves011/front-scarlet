@@ -90,7 +90,7 @@ export default function MediaCard({ produto }) {
 
       <CardMedia
         sx={{ height: 260, width: 300 }}
-        image={"http://localhost:8080/produto/imagem/" + produto.imagem}
+        image={"http://192.168.1.110:8080/produto/imagem/" + produto.imagem}
         title={produto.nome}
       />
 

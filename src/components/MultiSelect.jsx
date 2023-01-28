@@ -4,10 +4,16 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { FormControl, InputLabel } from '@mui/material';
+import { FilledInput, FormControl, InputLabel } from '@mui/material';
 import { useEffect } from 'react';
 
-export default function MultipleSelect({ dados, placeholder, reciever }) {
+MultipleSelect.defaultProps = {
+  variant: 'outlined',
+  size: "normal",
+  width: 300
+}
+
+export default function MultipleSelect({ dados, placeholder, reciever , variant , size, width}) {
   const [selected, setSelected] = useState([]);
 
   const handleChange = (event) => {
@@ -21,9 +27,19 @@ export default function MultipleSelect({ dados, placeholder, reciever }) {
 
   useEffect(() => { reciever(selected) }, [selected])
 
+  const getTypeInput = () => {
+    if (variant === 'outlined') {
+      return <OutlinedInput id="select-multiple-chip" label={placeholder} />
+    } else if (variant === 'filled') {
+      return <FilledInput id="select-multiple-chip" label={placeholder} />
+    } else {
+      return <OutlinedInput id="select-multiple-chip" label={placeholder} />
+    }
+  }
+
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: {width} }} variant={variant}>
         <InputLabel id="demo-multiple-chip-label">{placeholder}</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
@@ -31,8 +47,8 @@ export default function MultipleSelect({ dados, placeholder, reciever }) {
           multiple
           value={selected}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label={placeholder} />}
-          variant='filled'
+          input={getTypeInput()}
+          size={size}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.2 }}>
               {selected.map((value) => (
@@ -40,7 +56,7 @@ export default function MultipleSelect({ dados, placeholder, reciever }) {
               ))}
             </Box>
           )}
-          sx={{ minWidth: 500, maxWidth: 800 }}
+          sx={{ minWidth: {width} + 200, maxWidth: {width} + 400 }}
           placeholder={placeholder}
         >
           {dados.map((e) => (

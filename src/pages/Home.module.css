@@ -1,0 +1,22 @@
+.item {
+   border-radius: 1px 1px solid black;
+   padding: 10px;
+   margin: 10px;
+   width: 110px;
+   height: 60px;
+   background-color: #f5f5f5;
+   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+   align-items: center;
+   justify-content: center;
+   font-family: "Roboto", sans-serif;
+   font-size: 1.5rem;
+}
+
+.list {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   padding: 0;
+   list-style: none;
+}
