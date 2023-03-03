@@ -153,7 +153,7 @@ function Estoque2() {
 
          <MultiSelect dados={categorias !== undefined ? categorias : []} placeholder="Selecione as categorias" reciever={setSelectedCategorias}></MultiSelect>
 
-         <Stack direction="row" gap={4} marginLeft={5} marginTop={2}>
+         <Stack direction="row" gap={4} marginLeft={5} marginTop={2} flexWrap="wrap">
             {produtos2 !== undefined && produtos2.map((produto, key) => {
                return (
                   <Card produto={produto} key={key}></Card>

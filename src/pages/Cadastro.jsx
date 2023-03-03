@@ -5,6 +5,7 @@ import style from "./Cadastro.module.css";
 import { IMaskInput } from "react-imask";
 import FileUploader from "../components/FileUploader";
 import MultiSelect from "../components/MultiSelect.jsx";
+import axios from "axios";
 
 function Cadastro() {
 
@@ -17,7 +18,8 @@ function Cadastro() {
     let [categorias, setCategorias] = useState()
     let [optionsMarcas, setOptionsMarcas] = useState();
 
-
+    let [nome, setNome] = useState('');
+    let [valor, setValor] = useState(0);
     let [marca, setMarca] = useState('');
     let [tipo, setTipo] = useState("nominal")
     let [quantidade, setQuantidade] = useState(0)
@@ -158,7 +160,51 @@ function Cadastro() {
     //       />
     //     );
     //   });
+    const cadastrar = () => {
+        let produto = {
+            nome: nome,
+            marca: marca,
+            categorias: categoriasSelecionadas,
+            valor: valor,
+        }
 
+        // if (tipo === "numerico") {
+        //     produto = { ...produto, numerico: numerico }
+        // } else if (tipo === "avulso") {
+        //     produto = { ...produto, avulso: avulso }
+        // } else if (tipo === "nominal") {
+        //     produto = { ...produto, nominal: nominal }
+        // }
+
+        console.log(produto)
+        let formdata = new FormData();
+
+        formdata.append('produto', JSON.stringify(produto));
+        // formdata.append('x', JSON.stringify("teste do cacete"));
+        // formdata.append('imagem', imagem);
+
+        axios.post("http://localhost:8080/produto/teste", formdata,{
+            headers: {
+                // "content-Type": "multipart/form-data",
+                "content-type": "application/json",
+            }
+        }).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        // console.log(formdata)
+
+        // fetch("http://localhost:8080/produto", {
+        //     method: "post",
+        //     headers:{
+        //         "Content-Type": "multipart/form-data",
+        //     },
+        //     produto: produto,
+        //     imagem: imagem
+        // }).catch((error) => ("Something went wrong!", error));
+    }
 
     return (
         <section className={style.all}>
@@ -168,8 +214,7 @@ function Cadastro() {
 
             <div className={style.todoConteudo}>
                 <section className={style.textos}>
-                    <TextField id="filled-basic" label="Nome" variant="filled" size="small"
-                    />
+                    <TextField id="filled-basic" label="Nome" variant="filled" size="small" value={nome} onChange={(e) => setNome(e.target.value)} />
                     <Autocomplete
                         disablePortal
                         id="combo-box-demo"
@@ -190,7 +235,10 @@ function Cadastro() {
                         style={{ width: "150px" }}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">R$</InputAdornment>,
-                        }} />
+                        }}
+                        value={valor}
+                        onChange={(e) => setValor(isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value))}
+                    />
                 </section>
                 <section className={style.tamanho}>
                     <FormControl>
@@ -225,7 +273,7 @@ function Cadastro() {
                 </section>
 
             </div>
-            <button className={style.enviar}> Cadastrar</button>
+            <button className={style.enviar} onClick={cadastrar}> Cadastrar</button>
 
         </section>
 
