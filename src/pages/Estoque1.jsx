@@ -14,7 +14,7 @@ function Estoque1() {
   let [select, setSelect] = useState("");
 
   useEffect(() => {
-    fetch(" http://192.168.1.110:8080/produto/quantidade-marcas").then((data) => data.json()).then((val) => {
+    fetch(" http://localhost:8080/produto/quantidade-marcas").then((data) => data.json()).then((val) => {
       setMarcas(val.map((x, key) => { return { id: key, value: x.marca } }))
       setTabela(val.map((a) => { return { ...a, cor: "white" } }))
       setTabela2(val.map((a) => { return { ...a, cor: "white" } }))

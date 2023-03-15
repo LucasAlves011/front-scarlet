@@ -10,13 +10,13 @@ import axios from "axios";
 function Cadastro() {
 
     useEffect(() => {
-        fetch("http://192.168.1.110:8080/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
-        fetch("http://192.168.1.110:8080/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
+        fetch("http://localhost:8080/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
+        fetch("http://localhost:8080/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
         )
     }, [])
 
     let [categorias, setCategorias] = useState()
-    let [optionsMarcas, setOptionsMarcas] = useState();
+    let [optionsMarcas, setOptionsMarcas] = useState([]);
 
     let [nome, setNome] = useState('');
     let [valor, setValor] = useState(0);
@@ -166,44 +166,38 @@ function Cadastro() {
             marca: marca,
             categorias: categoriasSelecionadas,
             valor: valor,
+            numerico: null,
+            avulso: null,
+            nominal: null
         }
 
-        // if (tipo === "numerico") {
-        //     produto = { ...produto, numerico: numerico }
-        // } else if (tipo === "avulso") {
-        //     produto = { ...produto, avulso: avulso }
-        // } else if (tipo === "nominal") {
-        //     produto = { ...produto, nominal: nominal }
-        // }
+        if (tipo === "numerico") {
+            produto = { ...produto, numerico: numerico }
+        } else if (tipo === "avulso") {
+            produto = { ...produto, avulso: avulso }
+        } else if (tipo === "nominal") {
+            produto = { ...produto, nominal: nominal }
+        }
 
-        console.log(produto)
+
         let formdata = new FormData();
 
         formdata.append('produto', JSON.stringify(produto));
-        // formdata.append('x', JSON.stringify("teste do cacete"));
-        // formdata.append('imagem', imagem);
+        formdata.append('imagem', imagem, imagem.name);
+        formdata.append('tipo', tipo);
 
-        axios.post("http://localhost:8080/produto/teste", formdata,{
+        console.log(produto)
+        console.log(tipo)
+
+        axios.post("http://localhost:8080/produto/cadastro", formdata,{
             headers: {
-                // "content-Type": "multipart/form-data",
-                "content-type": "application/json",
+                'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
             console.log(response)
         }).catch((error) => {
             console.log(error)
         })
-
-        // console.log(formdata)
-
-        // fetch("http://localhost:8080/produto", {
-        //     method: "post",
-        //     headers:{
-        //         "Content-Type": "multipart/form-data",
-        //     },
-        //     produto: produto,
-        //     imagem: imagem
-        // }).catch((error) => ("Something went wrong!", error));
     }
 
     return (
