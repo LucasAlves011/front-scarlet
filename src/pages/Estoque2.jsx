@@ -18,7 +18,7 @@ function Estoque2() {
    let [selectedCategorias, setSelectedCategorias] = useState();
 
    useEffect(() => {
-      fetch(" http://192.168.1.110:8080/produto/marca/" + marca).then((response) => response.json()).then((x) => {
+      fetch(" http://localhost:8080/produto/marca/" + marca).then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
          // console.log(x)
@@ -46,7 +46,7 @@ function Estoque2() {
    }, [selectedCategorias])
 
    useEffect(() => {
-      console.log(filtros)
+      // console.log(filtros)
       let auxProd = []
       if (filtros !== undefined && filtros.length > 0) {
          filtros.forEach((e) => {
@@ -119,9 +119,9 @@ function Estoque2() {
 
          <div style={{ display: 'flex', direction: 'row', height: 45, width: 500, justifyContent: 'space-around', margin: '20px auto' }}>
 
-            {['P', 'M', 'G', 'GG'].map(e => {
+            {['P', 'M', 'G', 'GG'].map((e,key) => {
                return (
-                  <div style={{ width: 45, height: 40 }}>
+                  <div style={{ width: 45, height: 40 }} key={key}>
                      <Checkbox
                         defaultChecked={false}
                         onChange={(e) => handleFiltros(e)}
@@ -136,9 +136,9 @@ function Estoque2() {
 
          <div style={{ display: 'flex', direction: 'row', height: 45, width: 600, justifyContent: 'space-around', margin: '20px auto' }}>
 
-            {['36', '38', '40', '42', '44', '46', '48', '50'].map(e => {
+            {['36', '38', '40', '42', '44', '46', '48', '50'].map((e,key) => {
                return (
-                  <div style={{ width: 45, height: 40 }}>
+                  <div style={{ width: 45, height: 40 }} key={key}>
                      <Checkbox
                         defaultChecked={false}
                         onChange={(e) => handleFiltros(e)}
@@ -153,7 +153,7 @@ function Estoque2() {
 
          <MultiSelect dados={categorias !== undefined ? categorias : []} placeholder="Selecione as categorias" reciever={setSelectedCategorias}></MultiSelect>
 
-         <Stack direction="row" gap={4} marginLeft={5} marginTop={2}>
+         <Stack direction="row" gap={4} marginLeft={5} marginTop={2} flexWrap="wrap">
             {produtos2 !== undefined && produtos2.map((produto, key) => {
                return (
                   <Card produto={produto} key={key}></Card>

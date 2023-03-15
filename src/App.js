@@ -18,7 +18,7 @@ function App() {
         <Route path="/estoque" element={<Estoque />} />
         <Route path="/tabela" element={<TabelaTeste />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/teste" element={<FileUploader />} />
+        <Route path="/teste" element={<TabelaTeste />} />
       </Routes>
     </Router>
 

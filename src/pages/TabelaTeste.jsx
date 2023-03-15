@@ -1,97 +1,184 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
-import { TableSortLabel } from '@mui/material';
-import styles from './TabelaTeste.module.css';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#514c82',
-    color: theme.palette.common.white,
-    fontWeight: 'bold',
-    fontSize: 16
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 15
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+import { visuallyHidden } from '@mui/utils';
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  { name: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3 ,data: '2021-01-02'},
+  { name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9 ,data: '2021-01-03'},
+  { name: 'Eclair', calories: 262, fat: 16.0, carbs: 24, protein: 6.0 ,data: '2021-01-05'},
+  { name: 'Frozen yoghurt', calories: 159, fat: 6.0, carbs: 24, protein: 4.0 ,data: '2021-01-07'},
+  { name: 'Gingerbread', calories: 356, fat: 16.0, carbs: 49, protein: 3.9 ,  data: '2021-01-09'},
+  { name: 'Honeycomb', calories: 408, fat: 3.2, carbs: 87, protein: 6.5, data: '2021-01-11' },
+  { name: 'Ice cream sandwich', calories: 237, fat: 9.0, carbs: 37, protein: 4.3 , data: '2021-01-13'},
+  { name: 'Jelly Bean', calories: 375, fat: 0.0, carbs: 94, protein: 0.0 , data: '2021-01-15'},
+  { name: 'KitKat', calories: 518, fat: 26.0, carbs: 65, protein: 7.0 , data: '2020-01-17'},
+  { name: 'Lollipop', calories: 392, fat: 0.2, carbs: 98, protein: 0.0 , data: '2020-05-19'} ,
+  { name: 'Marshmallow', calories: 318, fat: 0, carbs: 81, protein: 2.0 , data: '2020-07-21'},
+  { name: 'Nougat', calories: 360, fat: 19.0, carbs: 9, protein: 37.0 , data: '2018-09-23'},
+  { name: 'Oreo', calories: 437, fat: 18.0, carbs: 63, protein: 4.0 , data: '2026-01-01'},
 ];
 
-export default function CustomizedTables() {
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
+// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
+// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
+// with exampleArray.slice().sort(exampleComparator)
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) {
+      return order;
+    }
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
+const headCells = [
+  {
+    id: 'name',
+    numeric: false,
+    disablePadding: true,
+    label: 'Dessert (100g serving)',
+  },
+  {
+    id: 'calories',
+    numeric: true,
+    disablePadding: false,
+    label: 'Calories',
+  },
+  {
+    id: 'fat',
+    numeric: true,
+    disablePadding: false,
+    label: 'Fat (g)',
+  },
+  {
+    id: 'carbs',
+    numeric: true,
+    disablePadding: false,
+    label: 'Carbs (g)',
+  },
+  {
+    id: 'protein',
+    numeric: true,
+    disablePadding: false,
+    label: 'Protein (g)',
+  },
+  {
+    id: 'data',
+    numeric: false,
+    disablePadding: false,
+    label: 'Data',
+  }
+];
+
+function EnhancedTableHead(props) {
+  const { order, orderBy, onRequestSort } =
+    props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
   return (
-    <>
+    <TableHead>
+      <TableRow>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={headCell.numeric ? 'right' : 'left'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
+            sortDirection={orderBy === headCell.id ? order : false}
+          >
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
 
-    <h1>Ola mundo</h1>
 
-    <TableContainer className={styles.tabela} component={Paper} >
-      <Table  aria-label="customized table">
+export default function EnhancedTable() {
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
 
-        <TableHead >
-          <TableRow>
-            <StyledTableCell key="dessert">
-               <TableSortLabel active={"dessert" === "dessert" }>
-               Dessert (100g serving)
-               </TableSortLabel>
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
-            </StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-          </TableRow>
-        </TableHead>
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
+        <TableContainer>
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle"
+          >
+            <EnhancedTableHead
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            />
 
+            <TableBody>
+              {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
+                    <TableCell component="th" id={labelId} scope="row" padding="none">
+                      {row.name}
+                    </TableCell>
 
-      </Table>
-    </TableContainer>
-
-    </>
+                    <TableCell align="right">{row.calories}</TableCell>
+                    <TableCell align="right">{row.fat}</TableCell>
+                    <TableCell align="right">{row.carbs}</TableCell>
+                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="right">{row.data}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Box>
   );
 }

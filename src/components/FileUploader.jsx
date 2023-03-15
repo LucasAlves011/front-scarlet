@@ -21,7 +21,10 @@ function FileUploader({ reciever }) {
             onChange={({ target: { files } }) => {
                files[0] && setFileName(files[0].name)
                if (files) {
-                  setImage(URL.createObjectURL(files[0]))
+                  // setImage(URL.createObjectURL(files[0]))
+                  const file = new Blob([files[0]], { type: files[0].type });
+                  setImage(file);
+
                }
             }}
 
