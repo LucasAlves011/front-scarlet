@@ -4,10 +4,47 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Container, Stack } from '@mui/system';
-import { Avatar, Chip } from '@mui/material';
+import { Avatar, Button, Chip, Dialog, DialogContentText, DialogTitle } from '@mui/material';
 
+function SimpleDialog(props) {
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  const handleListItemClick = (value) => {
+    onClose(value);
+  };
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>{props.nome}</DialogTitle>
+      <DialogContentText>R$ {props.valor}</DialogContentText>
+      <CardMedia
+        sx={{ height: '85vh', width: '57vh' }}
+        image={"http://localhost:8080/produto/imagem/" + props.imagem}
+        title={'teste'}
+      />
+    </Dialog>
+  );
+}
 
 export default function MediaCard({ produto }) {
+
+  const [open, setOpen] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
+
+
 
   const getTamanhos = (tipoTamanho) => {
     switch (tipoTamanho) {
@@ -85,14 +122,32 @@ export default function MediaCard({ produto }) {
     }
   }
 
+
+  const t = {
+    backgroundColor: 'red',
+    hover:{
+      backgroundColor: 'blue',
+      boxShadow: '4 4 4 1.2rem rgba(0,123,255,.5)',
+    },
+    cursor: 'pointer'
+
+  }
+
+  const teste = () => {
+    console.log("ta funcionando")
+  }
+
+
   return (
     <Card sx={{ width: 250, height: 370 }} variant="outlined">
 
-      <CardMedia
-        sx={{ height: 260, width: 300 }}
-        image={"http://localhost:8080/produto/imagem/" + produto.imagem}
-        title={produto.nome}
-      />
+      <div onClick={handleClickOpen} style={t}>
+        <CardMedia
+          sx={{ height: 260, width: 300 }}
+          image={"http://localhost:8080/produto/imagem/" + produto.imagem}
+          title={produto.nome}
+        />
+      </div>
 
       <CardContent style={{ padding: 0, alignContent: 'center', width: 250, height: 110 }} >
 
@@ -107,7 +162,14 @@ export default function MediaCard({ produto }) {
         </div>
       </CardContent>
 
-
+      <SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+        imagem={produto.imagem}
+        nome={produto.nome}
+        valor={produto.valor}
+      />
 
       {/* <CardActions>
         <Button size="small">Share</Button>

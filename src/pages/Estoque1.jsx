@@ -4,6 +4,7 @@ import { Box, Container, FormControlLabel, List, Radio, Typography } from "@mui/
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { useNavigate, Link } from "react-router-dom";
+import Carrinho from "../components/carrinho/Carrinho.jsx";
 
 function Estoque1() {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ function Estoque1() {
   let [tabela, setTabela] = useState();
   let [tabela2, setTabela2] = useState();
   let [select, setSelect] = useState("");
+  let [carrinho, setCarrinho] = useState([]);
 
   useEffect(() => {
     fetch(" http://localhost:8080/produto/quantidade-marcas").then((data) => data.json()).then((val) => {
@@ -68,6 +70,8 @@ function Estoque1() {
   return (
 
     <Box>
+      {/* <Carrinho car={carrinho}></Carrinho> */}
+
       <Typography variant="h2" align="center" style={{ margin: "auto" }} sx={{ padding: 2 }}>Estoque</Typography>
 
       <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-around", width: "95%", marginBottom: 25 }}>
