@@ -199,6 +199,11 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
 
+  const getEnv = () => {
+    const env = process.env.REACT_APP_GATEWAY_URL;
+    console.log("gateway url");
+    console.log(env);
+  }
   return (
    /*  <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -237,8 +242,8 @@ export default function EnhancedTable() {
 
 
     </Box> */
-
     <div>
+      {getEnv()}
 
       <Button variant="outlined" onClick={handleClickOpen}>
         Open simple dialog

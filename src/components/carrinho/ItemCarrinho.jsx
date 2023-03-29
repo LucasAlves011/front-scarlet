@@ -49,6 +49,10 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
       setAtt(!att)
    }, [quantidadeSelecionada, tamanhoSelecionado])
 
+   useEffect(() => {
+      setQuantidadeSelecionada(1);
+   }, [tamanhoSelecionado])
+
 
    const definirTipo = (tipo) => {
       switch (tipo) {

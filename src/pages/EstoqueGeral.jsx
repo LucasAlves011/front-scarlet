@@ -45,7 +45,7 @@ function EstoqueGeral({ car }) {
    const [selectedMarcas, setSelectedMarcas] = useState();
 
    useEffect(() => {
-      fetch(" http://localhost:8080/produto").then((response) => response.json()).then((x) => {
+      fetch(process.env.GATEAWAY_URL).then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
       })

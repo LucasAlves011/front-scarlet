@@ -23,7 +23,7 @@ function SimpleDialog(props) {
       <DialogContentText>R$ {props.valor}</DialogContentText>
       <CardMedia
         sx={{ height: '85vh', width: '57vh' }}
-        image={"http://localhost:8080/produto/imagem/" + props.imagem}
+        image={process.env.GATEAWAY_URL +"/" + props.imagem}
         title={'teste'}
       />
     </Dialog>
@@ -144,7 +144,7 @@ export default function MediaCard({ produto }) {
       <div onClick={handleClickOpen} style={t}>
         <CardMedia
           sx={{ height: 260, width: 300 }}
-          image={"http://localhost:8080/produto/imagem/" + produto.imagem}
+          image={process.env.GATEAWAY_URL+"/" + produto.imagem}
           title={produto.nome}
         />
       </div>
