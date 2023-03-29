@@ -144,7 +144,7 @@ export default function MediaCard({ produto }) {
       <div onClick={handleClickOpen} style={t}>
         <CardMedia
           sx={{ height: 260, width: 300 }}
-          image={process.env.GATEAWAY_URL+"/" + produto.imagem}
+          image={process.env.GATEAWAY_URL+"/imagem/" + produto.imagem}
           title={produto.nome}
         />
       </div>

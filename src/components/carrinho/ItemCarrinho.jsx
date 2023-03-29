@@ -133,7 +133,7 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
 
       <section className={style.container} >
 
-         <img src={"http://localhost:8080/produto/imagem/" + item.produto.imagem} width='100' height='110' alt="imagem do produto" />
+         <img src={process.env.GATEWAY_URL+"/produto/imagem/" + item.produto.imagem} width='100' height='110' alt="imagem do produto" />
 
          <div id={style.info}>
             <div id={style.titulo}>{item.produto.nome}</div>
