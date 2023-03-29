@@ -15,8 +15,8 @@ function Cadastro() {
         // fetch("http://localhost:8080/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
         // fetch("http://localhost:8080/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
 
-        fetch(process.env.GATEAWAY_URL+"produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
-        fetch(process.env.GATEAWAY_URL+"/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
+        fetch("http://35.199.82.99:8080/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
+        fetch("http://35.199.82.99:8080/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
         )
     }, [])
 
@@ -194,7 +194,7 @@ function Cadastro() {
         console.log(produto)
         console.log(tipo)
 
-        axios.post(process.env.GATEAWAY_URL+"/produto/cadastro", formdata,{
+        axios.post("http://35.199.82.99:8080/produto/cadastro", formdata,{
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
