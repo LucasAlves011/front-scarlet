@@ -1,7 +1,7 @@
 import { Avatar, Badge, Checkbox, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import Card from "../components/Card";
 import Carrinho from "../components/carrinho/Carrinho";
 import MultiSelect from "../components/MultiSelect";
@@ -45,7 +45,7 @@ function EstoqueGeral({ car }) {
    const [selectedMarcas, setSelectedMarcas] = useState();
 
    useEffect(() => {
-      fetch("http://35.199.82.99:8080/produto").then((response) => response.json()).then((x) => {
+      fetch(process.env.REACT_APP_GATEWAY_URL+"/produto").then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
       })

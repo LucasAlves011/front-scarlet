@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import style from "../styles/Carrinho.module.css"
 import ItemCarrinho from "./ItemCarrinho";
 import CloseIcon from '@mui/icons-material/Close';
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import { useNavigate, Link } from "react-router-dom";
 
 function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
+   const navigate = useNavigate()
 
    const [produtos, setProdutos] = useState(prop === undefined ? [] : prop);
    const [total, setTotal] = useState(0);
@@ -27,10 +29,6 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
             setProdutos([...produtos, novoProduto])
          }
          contarItens()
-
-         // setTotal(itens.reduce((acc, produto) => {
-         //    return acc + (produto.valor * produto.quantidadeSelecionada);
-         // }, 0))
       }
    }
 
@@ -135,6 +133,9 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
       }
    ]
 
+   const mudarRota = (produtos) => {
+      navigate("/venda",{ state: { carrinho: produtos } })
+    }
 
    return (
       <div id={style.principal}>
@@ -164,7 +165,7 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
             <div id={style.totalValor}>R$ {total}</div>
          </div>
 
-         <button onClick={handleFinalizarCompra}>finalizar</button>
+         <Button onClick={() => mudarRota(produtos)}>finalizar</Button>
       </div>
 
    );

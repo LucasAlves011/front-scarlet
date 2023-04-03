@@ -23,8 +23,8 @@ function SimpleDialog(props) {
       <DialogContentText>R$ {props.valor}</DialogContentText>
       <CardMedia
         sx={{ height: '85vh', width: '57vh' }}
-        image={process.env.GATEAWAY_URL +"/" + props.imagem}
-        title={'teste'}
+        image={process.env.REACT_APP_GATEWAY_URL +"/produto/imagem/" + props.imagem}
+        title={props.nome}
       />
     </Dialog>
   );
@@ -44,8 +44,6 @@ export default function MediaCard({ produto }) {
     setSelectedValue(value);
   };
 
-
-
   const getTamanhos = (tipoTamanho) => {
     switch (tipoTamanho) {
       case 'avulso':
@@ -54,7 +52,7 @@ export default function MediaCard({ produto }) {
 
             <Stack direction="row" gap={4} sx={{ padding: "0px 0px 0px 0px" }} >
               <Typography variant="body1" color="default" >{produto.quantidade} un.</Typography>
-              <Typography variant="body1" color="default" >R$ {produto.valor},00</Typography>
+              <Typography variant="body1" color="default" >R$ {produto.valor % 1 !== 0 ? produto.valor.toString().replace('.',',') : produto.valor + ',00' }</Typography>
             </Stack>
 
           </Container>
@@ -124,7 +122,7 @@ export default function MediaCard({ produto }) {
 
 
   const t = {
-    backgroundColor: 'red',
+    backgroundColor: '#bbbabf',
     hover:{
       backgroundColor: 'blue',
       boxShadow: '4 4 4 1.2rem rgba(0,123,255,.5)',
@@ -144,7 +142,7 @@ export default function MediaCard({ produto }) {
       <div onClick={handleClickOpen} style={t}>
         <CardMedia
           sx={{ height: 260, width: 300 }}
-          image={"http://35.199.82.99:8080/produto/imagem/" + produto.imagem}
+          image={process.env.REACT_APP_GATEWAY_URL+"/produto/imagem/" + produto.imagem}
           title={produto.nome}
         />
       </div>

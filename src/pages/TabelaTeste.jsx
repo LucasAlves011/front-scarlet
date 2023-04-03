@@ -9,7 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
-import { Button, CardMedia, Dialog, DialogActions, DialogTitle, Typography } from '@mui/material';
+import { Button, CardMedia, Dialog, DialogActions, DialogTitle, FormControl, FormHelperText, Input, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import {  Link } from 'react-router-dom';
 
 const rows = [
   { name: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3, data: '2021-01-02' },
@@ -168,92 +169,30 @@ function SimpleDialog(props) {
       <DialogTitle>Set backup account</DialogTitle>
       <CardMedia
         sx={{ height: 800, width: 600 }}
-        image={"http://localhost:8080/produto/imagem/81c14692-c1ce-4e80-a36c-4426f098d57f.png"}
+        image={process.env.REACT_APP_GATEWAY_URL + "/produto/imagem/81c14692-c1ce-4e80-a36c-4426f098d57f.png"}
         title={'teste'}
       />
     </Dialog>
   );
 }
 
+const p = () => {
+  console.log("teste");
+
+}
 
 
 export default function EnhancedTable() {
-  const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-    setSelectedValue(value);
-  };
-
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const getEnv = () => {
-    const env = process.env.REACT_APP_GATEWAY_URL;
-    console.log("gateway url");
-    console.log(env);
-  }
   return (
-   /*  <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle"
-          >
-            <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
 
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                    <TableCell component="th" id={labelId} scope="row" padding="none">
-                      {row.name}
-                    </TableCell>
-
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                    <TableCell align="right">{row.data}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-
-
-    </Box> */
     <div>
-      {getEnv()}
-
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open simple dialog
-      </Button>
-
-      <SimpleDialog
-        selectedValue={selectedValue}
-        open={open}
-        onClose={handleClose}
-      />
+        <Link to={{
+          pathname: '/teste2',
+          state: {
+            parametros: 'aasdasd'
+          },
+        }}>teste</Link>
     </div>
   );
 }

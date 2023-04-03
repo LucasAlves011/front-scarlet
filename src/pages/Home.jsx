@@ -11,6 +11,7 @@ function Home() {
             <li className={styles.item}> <Link to="/estoque">Estoque</Link></li>
             <li className={styles.item}> <Link to="/cadastro"> Cadastro</Link></li>
             <li className={styles.item}> <Link to="/geral">Geral</Link></li>
+            <li className={styles.item}> <Link to="/venda">Venda</Link></li>
          </ul>
       </nav>
    );

@@ -90,7 +90,7 @@ function Estoque2({ car }) {
    let [selectedCategorias, setSelectedCategorias] = useState();
 
    useEffect(() => {
-      fetch("http://35.199.82.99:8080/produto/marca/" + marca).then((response) => response.json()).then((x) => {
+      fetch(process.env.REACT_APP_GATEWAY_URL+"/produto/marca/" + marca).then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
          // console.log(x)
