@@ -1,22 +1,32 @@
-import { Avatar, Button, Checkbox, IconButton, List, Stack, Typography } from "@mui/material";
+import { Avatar, Badge, Checkbox, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import Card from "../components/Card";
 import Carrinho from "../components/carrinho/Carrinho";
 import MultiSelect from "../components/MultiSelect";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import { styled } from '@mui/material/styles';
 
-function Estoque2({ car }) {
+
+function EstoqueGeral({ car }) {
    const { marca } = useParams();
 
    const [produtos, setProdutos] = useState();
    const [produtos2, setProdutos2] = useState();
    const [categorias, setCategorias] = useState();
    const [filtros, setFiltros] = useState([]);
-   const [parametro,setParametro] = useState();
+   const [parametro, setParametro] = useState();
+   const [marcas, setMarcas] = useState();
+   const [bagVisible, setBagVisible] = useState(true);
+   const [qtdItens, setQtdItens] = useState(0);
 
-   let [carrinho, setCarrinho] = useState([]);
+   const contarItens = (newNumber) => {
+      setQtdItens(() => 0 +  newNumber)
+   }
+
+   const [carrinho, setCarrinho] = useState([]);
 
    const [hoveredProdutoId, setHoveredProdutoId] = useState(null);
 
@@ -31,13 +41,13 @@ function Estoque2({ car }) {
 
    let nominal = ['P', 'M', 'G', 'GG']
 
-   let [selectedCategorias, setSelectedCategorias] = useState();
+   const [selectedCategorias, setSelectedCategorias] = useState();
+   const [selectedMarcas, setSelectedMarcas] = useState();
 
    useEffect(() => {
-      fetch(process.env.REACT_APP_GATEWAY_URL+"/produto/marca/" + marca).then((response) => response.json()).then((x) => {
+      fetch(process.env.REACT_APP_GATEWAY_URL+"/produto").then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
-         // console.log(x)
       })
    }, [])
 
@@ -45,6 +55,10 @@ function Estoque2({ car }) {
       if (produtos !== undefined) {
          let catUnique = Array.from(new Set(produtos.map(x => { return x.categorias }).reduce((a, g) => a.concat(g), [])))
          setCategorias(catUnique.map((e, key) => { return { id: key, value: e } }))
+
+         let marcasUnique = Array.from(new Set(produtos.map(x => { return x.marca })))
+         setMarcas(marcasUnique.map((e, key) => { return { id: key, value: e } }))
+
       }
    }, [produtos])
 
@@ -62,7 +76,6 @@ function Estoque2({ car }) {
    }, [selectedCategorias])
 
    useEffect(() => {
-      // console.log(filtros)
       let auxProd = []
       if (filtros !== undefined && filtros.length > 0) {
          filtros.forEach((e) => {
@@ -131,16 +144,32 @@ function Estoque2({ car }) {
 
    const addCarrinho = () => {
       let a = produtos2.filter((x) => x.id === hoveredProdutoId)
-      console.log("valor de a")
-      console.log(a)
       setParametro(a[0])
    }
 
-
+   const StyledBadge = styled(Badge)(({ theme }) => ({
+      '& .MuiBadge-badge': {
+         right: 7,
+         top: 13,
+         border: `2px solid ${theme.palette.background.paper}`,
+         padding: '0 4px',
+      },
+   }));
 
    return (
       <>
-         <Typography variant="h1" align="center" sx={{ fontSize: '4.5em' }}>{marca !== undefined ? marca : "Sem marca"} </Typography>
+         <div hidden={!bagVisible}>
+            <Carrinho prop={carrinho} produtoAdd={parametro} resetAdd={setParametro} setBagVisible={setBagVisible} setQtdItens={contarItens}></Carrinho>
+         </div>
+
+         <Typography variant="h1" align="center" sx={{ fontSize: '4.5em' }}>Estoque </Typography>
+
+         <IconButton aria-label="cart" style={{left:'90vw'}} onClick={() => setBagVisible(true)}>
+            <StyledBadge badgeContent={qtdItens} color="primary" >
+               <ShoppingBagIcon style={{height:40,width:50}}/>
+            </StyledBadge>
+         </IconButton>
+
 
          <div style={{ display: 'flex', direction: 'row', height: 45, width: 500, justifyContent: 'space-around', margin: '20px auto' }}>
 
@@ -176,9 +205,12 @@ function Estoque2({ car }) {
 
          </div>
 
-         <MultiSelect dados={categorias !== undefined ? categorias : []} placeholder="Selecione as categorias" reciever={setSelectedCategorias}></MultiSelect>
+         <div style={{ flexDirection: "row" }}>
+            <MultiSelect dados={categorias !== undefined ? categorias : []} placeholder="Selecione as categorias" reciever={setSelectedCategorias}></MultiSelect>
+            <MultiSelect dados={marcas !== undefined ? marcas : []} placeholder="Selecione as marcas" reciever={setSelectedMarcas}></MultiSelect>
+         </div>
 
-         <Stack direction="row" gap={4} marginLeft={5} marginTop={2} flexWrap="wrap">
+         <Stack direction="row" gap={4} marginLeft={5} marginTop={2} flexWrap="wrap" marginBottom={6}>
             {produtos2 !== undefined && produtos2.map((produto, key) => {
                return (
                   <section
@@ -187,7 +219,7 @@ function Estoque2({ car }) {
                      onMouseLeave={handleMouseLeave}
                      style={{ position: 'relative' }}
                   >
-                     {<IconButton  size="small" aria-label="addCarrinho" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10 ,backgroundColor:'white', color:'#1565c0'}} onClick={addCarrinho}><AddShoppingCartIcon  ></AddShoppingCartIcon></IconButton>}
+                     {<IconButton size="small" aria-label="addCarrinho" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: '#1565c0' }} onClick={addCarrinho}><AddShoppingCartIcon  ></AddShoppingCartIcon></IconButton>}
 
                      <Card produto={produto}></Card>
                   </section>
@@ -197,11 +229,9 @@ function Estoque2({ car }) {
                produtos2 !== undefined && produtos2.length === 0 && <Typography variant="h1" align="center" sx={{ margin: "30px auto", fontSize: '4.5em', color: "#4b4d53" }}>Sem produtos </Typography>
             }
          </Stack>
-
-
       </>
 
    );
 }
 
-export default Estoque2;
+export default EstoqueGeral;

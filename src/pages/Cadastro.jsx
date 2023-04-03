@@ -1,4 +1,4 @@
-import { Autocomplete, FormControl, FormControlLabel, FormLabel, InputAdornment, Radio, RadioGroup, TextField, Typography } from "@mui/material";
+import { Alert, AlertTitle, Autocomplete, Fade, FormControl, FormControlLabel, FormLabel, InputAdornment, Radio, RadioGroup, TextField, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import HelpIcon from '@mui/icons-material/Help';
 import style from "./Cadastro.module.css";
@@ -9,9 +9,17 @@ import axios from "axios";
 
 function Cadastro() {
 
+    const [sucess, setSucess] = useState(false)
+    const [error, setError] = useState(false)
+
     useEffect(() => {
-        fetch("http://localhost:8080/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
-        fetch("http://localhost:8080/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
+
+
+        // fetch("http://localhost:8080/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
+        // fetch("http://localhost:8080/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
+
+        fetch(process.env.REACT_APP_GATEWAY_URL+"/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
+        fetch(process.env.REACT_APP_GATEWAY_URL+"/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
         )
     }, [])
 
@@ -189,12 +197,22 @@ function Cadastro() {
         console.log(produto)
         console.log(tipo)
 
-        axios.post("http://localhost:8080/produto/cadastro", formdata,{
+        axios.post(process.env.REACT_APP_GATEWAY_URL+"/produto/cadastro", formdata, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
-            console.log(response)
+            if(response.status === 201){
+                setSucess(true)
+                setTimeout(() => {
+                    setSucess(false)
+                }, 6000)
+            }else{
+                setError(true)
+                setTimeout(() => {
+                    setSucess(false)
+                }, 6000)
+            }
         }).catch((error) => {
             console.log(error)
         })
@@ -267,6 +285,25 @@ function Cadastro() {
                 </section>
 
             </div>
+
+            <div  className={style.alert}>
+                <Fade in={error}>
+                    <Alert severity="error" onClose={() => setError(false)} >
+                        <AlertTitle>Error</AlertTitle>
+                        This is an error alert — <strong>check it out!</strong>
+                    </Alert>
+                </Fade>
+            </div>
+
+            <div className={style.alert}>
+                <Fade in={sucess}>
+                    <Alert severity="success"  onClose={() => setSucess(false)}>
+                        <AlertTitle>Success</AlertTitle>
+                        This is a success alert — <strong>check it out!</strong>
+                    </Alert>
+                </Fade>
+            </div>
+
             <button className={style.enviar} onClick={cadastrar}> Cadastrar</button>
 
         </section>

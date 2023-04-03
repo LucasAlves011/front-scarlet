@@ -5,7 +5,9 @@ import Estoque from "./pages/Estoque1.jsx";
 import TabelaTeste from "./pages/TabelaTeste.jsx";
 import Estoque2 from './pages/Estoque2';
 import Cadastro from './pages/Cadastro';
-import FileUploader from './components/FileUploader';
+import EstoqueGeral from './pages/EstoqueGeral';
+import Venda from './pages/Venda';
+import Teste2 from './pages/Teste2';
 
 function App() {
   return (
@@ -18,7 +20,11 @@ function App() {
         <Route path="/estoque" element={<Estoque />} />
         <Route path="/tabela" element={<TabelaTeste />} />
         <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/geral" element={<EstoqueGeral />} />
+        <Route path="/venda" element={<Venda />} />
+
         <Route path="/teste" element={<TabelaTeste />} />
+        <Route path="/teste2" element={<Teste2 />} />
       </Routes>
     </Router>
 
