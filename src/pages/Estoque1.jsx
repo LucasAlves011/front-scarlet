@@ -70,7 +70,6 @@ function Estoque1() {
   return (
 
     <Box>
-      {/* <Carrinho car={carrinho}></Carrinho> */}
 
       <Typography variant="h2" align="center" style={{ margin: "auto" }} sx={{ padding: 2 }}>Estoque</Typography>
 

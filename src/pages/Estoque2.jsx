@@ -16,62 +16,6 @@ function Estoque2({ car }) {
    const [filtros, setFiltros] = useState([]);
    const [parametro,setParametro] = useState();
 
-   // let [carrinho, setCarrinho] = useState([  {
-   //    "id": 6,
-   //    "tipo": "nominal",
-   //    "nome": "Bermuda Jeans",
-   //    "marca": "TAMO JUNTO",
-   //    "categorias": [
-   //       "CALÇA",
-   //       "JEANS",
-   //       "LONG",
-   //       "ÓCULOS"
-   //    ],
-   //    "imagem": "7d13ee5a-4d56-4614-b4f2-2ac27ead65b2.png",
-   //    "valor": 75.0,
-   //    "quantidade": 10,
-   //    "g": 0,
-   //    "p": 8,
-   //    "gg": 3,
-   //    "m": 1
-   // },
-   // {
-   //    "id": 2,
-   //    "tipo": "avulso",
-   //    "nome": "Camisa lacoste branca",
-   //    "marca": "LACOSTE",
-   //    "categorias": [
-   //       "CAMISA DE TIME",
-   //       "COPA DO MUNDO",
-   //       "ÓCULOS"
-   //    ],
-   //    "imagem": "2f562cd6-12d9-4d4f-8b14-a06674a5e15a.png",
-   //    "valor": 60.0,
-   //    "quantidade": 3
-   // }, {
-   //    "id": 18,
-   //    "tipo": "numerico",
-   //    "nome": "Chapéu Pescador celine",
-   //    "marca": "CELINE",
-   //    "categorias": [
-   //       "BOLSA",
-   //       "CALÇA",
-   //       "CAMISA",
-   //       "JÓIA"
-   //    ],
-   //    "imagem": "4dfd426c-97a3-499b-a23d-05195cbd6851.png",
-   //    "valor": 60.0,
-   //    "quantidade": 14,
-   //    "t36": 4,
-   //    "t38": 1,
-   //    "t40": 0,
-   //    "t42": 1,
-   //    "t44": 1,
-   //    "t46": 3,
-   //    "t48": 2,
-   //    "t50": 2
-   // }]);
-
    let [carrinho, setCarrinho] = useState([]);
 
    const [hoveredProdutoId, setHoveredProdutoId] = useState(null);
@@ -190,24 +134,12 @@ function Estoque2({ car }) {
       console.log("valor de a")
       console.log(a)
       setParametro(a[0])
-
-
-     /*  console.log("valor de a")
-      console.log(a)
-      console.log(carrinho)
-      setCarrinho([...carrinho,...a])
-      console.log("novo carrinho")
-      console.log(carrinho) */
    }
 
 
 
    return (
       <>
-
-         {/* <BotaoMaisMenos></BotaoMaisMenos> */}
-         {/* <Carrinho prop={carrinho} produtoAdd={parametro} resetAdd= {setParametro}></Carrinho> */}
-
          <Typography variant="h1" align="center" sx={{ fontSize: '4.5em' }}>{marca !== undefined ? marca : "Sem marca"} </Typography>
 
          <div style={{ display: 'flex', direction: 'row', height: 45, width: 500, justifyContent: 'space-around', margin: '20px auto' }}>
