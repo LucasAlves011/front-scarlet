@@ -39,7 +39,7 @@ function SimpleDialog(props, parametro) {
                <DialogContentText>Total: R$ {props.total} </DialogContentText>
             </section>
             <Stack direction='row' spacing={5}>
-               <Button variant="contained" color="success">Confirmar</Button>
+               <Button variant="contained" color="success" >Confirmar</Button>
                <Button variant="contained" color="error" onClick={handleClose}>Cancelar</Button>
             </Stack>
          </div>
@@ -65,14 +65,15 @@ function Venda() {
 
 
    const calcularSubtotal = () => {
-      produtos.reduce((acc, item) => {
+      return produtos.reduce((acc, item) => {
          let valor = item.produto.valor * item.quantidadeSelecionada;
          return acc + valor;
       }, 0)
    }
+
    useEffect(() => {
-      console.log('mudou')
-   }, [produtos.quantidadeSelecionada])
+      setSubTotal(calcularSubtotal())
+   }, [produtos])
 
    useEffect(() => {
       if (location.state.produtos) {
@@ -92,9 +93,7 @@ function Venda() {
    useEffect(() => {
       let b = subTotal + parseFloat(entrega) - desconto
       b > 0 ? setTotal(b) : setTotal(0);
-   }, [desconto, entrega]);
-
-
+   }, [desconto, entrega, subTotal]);
 
    const handleClickOpen = () => {
       setOpen(true);
@@ -107,8 +106,20 @@ function Venda() {
 
    function LinhaProdutoTable(x, key) {
 
-      const [produtoInterno, setProdutoInterno] = useState(x.produto);
-      const [quantidade, setQuantidade] = useState(produtoInterno.quantidadeSelecionada || 0);
+      const [quantidade, setQuantidade] = useState(x.quantidadeSelecionada);
+
+      useEffect(() => {
+         let p = produtos.map(item => {
+            if (item.produto.id === x.produto.id) {
+               item.quantidadeSelecionada = quantidade
+               return item
+            } else {
+               return item
+            }
+         })
+         setProdutos(p)
+      }, [quantidade])
+
 
       return (
 
@@ -178,6 +189,12 @@ function Venda() {
       }
    };
 
+   const enviar = (e) => {
+      e.preventDefault();
+      console.log('teste')
+      handleClickOpen()
+   }
+
    return (
       <>
          <section >
@@ -189,7 +206,7 @@ function Venda() {
                      R$ {total}
                   </div>
 
-                  <form style={{ margin: '5% 0 0 5%' }}>
+                  <form style={{ margin: '5% 0 0 5%' }} onSubmit={enviar}>
 
                      <div style={{ display: 'flex', position: 'relative', justifyContent: 'space-around', marginTop: '5%', alignItems: 'baseline' }}>
 
@@ -240,8 +257,8 @@ function Venda() {
                         color="primary"
                         size="medium"
                         variant="contained"
-                        type="button"
-                        onClick={handleClickOpen}
+                        type="submit"
+                        // onClick={handleClickOpen}
                         //centralize o botão
                         sx={{ width: '50%', margin: '5% auto 0 auto', color: 'white', background: '#000', margin: '5% auto' }}
 
@@ -249,12 +266,6 @@ function Venda() {
 
 
                   </form>
-                  <button onClick={() => {
-                     console.log(entrega)
-                     console.log(desconto)
-                     console.log(formaPagamento)
-                  }}>teste</button>
-
                   <SimpleDialog
                      selectedValue={selectedValue}
                      open={open}
