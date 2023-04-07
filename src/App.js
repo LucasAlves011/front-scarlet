@@ -1,13 +1,15 @@
 import './App.css';
 import { BrowserRouter as Router,  Route, Routes } from 'react-router-dom'
+
 import Home from "./pages/Home.jsx";
-import Estoque from "./pages/Estoque1.jsx";
-import TabelaTeste from "./pages/TabelaTeste.jsx";
-import Estoque2 from './pages/Estoque2';
-import Cadastro from './pages/Cadastro';
-import EstoqueGeral from './pages/EstoqueGeral';
-import Venda from './pages/Venda';
-import Teste2 from './pages/Teste2';
+import Estoque1 from "./pages/estoque/Estoque1.jsx";
+import TabelaTeste from "./pages/tests/TabelaTeste.jsx";
+import Estoque2 from './pages/estoque/Estoque2.jsx';
+import Cadastro from './pages/cadastro/Cadastro';
+import Catalogo from './pages/venda/Catalogo.jsx';
+import Venda from './pages/venda/Venda.jsx';
+import Teste2 from './pages/tests/Teste2.jsx';
+import PosVenda from './pages/venda/PosVenda';
 
 function App() {
   return (
@@ -17,11 +19,13 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/estoque/:marca" element={<Estoque2 />} />
-        <Route path="/estoque" element={<Estoque />} />
+        <Route path="/estoque" element={<Estoque1 />} />
         <Route path="/tabela" element={<TabelaTeste />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/geral" element={<EstoqueGeral />} />
+        <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/venda" element={<Venda />} />
+        <Route path="/sucesso" element={<PosVenda />} />
+
 
         <Route path="/teste" element={<TabelaTeste />} />
         <Route path="/teste2" element={<Teste2 />} />

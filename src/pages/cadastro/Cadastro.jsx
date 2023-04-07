@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import HelpIcon from '@mui/icons-material/Help';
 import style from "./Cadastro.module.css";
 import { IMaskInput } from "react-imask";
-import FileUploader from "../components/FileUploader";
-import MultiSelect from "../components/MultiSelect.jsx";
+import FileUploader from "../../components/FileUploader.jsx";
+import MultiSelect from "../../components/MultiSelect.jsx";
 import axios from "axios";
 
 function Cadastro() {
@@ -13,11 +13,6 @@ function Cadastro() {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-
-
-        // fetch("http://localhost:8080/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
-        // fetch("http://localhost:8080/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
-
         fetch(process.env.REACT_APP_GATEWAY_URL+"/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
         fetch(process.env.REACT_APP_GATEWAY_URL+"/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
         )
