@@ -1,10 +1,10 @@
-import MultiSelect from "../components/MultiSelect";
+import MultiSelect from "../../components/MultiSelect";
 import { useState, useEffect } from "react";
 import { Box, Container, FormControlLabel, List, Radio, Typography } from "@mui/material";
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { useNavigate, Link } from "react-router-dom";
-import Carrinho from "../components/carrinho/Carrinho.jsx";
+import Carrinho from "../../components/carrinho/Carrinho.jsx";
 
 function Estoque1() {
   const navigate = useNavigate()

@@ -1,10 +1,13 @@
 import { Button, Dialog, DialogContentText, DialogTitle, Divider, FormControl, IconButton, Input, InputAdornment, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import style from '../components/styles/ItemCarrinho.module.css'
-import style2 from '../components/styles/Venda.module.css'
+import { useLocation, useNavigate } from "react-router-dom";
+import style from '../../components/styles/ItemCarrinho.module.css'
+import style2 from '../../components/styles/Venda.module.css'
+import axios from 'axios';
 
 function SimpleDialog(props, parametro) {
+   const navigate = useNavigate();
+
    const { onClose, selectedValue, open } = props;
 
    const handleClose = () => {
@@ -39,12 +42,45 @@ function SimpleDialog(props, parametro) {
                <DialogContentText>Total: R$ {props.total} </DialogContentText>
             </section>
             <Stack direction='row' spacing={5}>
-               <Button variant="contained" color="success">Confirmar</Button>
+               <Button variant="contained" color="success" onClick={() => enviarReq(props.produtos,props.entrega,props.desconto,props.total,props.formaPagamento,navigate)}>Confirmar</Button>
                <Button variant="contained" color="error" onClick={handleClose}>Cancelar</Button>
             </Stack>
          </div>
       </Dialog>
    );
+}
+
+const enviarReq = (produtos,entrega,desconto,total,formaPagamento,navigate) => {
+
+   let itens = produtos.map(({ produto, tamanhoSelecionado, quantidadeSelecionada }) => ({
+      produtoId: produto.id,
+      tamanho: tamanhoSelecionado.toUpperCase(),
+      quantidade: quantidadeSelecionada
+    }));
+
+    let objeto = {
+      entrega: parseFloat(entrega),
+      desconto: parseFloat(desconto),
+      total: parseFloat(total),
+      formaPagamento: formaPagamento.toUpperCase(),
+      itens: itens
+    }
+
+   console.log(objeto)
+
+  let formdata = new FormData();
+   formdata.append("venda", JSON.stringify(objeto));
+
+   axios.post('http://localhost:8080/venda/cadastro',formdata, {
+      headers: {
+         'Content-Type': 'multipart/form-data'
+      }
+   }).then((res) => {
+      res.status === 200 ? navigate('/sucesso') : alert('Erro ao realizar venda')
+   }).catch((err) => {
+      console.log(err)
+   })
+
 }
 
 function Venda() {
@@ -65,14 +101,15 @@ function Venda() {
 
 
    const calcularSubtotal = () => {
-      produtos.reduce((acc, item) => {
+      return produtos.reduce((acc, item) => {
          let valor = item.produto.valor * item.quantidadeSelecionada;
          return acc + valor;
       }, 0)
    }
+
    useEffect(() => {
-      console.log('mudou')
-   }, [produtos.quantidadeSelecionada])
+      setSubTotal(calcularSubtotal())
+   }, [produtos])
 
    useEffect(() => {
       if (location.state.produtos) {
@@ -92,9 +129,7 @@ function Venda() {
    useEffect(() => {
       let b = subTotal + parseFloat(entrega) - desconto
       b > 0 ? setTotal(b) : setTotal(0);
-   }, [desconto, entrega]);
-
-
+   }, [desconto, entrega, subTotal]);
 
    const handleClickOpen = () => {
       setOpen(true);
@@ -107,8 +142,20 @@ function Venda() {
 
    function LinhaProdutoTable(x, key) {
 
-      const [produtoInterno, setProdutoInterno] = useState(x.produto);
-      const [quantidade, setQuantidade] = useState(produtoInterno.quantidadeSelecionada || 0);
+      const [quantidade, setQuantidade] = useState(x.quantidadeSelecionada);
+
+      useEffect(() => {
+         let p = produtos.map(item => {
+            if (item.produto.id === x.produto.id) {
+               item.quantidadeSelecionada = quantidade
+               return item
+            } else {
+               return item
+            }
+         })
+         setProdutos(p)
+      }, [quantidade])
+
 
       return (
 
@@ -178,6 +225,12 @@ function Venda() {
       }
    };
 
+   const enviar = (e) => {
+      e.preventDefault();
+      console.log('teste')
+      handleClickOpen()
+   }
+
    return (
       <>
          <section >
@@ -189,7 +242,7 @@ function Venda() {
                      R$ {total}
                   </div>
 
-                  <form style={{ margin: '5% 0 0 5%' }}>
+                  <form style={{ margin: '5% 0 0 5%' }} onSubmit={enviar}>
 
                      <div style={{ display: 'flex', position: 'relative', justifyContent: 'space-around', marginTop: '5%', alignItems: 'baseline' }}>
 
@@ -240,21 +293,14 @@ function Venda() {
                         color="primary"
                         size="medium"
                         variant="contained"
-                        type="button"
-                        onClick={handleClickOpen}
+                        type="submit"
+                        // onClick={handleClickOpen}
                         //centralize o botão
                         sx={{ width: '50%', margin: '5% auto 0 auto', color: 'white', background: '#000', margin: '5% auto' }}
 
                      >Finalizar</Button>
 
-
                   </form>
-                  <button onClick={() => {
-                     console.log(entrega)
-                     console.log(desconto)
-                     console.log(formaPagamento)
-                  }}>teste</button>
-
                   <SimpleDialog
                      selectedValue={selectedValue}
                      open={open}
@@ -263,6 +309,7 @@ function Venda() {
                      desconto={desconto}
                      formaPagamento={formaPagamento}
                      total={total}
+                     produtos={produtos}
                   />
 
                </div>

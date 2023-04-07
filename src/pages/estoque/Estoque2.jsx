@@ -1,10 +1,9 @@
-import { Avatar, Button, Checkbox, IconButton, List, Stack, Typography } from "@mui/material";
+import { Avatar, Checkbox, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Card from "../components/Card";
-import Carrinho from "../components/carrinho/Carrinho";
-import MultiSelect from "../components/MultiSelect";
+import Card from "../../components/Card";
+import MultiSelect from "../../components/MultiSelect";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function Estoque2({ car }) {
@@ -16,7 +15,6 @@ function Estoque2({ car }) {
    const [filtros, setFiltros] = useState([]);
    const [parametro,setParametro] = useState();
 
-   let [carrinho, setCarrinho] = useState([]);
 
    const [hoveredProdutoId, setHoveredProdutoId] = useState(null);
 
@@ -37,7 +35,6 @@ function Estoque2({ car }) {
       fetch(process.env.REACT_APP_GATEWAY_URL+"/produto/marca/" + marca).then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
-         // console.log(x)
       })
    }, [])
 

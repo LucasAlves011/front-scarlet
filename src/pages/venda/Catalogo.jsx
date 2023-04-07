@@ -2,9 +2,9 @@ import { Avatar, Badge, Checkbox, IconButton, Stack, Typography } from "@mui/mat
 import { useState } from "react";
 import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import Card from "../components/Card";
-import Carrinho from "../components/carrinho/Carrinho";
-import MultiSelect from "../components/MultiSelect";
+import Card from "../../components/Card";
+import Carrinho from "../../components/carrinho/Carrinho";
+import MultiSelect from "../../components/MultiSelect";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { styled } from '@mui/material/styles';
