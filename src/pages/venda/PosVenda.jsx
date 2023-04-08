@@ -7,9 +7,6 @@ function PosVenda() {
    const navigate = useNavigate();
    const [mensagem, setMensagem] = useState('Você será redirecionado em breve para o catálogo.');
 
-   //a cada segundo incrementar um . no final da mensagem
-
-
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       navigate('/catalogo');

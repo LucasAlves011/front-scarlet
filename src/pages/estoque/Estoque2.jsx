@@ -148,8 +148,9 @@ function Estoque2({ car }) {
                         defaultChecked={false}
                         onChange={(e) => handleFiltros(e)}
                         value={e}
-                        icon={<Avatar sx={{ bgcolor: 'white', color: '#6558f5', border: '1px solid #6558f5' }} variant="rounded">{e}</Avatar>}
-                        checkedIcon={<Avatar sx={{ bgcolor: "#6558f5", width: 40 }} variant="rounded" >{e}</Avatar>} />
+                        color="default"
+                        icon={<Avatar sx={{ bgcolor: 'white', color: '#797979', border: '1px solid #797979' }} variant="rounded">{e}</Avatar>}
+                        checkedIcon={<Avatar sx={{ bgcolor: "#535352", width: 40 }} variant="rounded" >{e}</Avatar>} />
                   </div>
                )
             })}
@@ -165,8 +166,9 @@ function Estoque2({ car }) {
                         defaultChecked={false}
                         onChange={(e) => handleFiltros(e)}
                         value={e.toString()}
-                        icon={<Avatar sx={{ bgcolor: 'white', color: '#6558f5', border: '1px solid #6558f5' }} variant="rounded">{e}</Avatar>}
-                        checkedIcon={<Avatar sx={{ bgcolor: "#6558f5", width: 40 }} variant="rounded" >{e}</Avatar>} />
+                        color="default"
+                        icon={<Avatar sx={{ bgcolor: 'white', color: '#858585', border: '1px solid #858585' }} variant="rounded">{e}</Avatar>}
+                        checkedIcon={<Avatar sx={{ bgcolor: "#535352", width: 40 }} variant="rounded" >{e}</Avatar>} />
                   </div>
                )
             })}

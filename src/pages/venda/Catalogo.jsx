@@ -1,4 +1,4 @@
-import { Avatar, Badge, Checkbox, IconButton, Stack, Typography } from "@mui/material";
+import { Avatar, Badge, Checkbox, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
@@ -180,6 +180,7 @@ function EstoqueGeral({ car }) {
                         defaultChecked={false}
                         onChange={(e) => handleFiltros(e)}
                         value={e}
+                        color="default"
                         icon={<Avatar sx={{ bgcolor: 'white', color: '#6558f5', border: '1px solid #6558f5' }} variant="rounded">{e}</Avatar>}
                         checkedIcon={<Avatar sx={{ bgcolor: "#6558f5", width: 40 }} variant="rounded" >{e}</Avatar>} />
                   </div>

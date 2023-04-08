@@ -10,6 +10,8 @@ import Catalogo from './pages/venda/Catalogo.jsx';
 import Venda from './pages/venda/Venda.jsx';
 import Teste2 from './pages/tests/Teste2.jsx';
 import PosVenda from './pages/venda/PosVenda';
+import Relatorio1 from './pages/relatório/Relatorio1';
+import DetalhesVenda from './pages/relatório/DetalhesVenda';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/venda" element={<Venda />} />
         <Route path="/sucesso" element={<PosVenda />} />
+        <Route path="/vendas" element={<Relatorio1 />} />
+        <Route path="/vendas/:data" element={<DetalhesVenda />} />
 
 
         <Route path="/teste" element={<TabelaTeste />} />

@@ -5,6 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Container, Stack } from '@mui/system';
 import { Avatar, Button, Chip, Dialog, DialogContentText, DialogTitle } from '@mui/material';
+import { formatoDinheiroReal } from '../utils/NumeroFormaters';
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -20,7 +21,7 @@ function SimpleDialog(props) {
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{props.nome}</DialogTitle>
-      <DialogContentText>R$ {props.valor}</DialogContentText>
+      <DialogContentText>{formatoDinheiroReal (props.valor)}</DialogContentText>
       <CardMedia
         sx={{ height: '85vh', width: '57vh' }}
         image={process.env.REACT_APP_GATEWAY_URL +"/produto/imagem/" + props.imagem}
@@ -52,7 +53,7 @@ export default function MediaCard({ produto }) {
 
             <Stack direction="row" gap={4} sx={{ padding: "0px 0px 0px 0px" }} >
               <Typography variant="body1" color="default" >{produto.quantidade} un.</Typography>
-              <Typography variant="body1" color="default" >R$ {produto.valor % 1 !== 0 ? produto.valor.toString().replace('.',',') : produto.valor + ',00' }</Typography>
+              <Typography variant="body1" color="default" >{formatoDinheiroReal(produto.valor)}</Typography>
             </Stack>
 
           </Container>

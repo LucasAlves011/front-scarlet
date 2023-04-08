@@ -4,6 +4,7 @@ import ItemCarrinho from "./ItemCarrinho";
 import CloseIcon from '@mui/icons-material/Close';
 import { Button, IconButton } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
+import { formatoDinheiroReal } from "../../utils/NumeroFormaters";
 
 function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
    const navigate = useNavigate()
@@ -155,7 +156,7 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
 
          <div id={style.total}>
             <div id={style.totalText}>Total</div>
-            <div id={style.totalValor}>R$ {total}</div>
+            <div id={style.totalValor}>{formatoDinheiroReal(total)}</div>
          </div>
 
          <Button onClick={() => mudarRota(produtos)}>finalizar</Button>

@@ -2,6 +2,7 @@ import { IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import style from "../styles/ItemCarrinho.module.css"
 import DeleteIcon from '@mui/icons-material/Delete';
+import { formatoDinheiroReal } from "../../utils/NumeroFormaters";
 
 function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
 
@@ -139,7 +140,7 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
             <div id={style.titulo}>{item.produto.nome}</div>
 
             <div id={style.dentroInfo}>
-               <span id={style.preco}>R$ {item.produto.valor}</span>
+               <span id={style.preco}>{formatoDinheiroReal(item.produto.valor)}</span>
                {definirTipo(item.produto.tipo)}
             </div>
 
