@@ -26,7 +26,7 @@ function App() {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/venda" element={<Venda />} />
-        <Route path="/sucesso" element={<PosVenda />} />
+        <Route path="/venda/sucesso" element={<PosVenda />} />
         <Route path="/vendas" element={<Relatorio1 />} />
         <Route path="/vendas/:data" element={<DetalhesVenda />} />
 

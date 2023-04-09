@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import style from '../../components/styles/ItemCarrinho.module.css'
 import style2 from '../../components/styles/Venda.module.css'
 import axios from 'axios';
+import { formatoDinheiroReal } from "../../utils/NumeroFormaters";
 
 function SimpleDialog(props, parametro) {
    const navigate = useNavigate();
@@ -33,13 +34,14 @@ function SimpleDialog(props, parametro) {
 
    return (
       <Dialog onClose={handleClose} open={open} >
+         {console.log(props)}
          <div style={{ padding: '15px' }}>
             <DialogTitle style={{ textAlign: 'center' }}>Confirmar venda</DialogTitle>
             <section style={{ margin: '10px 5px 15px 15px', height: '130px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-               <DialogContentText>Entrega: R$ {props.entrega} </DialogContentText>
-               <DialogContentText>Desconto: R$ {props.desconto} </DialogContentText>
+               <DialogContentText>Entrega: {formatoDinheiroReal(props.entrega)} </DialogContentText>
+               <DialogContentText>Desconto: {formatoDinheiroReal(props.desconto)} </DialogContentText>
                <DialogContentText>Forma de pagamento: {formatFormaPagamento(props.formaPagamento)} </DialogContentText>
-               <DialogContentText>Total: R$ {props.total} </DialogContentText>
+               <DialogContentText>Total: {formatoDinheiroReal(props.total)} </DialogContentText>
             </section>
             <Stack direction='row' spacing={5}>
                <Button variant="contained" color="success" onClick={() => enviarReq(props.produtos,props.entrega,props.desconto,props.total,props.formaPagamento,navigate)}>Confirmar</Button>
@@ -55,7 +57,8 @@ const enviarReq = (produtos,entrega,desconto,total,formaPagamento,navigate) => {
    let itens = produtos.map(({ produto, tamanhoSelecionado, quantidadeSelecionada }) => ({
       produtoId: produto.id,
       tamanho: tamanhoSelecionado.toUpperCase(),
-      quantidade: quantidadeSelecionada
+      quantidade: quantidadeSelecionada,
+      valor: produto.valor
     }));
 
     let objeto = {
@@ -71,16 +74,15 @@ const enviarReq = (produtos,entrega,desconto,total,formaPagamento,navigate) => {
   let formdata = new FormData();
    formdata.append("venda", JSON.stringify(objeto));
 
-   axios.post('http://localhost:8080/venda/cadastro',formdata, {
+   axios.post(process.env.REACT_APP_GATEWAY_URL+'/venda/cadastro',formdata, {
       headers: {
          'Content-Type': 'multipart/form-data'
       }
    }).then((res) => {
-      res.status === 200 ? navigate('/sucesso') : alert('Erro ao realizar venda')
+      res.status === 200 ? navigate('/venda/sucesso') : alert('Erro ao realizar venda')
    }).catch((err) => {
       console.log(err)
    })
-
 }
 
 function Venda() {

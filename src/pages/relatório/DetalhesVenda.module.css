@@ -1,0 +1,32 @@
+#listaProdutos {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   height: 100%;
+   margin-top: 20px;
+   list-style: none;
+}
+
+.itemLista {
+   display: flex;
+   flex-direction: row;
+   align-items: baseline;
+   justify-content: space-between;
+}
+
+.itemLista p {
+   width: auto;
+   margin: 0px 20px ;
+}
+
+.acordeon {
+   width: 90%;
+   margin: 3% auto;
+}
+
+.h1Data {
+   text-align: center;
+   margin: 10px;
+}

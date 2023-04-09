@@ -284,8 +284,8 @@ function Cadastro() {
             <div  className={style.alert}>
                 <Fade in={error}>
                     <Alert severity="error" onClose={() => setError(false)} >
-                        <AlertTitle>Error</AlertTitle>
-                        This is an error alert — <strong>check it out!</strong>
+                        <AlertTitle>Erro</AlertTitle>
+                        Ocorreu um erro produto<strong>não cadastrado</strong>
                     </Alert>
                 </Fade>
             </div>
@@ -293,8 +293,8 @@ function Cadastro() {
             <div className={style.alert}>
                 <Fade in={sucess}>
                     <Alert severity="success"  onClose={() => setSucess(false)}>
-                        <AlertTitle>Success</AlertTitle>
-                        This is a success alert — <strong>check it out!</strong>
+                        <AlertTitle>Sucesso</AlertTitle>
+                        Produto cadastrado com  <strong>sucesso</strong>!!
                     </Alert>
                 </Fade>
             </div>

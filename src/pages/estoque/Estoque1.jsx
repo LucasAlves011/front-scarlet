@@ -115,7 +115,6 @@ function Estoque1() {
         }
         )}
       </List>
-      <button onClick={() => console.log(marcasSelecionadas)}>ver marcas selecionadas</button>
     </Box>
   );
 }

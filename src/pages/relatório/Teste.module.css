@@ -1,0 +1,11 @@
+.container
+{
+   display: flex;
+   justify-content: space-between;
+   align-items: center,
+   /* gap: theme.spacing(2); */
+ }
+
+.input {
+   width: 100%,
+ }

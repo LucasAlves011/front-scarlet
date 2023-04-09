@@ -8,6 +8,7 @@ function FileUploader({ reciever }) {
 
    const [image, setImage] = useState(null)
    const [fileName, setFileName] = useState("Nenhuma imagem selecionada")
+   const [imagemPreview, setImagemPreview] = useState(null)
 
    useEffect(() => {
       reciever(image);
@@ -21,8 +22,8 @@ function FileUploader({ reciever }) {
             onChange={({ target: { files } }) => {
                files[0] && setFileName(files[0].name)
                if (files) {
-                  // setImage(URL.createObjectURL(files[0]))
                   const file = new Blob([files[0]], { type: files[0].type });
+                  setImagemPreview(URL.createObjectURL(files[0]))
                   setImage(file);
 
                }
@@ -32,7 +33,7 @@ function FileUploader({ reciever }) {
 
          {!image ? <div> <label htmlFor="input" className={style.geral}>Faça upload da imagem <FileUploadIcon color='info' fontSize='large' /></label></div>
             :
-            <div className={style.comImagem}><img src={image} height={270} width={202} alt={fileName} /></div>
+            <div className={style.comImagem}><img src={imagemPreview} height={270} width={202} alt={fileName} /></div>
          }
 
          <section className={style.uploadedRow}>
