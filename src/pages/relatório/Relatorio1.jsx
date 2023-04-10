@@ -68,7 +68,7 @@ function Relatorio1() {
    const [vendasHoje, setVendasHoje] = useState();
 
    useEffect(() => {
-      fetch(process.env.REACT_APP_GATEWAY_URL+"/venda/resumo-dia?data=" + format(new Date(), "dd-MM-yyyy"))
+      fetch(process.env.REACT_APP_GATEWAY_URL + "/venda/resumo-dia?data=" + format(new Date(), "dd-MM-yyyy"))
          .then(res => res.json())
          .then(res => {
             setVendasHoje(res)
@@ -76,7 +76,7 @@ function Relatorio1() {
    }, [])
 
    useEffect(() => {
-      fetch(process.env.REACT_APP_GATEWAY_URL+"/venda/resumo-semana")
+      fetch(process.env.REACT_APP_GATEWAY_URL + "/venda/resumo-semana")
          .then(res => res.json())
          .then(res => {
             setVendaDoisDiasAtras(res)
@@ -89,9 +89,9 @@ function Relatorio1() {
          <section className={style.todoDasMetades}>
             {vendasHoje && <section className={style.metade} >
                <h1>Resumo de hoje: </h1>
-               <p style={{ margin: '-10%'}}>{format(new Date() , "dd/MM/yyyy")}</p>
+               <p >{format(new Date(), "dd/MM/yyyy")}</p>
 
-               <h2>{vendasHoje.quantidadeVendas === 0 ? 'Nenhuma venda realizada.': vendasHoje.quantidadeVendas + ' vendas realizadas.' }</h2>
+               <h2>{vendasHoje.quantidadeVendas === 0 ? 'Nenhuma venda realizada.' : vendasHoje.quantidadeVendas + ' vendas realizadas.'}</h2>
                <div className={style.cartoes}>
 
                   Cartão
@@ -106,11 +106,11 @@ function Relatorio1() {
                      <p>{formatoDinheiroReal(vendasHoje.pix)}</p>
                   </div>
 
-                     Dinheiro
-                     <div className={style.figura2}>
-                        <FaMoneyBillWave />
-                        <p>{formatoDinheiroReal(vendasHoje.dinheiro)}</p>
-                     </div>
+                  Dinheiro
+                  <div className={style.figura2}>
+                     <FaMoneyBillWave />
+                     <p>{formatoDinheiroReal(vendasHoje.dinheiro)}</p>
+                  </div>
                </div>
 
                <h3>{formatoDinheiroReal(vendasHoje.total)}</h3>

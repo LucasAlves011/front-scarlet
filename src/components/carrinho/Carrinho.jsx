@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import style from "../styles/Carrinho.module.css"
 import ItemCarrinho from "./ItemCarrinho";
 import CloseIcon from '@mui/icons-material/Close';
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { formatoDinheiroReal } from "../../utils/NumeroFormaters";
+import { Button } from "rsuite";
 
 function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
    const navigate = useNavigate()
@@ -63,80 +64,9 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
       setQtdItens(a)
    }
 
-   // const itensTeste = [
-   //    {
-   //       produto: {
-   //          "id": 6,
-   //          "tipo": "nominal",
-   //          "nome": "Bermuda Jeans",
-   //          "marca": "TAMO JUNTO",
-   //          "categorias": [
-   //             "CALÇA",
-   //             "JEANS",
-   //             "LONG",
-   //             "ÓCULOS"
-   //          ],
-   //          "imagem": "7d13ee5a-4d56-4614-b4f2-2ac27ead65b2.png",
-   //          "valor": 75.0,
-   //          "quantidade": 13,
-   //          "g": 0,
-   //          "p": 8,
-   //          "m": 3,
-   //          "gg": 2
-   //       },
-   //       tamanhoSelecionado: null,
-   //       quantidadeSelecionada: null
-   //    },
-   //    {
-   //       produto: {
-   //          "id": 2,
-   //          "tipo": "avulso",
-   //          "nome": "Camisa lacoste branca",
-   //          "marca": "LACOSTE",
-   //          "categorias": [
-   //             "CAMISA DE TIME",
-   //             "COPA DO MUNDO",
-   //             "ÓCULOS"
-   //          ],
-   //          "imagem": "2f562cd6-12d9-4d4f-8b14-a06674a5e15a.png",
-   //          "valor": 60.0,
-   //          "quantidade": 3
-   //       },
-   //       tamanhoSelecionado: null,
-   //       quantidadeSelecionada: null
-   //    },
-   //    {
-   //       produto: {
-   //          "id": 18,
-   //          "tipo": "numerico",
-   //          "nome": "Chapéu Pescador celine",
-   //          "marca": "CELINE",
-   //          "categorias": [
-   //             "BOLSA",
-   //             "CALÇA",
-   //             "CAMISA",
-   //             "JÓIA"
-   //          ],
-   //          "imagem": "4dfd426c-97a3-499b-a23d-05195cbd6851.png",
-   //          "valor": 60.0,
-   //          "quantidade": 14,
-   //          "t36": 4,
-   //          "t38": 1,
-   //          "t40": 0,
-   //          "t42": 1,
-   //          "t44": 1,
-   //          "t46": 3,
-   //          "t48": 2,
-   //          "t50": 2
-   //       },
-   //       tamanhoSelecionado: null,
-   //       quantidadeSelecionada: null
-   //    }
-   // ]
-
    const mudarRota = (produtos) => {
-      navigate("/venda",{ state: { carrinho: produtos } })
-    }
+      navigate("/venda", { state: { carrinho: produtos } })
+   }
 
    return (
       <div id={style.principal}>
@@ -144,22 +74,21 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
             <CloseIcon onClick={() => setBagVisible(false)} />
          </IconButton>
 
-         <h1 style={{ textAlign: 'center',fontFamily: 'Roboto, sans-serif' }}>Carrinho</h1>
+         <h1 style={{ textAlign: 'center', fontFamily: 'Roboto, sans-serif' }}>Carrinho</h1>
          <div id={style.lista}>
 
             {produtos.map((e, key) => {
                return (
-                  <ItemCarrinho item={e} key={key} receberNovoProduto={novoArrayDeitens} remover={remover} setAtt={setAtt} att={att}/>
+                  <ItemCarrinho item={e} key={key} receberNovoProduto={novoArrayDeitens} remover={remover} setAtt={setAtt} att={att} />
                )
             })}
          </div>
 
          <div id={style.total}>
-            <div id={style.totalText}>Total</div>
-            <div id={style.totalValor}>{formatoDinheiroReal(total)}</div>
+            <div >Total: {formatoDinheiroReal(total)}</div>
+            <Button color="primary" onClick={() => mudarRota(produtos)} id={style.botaoFinalizar}>finalizar</Button>
          </div>
 
-         <Button onClick={() => mudarRota(produtos)}>finalizar</Button>
       </div>
 
    );

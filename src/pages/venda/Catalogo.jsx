@@ -147,6 +147,16 @@ function EstoqueGeral({ car }) {
       setParametro(a[0])
    }
 
+   const verificarDisponibilidade = (produto) => {
+      if (produto.tipo === "avulso") {
+         return produto.qtd > 0
+      } else if(produto.tipo === "nominal") {
+         return produto.p > 0 || produto.m > 0 || produto.g > 0 || produto.gg > 0
+      }else {
+         return produto.t36 > 0 || produto.t38 > 0 || produto.t40 > 0 || produto.t42 > 0 || produto.t44 > 0 || produto.t46 > 0 || produto.t48 > 0 || produto.t50 > 0
+      }
+   }
+
    const StyledBadge = styled(Badge)(({ theme }) => ({
       '& .MuiBadge-badge': {
          right: 7,
@@ -181,8 +191,8 @@ function EstoqueGeral({ car }) {
                         onChange={(e) => handleFiltros(e)}
                         value={e}
                         color="default"
-                        icon={<Avatar sx={{ bgcolor: 'white', color: '#6558f5', border: '1px solid #6558f5' }} variant="rounded">{e}</Avatar>}
-                        checkedIcon={<Avatar sx={{ bgcolor: "#6558f5", width: 40 }} variant="rounded" >{e}</Avatar>} />
+                        icon={<Avatar sx={{ bgcolor: 'white', color: '#858585', border: '1px solid #858585' }} variant="rounded">{e}</Avatar>}
+                        checkedIcon={<Avatar sx={{ bgcolor: "#535352", width: 40 }} variant="rounded" >{e}</Avatar>} />
                   </div>
                )
             })}
@@ -198,8 +208,8 @@ function EstoqueGeral({ car }) {
                         defaultChecked={false}
                         onChange={(e) => handleFiltros(e)}
                         value={e.toString()}
-                        icon={<Avatar sx={{ bgcolor: 'white', color: '#6558f5', border: '1px solid #6558f5' }} variant="rounded">{e}</Avatar>}
-                        checkedIcon={<Avatar sx={{ bgcolor: "#6558f5", width: 40 }} variant="rounded" >{e}</Avatar>} />
+                        icon={<Avatar sx={{ bgcolor: 'white', color: '#858585', border: '1px solid #858585' }} variant="rounded">{e}</Avatar>}
+                        checkedIcon={<Avatar sx={{ bgcolor: "#535352", width: 40 }} variant="rounded" >{e}</Avatar>} />
                   </div>
                )
             })}
@@ -211,7 +221,8 @@ function EstoqueGeral({ car }) {
             <MultiSelect dados={marcas !== undefined ? marcas : []} placeholder="Selecione as marcas" reciever={setSelectedMarcas}></MultiSelect>
          </div>
 
-         <Stack direction="row" gap={4} marginLeft={5} marginTop={2} flexWrap="wrap" marginBottom={6}>
+         <Stack direction="row" gap={4} marginLeft={5} marginTop={2} flexWrap="wrap" marginBottom={6}
+         style={{margin: '4% 4%'}}>
             {produtos2 !== undefined && produtos2.map((produto, key) => {
                return (
                   <section
@@ -220,7 +231,7 @@ function EstoqueGeral({ car }) {
                      onMouseLeave={handleMouseLeave}
                      style={{ position: 'relative' }}
                   >
-                     {<IconButton size="small" aria-label="addCarrinho" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: '#1565c0' }} onClick={addCarrinho}><AddShoppingCartIcon  ></AddShoppingCartIcon></IconButton>}
+                     {<IconButton disabled={verificarDisponibilidade(produto)} size="small" aria-label="addCarrinho" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color:  verificarDisponibilidade(produto) ? '#1565c0' : 'red' }}onClick={verificarDisponibilidade(produto) && addCarrinho}><AddShoppingCartIcon  ></AddShoppingCartIcon></IconButton>}
 
                      <Card produto={produto}></Card>
                   </section>

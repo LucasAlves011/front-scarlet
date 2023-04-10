@@ -1,11 +1,10 @@
-import { Alert, AlertTitle, Autocomplete, Fade, FormControl, FormControlLabel, FormLabel, InputAdornment, Radio, RadioGroup, TextField, Typography } from "@mui/material";
+import { Alert, AlertTitle, Fade } from "@mui/material";
 import { useState, useEffect } from "react";
-import HelpIcon from '@mui/icons-material/Help';
 import style from "./Cadastro.module.css";
 import { IMaskInput } from "react-imask";
 import FileUploader from "../../components/FileUploader.jsx";
-import MultiSelect from "../../components/MultiSelect.jsx";
 import axios from "axios";
+import { AutoComplete, Button, CheckPicker, Form, InputNumber, RadioGroup, Radio } from "rsuite";
 
 function Cadastro() {
 
@@ -13,21 +12,23 @@ function Cadastro() {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_GATEWAY_URL+"/produto/marcas").then((res) => res.json()).then((res) => setOptionsMarcas(res))
-        fetch(process.env.REACT_APP_GATEWAY_URL+"/categoria").then((res) => res.json()).then((res) => setCategorias(res.map((x, key) => { return { id: key, value: x } }))
-        )
+        fetch(process.env.REACT_APP_GATEWAY_URL + "/produto/marcas").then((res) => res.json()).then((res) => {
+            console.log('marcas')
+            console.log(res)
+            setOptionsMarcas(res)
+        })
+
+        fetch(process.env.REACT_APP_GATEWAY_URL + "/categoria").then((res) => res.json()).then((res) => {
+            console.log('categorias')
+            console.log(res)
+            setCategorias(res)
+        })
     }, [])
 
     let [categorias, setCategorias] = useState()
     let [optionsMarcas, setOptionsMarcas] = useState([]);
 
-    let [nome, setNome] = useState('');
-    let [valor, setValor] = useState(0);
-    let [marca, setMarca] = useState('');
-    let [tipo, setTipo] = useState("nominal")
-    let [quantidade, setQuantidade] = useState(0)
     let [imagem, setImagem] = useState(null)
-    let [categoriasSelecionadas, setCategoriasSelecionadas] = useState([])
 
     let [avulso, setAvulso] = useState(0)
 
@@ -49,126 +50,54 @@ function Cadastro() {
         gg: 0
     })
 
-    useEffect(() => {
-        let soma = 0
-        for (let i in nominal) {
-            soma += isNaN(nominal[i]) ? 0 : nominal[i]
-        }
-        setQuantidade(soma)
-    }, [nominal])
+    /** CONTAR UNIDADES, TALVEZ SEJA RE-IMPLEMENTADO NO FUTUDO */
+    // useEffect(() => {
+    //     let soma = 0
+    //     for (let i in nominal) {
+    //         soma += isNaN(nominal[i]) ? 0 : nominal[i]
+    //     }
+    //     setQuantidade(soma)
+    // }, [nominal])
 
-    useEffect(() => {
-        let soma = 0
-        for (let i in numerico) {
-            soma += isNaN(numerico[i]) ? 0 : numerico[i]
-        }
-        setQuantidade(soma)
-    }, [numerico])
+    // useEffect(() => {
+    //     let soma = 0
+    //     for (let i in numerico) {
+    //         soma += isNaN(numerico[i]) ? 0 : numerico[i]
+    //     }
+    //     setQuantidade(soma)
+    // }, [numerico])
 
-    useEffect(() => {
-        setQuantidade(avulso)
-    }, [avulso])
+    // useEffect(() => {
+    //     setQuantidade(avulso)
+    // }, [avulso])
 
-    const limparCampos = () => {
-        setAvulso(0)
-        setNominal({
-            p: 0,
-            m: 0,
-            g: 0,
-            gg: 0
-        })
-        setNumerico({
-            t36: 0,
-            t38: 0,
-            t40: 0,
-            t42: 0,
-            t44: 0,
-            t46: 0,
-            t48: 0,
-            t50: 0
-        })
-        setQuantidade(0)
-    }
+    // const limparCampos = () => {
+    //     setAvulso(0)
+    //     setNominal({
+    //         p: 0,
+    //         m: 0,
+    //         g: 0,
+    //         gg: 0
+    //     })
+    //     setNumerico({
+    //         t36: 0,
+    //         t38: 0,
+    //         t40: 0,
+    //         t42: 0,
+    //         t44: 0,
+    //         t46: 0,
+    //         t48: 0,
+    //         t50: 0
+    //     })
+    //     setQuantidade(0)
+    // }
 
-    const mudarTamanhos = () => {
-        if (tipo === "nominal") {
-            return <>
-                <div style={{ display: 'flex', flexDirection: "column", width: "70px", height: "300px", justifyContent: "space-around" }}>
-
-                    <TextField id="p" label="P" variant="outlined" type="number" size="small" defaultValue={0} value={nominal.p} onChange={(e) => setNominal({ ...nominal, p: parseInt(e.target.value) })} />
-
-                    <TextField id="m" label="M" variant="outlined" type="number" size="small" defaultValue={0} value={nominal.m} onChange={(e) => setNominal({ ...nominal, m: parseInt(e.target.value) })} />
-
-                    <TextField id="g" label="G" variant="outlined" type="number" size="small" defaultValue={0} value={nominal.g} onChange={(e) => setNominal({ ...nominal, g: parseInt(e.target.value) })} />
-
-                    <TextField id="gg" label="GG" variant="outlined" type="number" size="small" defaultValue={0} value={nominal.gg} onChange={(e) => setNominal({ ...nominal, gg: parseInt(e.target.value) })} />
-
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", alignItems: 'center' }} className={style.contador}>
-                    <div>{quantidade}</div>
-                    <div style={{ fontFamily: "Roboto", fontSize: "0.7em" }}>Unidades</div>
-                </div>
-            </>
-        } else if (tipo === "numerico") {
-            return <>
-                <div className={style.numerico}>
-                    <TextField id="36" label="36" variant="outlined" type="number" size="small" value={numerico.t36} defaultValue={0} onChange={(e) => setNumerico({ ...numerico, t36: parseInt(e.target.value) })} />
-                    <TextField id="38" label="38" variant="outlined" type="number" size="small" value={numerico.t38} defaultValue={0} onChange={(e) => setNumerico({ ...numerico, t38: parseInt(e.target.value) })} />
-                    <TextField id="40" label="40" variant="outlined" type="number" size="small" value={numerico.t40} defaultValue={0} onChange={(e) => setNumerico({ ...numerico, t40: parseInt(e.target.value) })} />
-                    <TextField id="42" label="42" variant="outlined" type="number" size="small" value={numerico.t42} defaultValue={0} onChange={(e) => setNumerico({ ...numerico, t42: parseInt(e.target.value) })} />
-                </div>
-
-                <div className={style.numerico}>
-                    <TextField id="44" label="44" variant="outlined" type="number" size="small" defaultValue={0} value={numerico.t44} onChange={(e) => setNumerico({ ...numerico, t44: parseInt(e.target.value) })} />
-                    <TextField id="46" label="46" variant="outlined" type="number" size="small" defaultValue={0} value={numerico.t46} onChange={(e) => setNumerico({ ...numerico, t46: parseInt(e.target.value) })} />
-                    <TextField id="48" label="48" variant="outlined" type="number" size="small" defaultValue={0} value={numerico.t48} onChange={(e) => setNumerico({ ...numerico, t48: parseInt(e.target.value) })} />
-                    <TextField id="50" label="50" variant="outlined" type="number" size="small" defaultValue={0} value={numerico.t50} onChange={(e) => setNumerico({ ...numerico, t50: parseInt(e.target.value) })} />
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: 'center' }} className={style.contador}>
-                    <div>{quantidade}</div>
-                    <div style={{ fontFamily: "Roboto", fontSize: "0.7em" }}>Unidades</div>
-                </div>
-            </>
-
-        } else if (tipo === "avulso") {
-            return <>
-                <div style={{ display: 'flex', flexDirection: "column", width: "70px", height: "300px", justifyContent: "space-around" }}>
-                    <TextField id="avulso" label="Avulso" variant="outlined" type="number" size="small" onChange={(e) => {
-                        setAvulso(isNaN(parseInt(e.target.value)) ? 0 : parseInt(e.target.value))
-                    }} />
-
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: 'center' }} className={style.contador}>
-                    <div>{quantidade}</div>
-                    <div style={{ fontFamily: "Roboto", fontSize: "0.7em" }}>Unidades</div>
-                </div>
-            </>
-
-        }
-    }
-
-    // const TextMaskCustom = forwardRef(function TextMaskCustom(props, ref) {
-    //     const { onChange, ...other } = props;
-    //     return (
-    //       <IMaskInput
-    //         {...other}
-    //         mask="###.###.###,##"
-    //         definitions={{
-    //           '#': /[1-9]/,
-    //         }}
-    //         inputRef={ref}
-    //         onAccept={(value) => onChange({ target: { name: props.name, value } })}
-    //         overwrite
-    //       />
-    //     );
-    //   });
     const cadastrar = () => {
         let produto = {
-            nome: nome,
-            marca: marca,
-            categorias: categoriasSelecionadas,
-            valor: valor,
+            nome: model.nome,
+            marca: model.marca,
+            categorias: model.categorias,
+            valor: parseFloat(model.valor),
             numerico: null,
             avulso: null,
             nominal: null
@@ -177,7 +106,7 @@ function Cadastro() {
         if (tipo === "numerico") {
             produto = { ...produto, numerico: numerico }
         } else if (tipo === "avulso") {
-            produto = { ...produto, avulso: avulso }
+            produto = { ...produto, avulso: parseFloat(avulso) }
         } else if (tipo === "nominal") {
             produto = { ...produto, nominal: nominal }
         }
@@ -192,17 +121,18 @@ function Cadastro() {
         console.log(produto)
         console.log(tipo)
 
-        axios.post(process.env.REACT_APP_GATEWAY_URL+"/produto/cadastro", formdata, {
+        console.log(formdata)
+        axios.post(process.env.REACT_APP_GATEWAY_URL + "/produto/cadastro", formdata, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
-            if(response.status === 201){
+            if (response.status === 201) {
                 setSucess(true)
                 setTimeout(() => {
                     setSucess(false)
                 }, 6000)
-            }else{
+            } else {
                 setError(true)
                 setTimeout(() => {
                     setSucess(false)
@@ -213,95 +143,184 @@ function Cadastro() {
         })
     }
 
+    const [model, setModel] = useState({
+        nome: '',
+        marca: '',
+        categorias: [],
+        valor: 0
+    })
+
+    const [tipo, setTipo] = useState("avulso")
+
     return (
-        <section className={style.all}>
-            <div className={style.h1}>
-                <Typography variant="h1" align="center" sx={{ fontSize: '3.5em' }}>Cadastrar Produto </Typography>
-            </div>
+        <>
+            <h1 id={style.h1}>Cadastrar produto</h1>
+            <Form className={style.form} model={model} style={{ width: '95vw', margin: '0 auto' }} >
+                <Form.Group controlId="nomeCateValor" style={{ width: '33%' }} className={style.nomeCateValor}>
+                    <Form.Group controlId="name">
+                        <Form.ControlLabel>Nome do produto</Form.ControlLabel>
+                        <Form.Control name="name" onChange={value => setModel(model => ({ ...model, nome: value }))}
+                        />
+                        <Form.HelpText>Nome é obrigatório</Form.HelpText>
+                    </Form.Group>
+                    <Form.Group controlId="marca" >
+                        <Form.ControlLabel>Marca</Form.ControlLabel>
+                        {optionsMarcas && <AutoComplete data={optionsMarcas} onChange={value => setModel(model => ({ ...model, marca: value }))}
+                        />}
+                    </Form.Group>
+                    <Form.Group controlId="categorias" >
+                        <Form.ControlLabel>Categorias</Form.ControlLabel>
+                        {categorias && <CheckPicker searchable={false} value={model.categorias} data={categorias.map(item => ({ label: item, value: item }))} onChange={value => setModel(model => ({ ...model, categorias: value }))}
+                        />}
+                    </Form.Group>
+                    <Form.Group controlId="valor">
+                        <Form.ControlLabel>Valor</Form.ControlLabel>
+                        <InputNumber prefix="R$" onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} />
+                    </Form.Group>
+                </Form.Group>
+                <div style={{ width: '33%' }}>
+                    <Form.Group controlId="tamanho" className={style.are}>
 
-            <div className={style.todoConteudo}>
-                <section className={style.textos}>
-                    <TextField id="filled-basic" label="Nome" variant="filled" size="small" value={nome} onChange={(e) => setNome(e.target.value)} />
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={optionsMarcas}
-                        sx={{ width: 200 }}
-                        freeSolo={true}
-                        inputValue={marca}
-                        size="small"
-                        onInputChange={(event, newInputValue) => {
-                            setMarca(newInputValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} label="Marca" variant="filled" />}
-                    />
+                        <Form.ControlLabel>Tamanho</Form.ControlLabel>
 
-                    <MultiSelect dados={categorias !== undefined ? categorias : []} placeholder="Categorias" reciever={setCategoriasSelecionadas} variant="filled" width={300}></MultiSelect>
-
-                    <TextField id="filled-basic" label="Valor" variant="filled" size="small" type="number"
-                        style={{ width: "150px" }}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start">R$</InputAdornment>,
-                        }}
-                        value={valor}
-                        onChange={(e) => setValor(isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value))}
-                    />
-                </section>
-                <section className={style.tamanho}>
-                    <FormControl>
-                        <FormLabel id="demo-radio-buttons-group-label">Tamanho</FormLabel>
-                        <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue="nominal"
-                            name="radio-buttons-group"
-                            onChange={(e) => {
-                                setTipo(e.target.value)
-                                limparCampos()
-                            }}
-                        >
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                                <FormControlLabel value="nominal" control={<Radio />} label="Nominal" style={{ marginRight: 3 }} />
-                                <HelpIcon titleAccess="P, M, G e GG." fontSize="inherit" color="info" />
-                            </div>
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                                <FormControlLabel value="numerico" control={<Radio />} label="Numerico" style={{ marginRight: 3 }} />
-                                <HelpIcon titleAccess="36, 38, 40, 42..." fontSize="inherit" color="info" />
-                            </div>
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                                <FormControlLabel value="avulso" control={<Radio />} label="Avulso" style={{ marginRight: 3 }} />
-                                <HelpIcon titleAccess="Tamanho único." fontSize="inherit" color="info" />
-                            </div>
+                        <RadioGroup inline name="radioList" defaultValue="avulso" value={tipo} onChange={setTipo} style={{ display: 'flex', margin: '0 auto' }}>
+                            <Radio value="avulso">Avulso</Radio>
+                            <Radio value="numerico">Numérico</Radio>
+                            <Radio value="nominal">Nominal</Radio>
                         </RadioGroup>
-                    </FormControl>
-                    {mudarTamanhos()}
-                </section>
-                <section >
-                    <FileUploader reciever={setImagem}  ></FileUploader>
-                </section>
 
+                        {tipo === 'avulso' && <Form.Group controlId="avulso">
+                            <Form.ControlLabel>Unidades</Form.ControlLabel>
+                            <InputNumber defaultValue={0} min={0} max={99} onChange={(e) => setAvulso(parseInt(e))} />
+                        </Form.Group>}
+
+                        {tipo === 'numerico' &&
+                            <div>
+                                <div className={style.numerico}>
+                                    <Form.Group controlId="t36" >
+                                        <Form.ControlLabel >36</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNumerico({ ...numerico, t36: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="t38" >
+                                        <Form.ControlLabel >38</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNumerico({ ...numerico, t38: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="t40" className={style.inputNumerico}>
+                                        <Form.ControlLabel>40</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNumerico({ ...numerico, t40: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                    <div className="col-md-3">
+                                        <Form.Group controlId="t42" className={style.inputNumerico}>
+                                            <Form.ControlLabel>42</Form.ControlLabel>
+                                            <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                                onChange={(e) => setNumerico({ ...numerico, t42: parseInt(e) })}
+                                            />
+                                        </Form.Group>
+                                    </div>
+                                </div>
+
+                                <div className={style.numerico}>
+                                    <Form.Group c1ontrolId="t44" className={style.inputNumerico}>
+                                        <Form.ControlLabel>44</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNumerico({ ...numerico, t44: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="t46" className={style.inputNumerico}>
+                                        <Form.ControlLabel>46</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNumerico({ ...numerico, t46: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="t48" className={style.inputNumerico}>
+                                        <Form.ControlLabel>48</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNumerico({ ...numerico, t48: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="t50" className={style.inputNumerico}>
+                                        <Form.ControlLabel>50</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNumerico({ ...numerico, t50: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                </div>
+                            </div>
+                        }
+
+                        {tipo === 'nominal' &&
+                            <div>
+                                <div className={style.numerico}>
+                                    <Form.Group controlId="P" >
+                                        <Form.ControlLabel >P</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNominal({ ...nominal, p: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="M" >
+                                        <Form.ControlLabel >M</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNominal({ ...nominal, m: parseInt(e) })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="G" className={style.inputNumerico}>
+                                        <Form.ControlLabel>G</Form.ControlLabel>
+                                        <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                            onChange={(e) => setNominal({ ...nominal, g: parseInt(e)(e) })}
+                                        />
+                                    </Form.Group>
+                                    <div className="col-md-3">
+                                        <Form.Group controlId="GG" className={style.inputNumerico}>
+                                            <Form.ControlLabel>GG</Form.ControlLabel>
+                                            <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
+                                                onChange={(e) => setNominal({ ...nominal, gg: parseInt(e) })}
+                                            />
+                                        </Form.Group>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </Form.Group>
+
+                </div>
+                <div style={{ width: '33%', }}>
+                    <FileUploader reciever={setImagem} ></FileUploader>
+                </div>
+                <button appearance="primary" type="submit" style={{ display: 'none' }}>
+
+                </button>
+            </Form>
+
+            <div id={style.botaoSubmit}>
+                <Button appearance="primary" onClick={() => cadastrar()} id={style.botao}>
+                    Cadastrar
+                </Button>
             </div>
 
-            <div  className={style.alert}>
+            <div className={style.alert}>
                 <Fade in={error}>
                     <Alert severity="error" onClose={() => setError(false)} >
                         <AlertTitle>Erro</AlertTitle>
-                        Ocorreu um erro produto<strong>não cadastrado</strong>
+                        Ocorreu um erro, produto<strong> não cadastrado.</strong>
                     </Alert>
                 </Fade>
             </div>
 
             <div className={style.alert}>
                 <Fade in={sucess}>
-                    <Alert severity="success"  onClose={() => setSucess(false)}>
+                    <Alert severity="success" onClose={() => setSucess(false)}>
                         <AlertTitle>Sucesso</AlertTitle>
                         Produto cadastrado com  <strong>sucesso</strong>!!
                     </Alert>
                 </Fade>
             </div>
-
-            <button className={style.enviar} onClick={cadastrar}> Cadastrar</button>
-
-        </section>
+        </>
 
     );
 }

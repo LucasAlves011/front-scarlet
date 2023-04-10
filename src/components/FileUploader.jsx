@@ -31,25 +31,26 @@ function FileUploader({ reciever }) {
 
          />
 
-         {!image ? <div> <label htmlFor="input" className={style.geral}>Faça upload da imagem <FileUploadIcon color='info' fontSize='large' /></label></div>
+         {!image ? <div> <label htmlFor="input" className={style.geral}> <FileUploadIcon color='#797979' fontSize='large' />Faça upload da imagem</label></div>
             :
-            <div className={style.comImagem}><img src={imagemPreview} height={270} width={202} alt={fileName} /></div>
+            <div className={style.comImagem}><img src={imagemPreview}  alt={fileName} id={style.imagem}/></div>
          }
 
          <section className={style.uploadedRow}>
-            <ImageIcon color='#1475cf' />
+            <ImageIcon color='#797979' />
             <span className={style.uploadContent}>
                {fileName}
-               <DeleteIcon style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                     setFileName("No selected File")
-                     setImage(null)
-                  }}
-               />
             </span>
+            <DeleteIcon style={{ cursor: 'pointer' }}
+               onClick={() => {
+                  setFileName("No selected File")
+                  setImage(null)
+               }}
+            />
+
          </section>
       </section>
    )
 }
-
+// height={270} width={202}
 export default FileUploader

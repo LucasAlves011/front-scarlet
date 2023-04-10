@@ -25,4 +25,10 @@
    margin-bottom: 10px;
 }
 
-
+#total {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-evenly;
+   margin: 5px;
+   align-items: baseline;
+}
