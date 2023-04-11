@@ -45,19 +45,24 @@
 }
 
 
-#botao {
+.botao {
    display: flex;
    flex-direction: row;
    margin: 0 auto;
 }
 
-#botoesSubmit {
+.botoesSubmit {
    display: flex;
    flex-direction: row;
    justify-content: center;
+   margin: 1em 0;
 }
 
-#botoesSubmit > Button {
+.botoesSubmit > Button {
    margin: 10px;
    width: 5em;
+}
+
+.inputs {
+   width: 20px;
 }

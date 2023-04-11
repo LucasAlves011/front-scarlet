@@ -214,7 +214,7 @@ function EstoqueGeral({ car }) {
          </div>
 
          <Stack direction="row" gap={4} marginLeft={5} marginTop={2} flexWrap="wrap" marginBottom={6}
-            style={{ margin: '4% 4%' }}>
+            style={{ width: '95vw', justifyContent: 'center' }}>
             {produtos2 !== undefined && produtos2.map((produto, key) => {
                return (
                   <section

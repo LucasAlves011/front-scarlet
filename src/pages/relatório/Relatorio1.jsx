@@ -7,7 +7,7 @@ import { MdPix } from 'react-icons/md';
 import { BsFillCreditCard2BackFill } from 'react-icons/bs';
 import { formatoDinheiroReal } from '../../utils/NumeroFormaters';
 import { useNavigate } from 'react-router-dom';
-import { DateRangePicker } from 'rsuite';
+import { Button, DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 
 const CalendarLocaleType = {
@@ -25,8 +25,6 @@ const CalendarLocaleType = {
    seconds: 'Segundos',
    formattedMonthPattern: 'MMMM yyyy',
    formattedDayPattern: 'dd MM yyyy',
-
-   // for DateRangePicker
    last7Days: 'Ultimos 7 dias',
 };
 
@@ -115,14 +113,11 @@ function Relatorio1() {
 
                <h3>{formatoDinheiroReal(vendasHoje.total)}</h3>
 
-               <p onClick={() => {
+
+               <Button appearance='link' onClick={() => {
                   navigate('/vendas/' + format(new Date(), "dd-MM-yyyy"))
-               }
-
-               }>detalhes</p>
-
+               }}>detalhes</Button>
             </section>}
-
 
             <section className={style.metade}>
                <DateRangePicker placeholder="Selecione as datas " locale={CalendarLocaleType} format='dd/MM/yyyy' />

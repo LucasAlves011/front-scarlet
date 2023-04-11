@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import style from "../styles/ItemCarrinho.module.css"
 import DeleteIcon from '@mui/icons-material/Delete';
 import { formatoDinheiroReal } from "../../utils/NumeroFormaters";
+import { InputGroup, InputNumber } from "rsuite";
 
 function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
+
+   const [sucess, setSucess] = useState(false)
 
    const verificarPrimeiroTamanhoDisponivel = () => {
       if (item.produto.tipo === "nominal") {
@@ -60,66 +63,39 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
          case 'avulso':
             return <>
                <span>Tamanho único</span>
-               <div className={style.maisMenos}>
-                  <IconButton onClick={() => {
+               {/* <InputGroup style={{width: '30px'}}>
+                  <InputGroup.Button onClick={() => {
                      if (quantidadeSelecionada > 1) {
                         setQuantidadeSelecionada(quantidadeSelecionada - 1)
                      }
-                  }} >-</IconButton>
-                  <span id="mostrar">{quantidadeSelecionada}</span>
-                  <IconButton onClick={() => {
+                  }}>-</InputGroup.Button>
+                  <InputNumber  value={quantidadeSelecionada} />
+                  <InputGroup.Button onClick={() => {
                      if (quantidadeSelecionada < item.produto.quantidade) {
                         setQuantidadeSelecionada(quantidadeSelecionada + 1)
                      }
-                  }} >+</IconButton>
-               </div>
+                  }}>+</InputGroup.Button>
+               </InputGroup> */}
 
                {/* //TODO: adicionar botão de remover */}
 
             </>
          case 'nominal':
             return <>
-               <select  className={style.tamanho} placeholder="Tamanho" value={tamanhoSelecionado} onChange={e => setTamanhoSelecionado(e.target.value)}>
+               <select className={style.tamanho} placeholder="Tamanho" value={tamanhoSelecionado} onChange={e => setTamanhoSelecionado(e.target.value)}>
                   {['p', 'm', 'g', 'gg'].map((e, key) => {
                      return (<option value={e} key={key} disabled={item.produto[e] > 0 ? false : true} style={item.produto[e] > 0 ? {} : { color: 'red' }}>{e}</option>)
                   })}
                </select>
-               <div className={style.maisMenos}>
-                  <IconButton onClick={() => {
-                     if (quantidadeSelecionada > 1) {
-                        setQuantidadeSelecionada(quantidadeSelecionada - 1)
-                     }
-                  }} >-</IconButton>
-                  <span id="mostrar">{quantidadeSelecionada}</span>
-                  <IconButton onClick={() => {
-                     if (quantidadeSelecionada < item.produto[tamanhoSelecionado]) {
-                        setQuantidadeSelecionada(quantidadeSelecionada + 1)
-                     }
-                  }} >+</IconButton>
-               </div>
                {/* TODO: adicionar botão de remover */}
             </>
          case 'numerico':
             return <>
                <select className={style.tamanho} placeholder="Tamanho" value={tamanhoSelecionado} onChange={e => setTamanhoSelecionado(e.target.value)}>
                   {['t36', 't38', 't40', 't42', 't44', 't46', 't48', 't50'].map((e, key) => {
-                     return (<option value={e} key={key} disabled={item.produto[e] > 0 ? false : true} style={item.produto[e] > 0 ? {} : { color: 'red' }}>{e.replace('t','')}</option>)
+                     return (<option value={e} key={key} disabled={item.produto[e] > 0 ? false : true} style={item.produto[e] > 0 ? {} : { color: 'red' }}>{e.replace('t', '')}</option>)
                   })}
                </select>
-
-               <div className={style.maisMenos}>
-                  <IconButton onClick={() => {
-                     if (quantidadeSelecionada > 1) {
-                        setQuantidadeSelecionada(quantidadeSelecionada - 1)
-                     }
-                  }} >-</IconButton>
-                  <span id="mostrar">{quantidadeSelecionada}</span>
-                  <IconButton onClick={() => {
-                     if (quantidadeSelecionada < item.produto[tamanhoSelecionado]) {
-                        setQuantidadeSelecionada(quantidadeSelecionada + 1)
-                     }
-                  }} >+</IconButton>
-               </div>
 
             </>
          default:
@@ -133,7 +109,7 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
 
       <section className={style.container} >
 
-         <img src={process.env.REACT_APP_GATEWAY_URL+"/produto/imagem/" + item.produto.imagem} width='100' height='110' alt="imagem do produto" />
+         <img src={process.env.REACT_APP_GATEWAY_URL + "/produto/imagem/" + item.produto.imagem} width='100' height='110' alt="imagem do produto" />
 
          <div id={style.info}>
             <div id={style.titulo}>{item.produto.nome}</div>
@@ -141,6 +117,19 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
             <div id={style.dentroInfo}>
                <span id={style.preco}>{formatoDinheiroReal(item.produto.valor)}</span>
                {definirTipo(item.produto.tipo)}
+               <div className={style.maisMenos}>
+                  <IconButton onClick={() => {
+                     if (quantidadeSelecionada > 1) {
+                        setQuantidadeSelecionada(quantidadeSelecionada - 1)
+                     }
+                  }} >-</IconButton>
+                  <span id="mostrar">{quantidadeSelecionada}</span>
+                  <IconButton onClick={() => {
+                     if (quantidadeSelecionada < item.produto[tamanhoSelecionado]) {
+                        setQuantidadeSelecionada(quantidadeSelecionada + 1)
+                     }
+                  }} >+</IconButton>
+               </div>
             </div>
 
          </div>

@@ -1,16 +1,33 @@
-import { Avatar, Checkbox, IconButton, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Avatar, Checkbox, Fade, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Card from "../../components/Card";
 import MultiSelect from "../../components/MultiSelect";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { FiEdit3 } from 'react-icons/fi';
 
-function Estoque2({ car }) {
+function Estoque2({ car, state }) {
    const navigate = useNavigate()
 
    const { marca } = useParams();
+   const [deletado, setDeletado] = useState(undefined);
+
+   const location = useLocation();
+   let stateDelete = location.state;
+
+   useEffect(() => {
+      if (stateDelete && stateDelete.deletado) {
+         setDeletado(true);
+         setTimeout(() => {
+            setDeletado(undefined)
+         }, 4000);
+      } else if (stateDelete && !stateDelete.deletado) {
+         setDeletado(false);
+         setTimeout(() => {
+            setDeletado(undefined)
+         }, 4000);
+      }
+   }, []);
 
    const [produtos, setProdutos] = useState();
    const [produtos2, setProdutos2] = useState();
@@ -62,7 +79,6 @@ function Estoque2({ car }) {
    }, [selectedCategorias])
 
    useEffect(() => {
-      // console.log(filtros)
       let auxProd = []
       if (filtros !== undefined && filtros.length > 0) {
          filtros.forEach((e) => {
@@ -129,6 +145,14 @@ function Estoque2({ car }) {
       }
    }
 
+   const styleAlert = {
+      width: 'fit-content',
+      position: 'fixed',
+      zIndex: '10',
+      top: '20px',
+      right: '20px',
+   }
+
 
    return (
       <>
@@ -181,7 +205,7 @@ function Estoque2({ car }) {
                      onMouseLeave={handleMouseLeave}
                      style={{ position: 'relative' }}
                   >
-                     {<IconButton size="small" aria-label="editProduto" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: '#1565c0' }} onClick={()=> navigate("/estoque/alterar-produto/"+ produto.id)}><FiEdit3  > </FiEdit3></IconButton>}
+                     {<IconButton size="small" aria-label="editProduto" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: '#1565c0' }} onClick={() => navigate("/estoque/alterar-produto/" + produto.id)}><FiEdit3  > </FiEdit3></IconButton>}
 
                      <Card produto={produto}></Card>
                   </section>
@@ -193,6 +217,23 @@ function Estoque2({ car }) {
          </Stack>
 
 
+         {deletado !== undefined && <div style={styleAlert}>
+            <Fade in={deletado}>
+               <Alert severity="success" onClose={() => setDeletado(null)}>
+                  <AlertTitle>Sucesso</AlertTitle>
+                  Produto {stateDelete.produto.nome} foi deletado com <strong>sucesso</strong>!!
+               </Alert>
+            </Fade>
+         </div>
+         }
+         {deletado !== undefined  && <div style={styleAlert}>
+            <Fade in={!deletado}>
+               <Alert severity="error" onClose={() => setDeletado(null)} >
+                  <AlertTitle>Erro</AlertTitle>
+                  Ocorreu um erro, produto {stateDelete.produto.nome}<strong> não deletado.</strong>
+               </Alert>
+            </Fade>
+         </div>}
       </>
 
    );

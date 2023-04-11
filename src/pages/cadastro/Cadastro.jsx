@@ -4,7 +4,7 @@ import style from "./Cadastro.module.css";
 import { IMaskInput } from "react-imask";
 import FileUploader from "../../components/FileUploader.jsx";
 import axios from "axios";
-import { AutoComplete, Button, CheckPicker, Form, InputNumber, RadioGroup, Radio } from "rsuite";
+import { AutoComplete, Button, CheckPicker, Form, InputNumber, RadioGroup, Radio, Input } from "rsuite";
 
 function Cadastro() {
 
@@ -50,7 +50,7 @@ function Cadastro() {
         gg: 0
     })
 
-    /** CONTAR UNIDADES, TALVEZ SEJA RE-IMPLEMENTADO NO FUTUDO */
+    /** TODO: CONTAR UNIDADES, TALVEZ SEJA RE-IMPLEMENTADO NO FUTUDO */
     // useEffect(() => {
     //     let soma = 0
     //     for (let i in nominal) {
@@ -159,23 +159,22 @@ function Cadastro() {
                 <Form.Group controlId="nomeCateValor" style={{ width: '33%' }} className={style.nomeCateValor}>
                     <Form.Group controlId="name">
                         <Form.ControlLabel>Nome do produto</Form.ControlLabel>
-                        <Form.Control name="name" onChange={value => setModel(model => ({ ...model, nome: value }))}
-                        />
+                        <Input name="name" style={ {width: '90%'}} onChange={value => setModel(model => ({ ...model, nome: value }))} />
                         <Form.HelpText>Nome é obrigatório</Form.HelpText>
                     </Form.Group>
                     <Form.Group controlId="marca" >
                         <Form.ControlLabel>Marca</Form.ControlLabel>
-                        {optionsMarcas && <AutoComplete data={optionsMarcas} onChange={value => setModel(model => ({ ...model, marca: value }))}
+                        {optionsMarcas && <AutoComplete data={optionsMarcas} style={{width: '30%'}} onChange={value => setModel(model => ({ ...model, marca: value }))}
                         />}
                     </Form.Group>
                     <Form.Group controlId="categorias" >
                         <Form.ControlLabel>Categorias</Form.ControlLabel>
-                        {categorias && <CheckPicker searchable={false} value={model.categorias} data={categorias.map(item => ({ label: item, value: item }))} onChange={value => setModel(model => ({ ...model, categorias: value }))}
+                        {categorias && <CheckPicker searchable={false} style={ {width: '90%'}} value={model.categorias} data={categorias.map(item => ({ label: item, value: item }))} onChange={value => setModel(model => ({ ...model, categorias: value }))}
                         />}
                     </Form.Group>
                     <Form.Group controlId="valor">
                         <Form.ControlLabel>Valor</Form.ControlLabel>
-                        <InputNumber prefix="R$" onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} />
+                        <InputNumber prefix="R$" onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} style={{width: '30%'}}/>
                     </Form.Group>
                 </Form.Group>
                 <div style={{ width: '33%' }}>
@@ -191,7 +190,7 @@ function Cadastro() {
 
                         {tipo === 'avulso' && <Form.Group controlId="avulso">
                             <Form.ControlLabel>Unidades</Form.ControlLabel>
-                            <InputNumber defaultValue={0} min={0} max={99} onChange={(e) => setAvulso(parseInt(e))} />
+                            <InputNumber defaultValue={0} min={0} max={99} onChange={(e) => setAvulso(parseInt(e))} style={{width: '25%'}}/>
                         </Form.Group>}
 
                         {tipo === 'numerico' &&

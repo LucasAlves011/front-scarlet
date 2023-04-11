@@ -20,11 +20,11 @@ function SimpleDialog(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>{props.nome}</DialogTitle>
+    <Dialog onClose={handleClose} open={open} style={{position:'fixed',zIndex: 4}}>
+      <DialogTitle style={{textAlign: 'center'}}>{props.nome}</DialogTitle>
       <DialogContentText>{formatoDinheiroReal(props.valor)}</DialogContentText>
       <CardMedia
-        sx={{ height: '85vh', width: '57vh' }}
+        sx={{ height: '86vh', width: '53vh' }}
         image={process.env.REACT_APP_GATEWAY_URL + "/produto/imagem/" + props.imagem}
         title={props.nome}
       />
@@ -50,10 +50,10 @@ export default function MediaCard({ produto }) {
     switch (tipoTamanho) {
       case 'avulso':
         return (
-          <Container style={{ display: 'flex', flexDirection: 'row', margin: 'auto', justifyContent: 'center', padding: 0 }}>
+          <Container style={{ display: 'flex', flexDirection: 'row', margin: 'auto', justifyContent: 'center', padding: 0 }} >
 
-            <Stack direction="row" gap={4} sx={{ padding: "0px 0px 0px 0px" }} >
-              <Chip style={{ backgroundColor: produto.quantidade > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.quantidade} size="medium" avatar={<Avatar circle style={{ fontSize: '1.008em', backgroundColor: '#C2C2C2' }}></Avatar>} />
+            <Stack direction="row" gap={4} sx={{ padding: "0px 0px 0px 0px" }}  >
+              <Chip style={{ backgroundColor: produto.quantidade > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.quantidade} size="medium" avatar={<Avatar circle style={{ fontSize: '1.008em', backgroundColor: '#C2C2C2' }} onClick={() => console.log('teste')}></Avatar>} />
               <Typography variant="body1" color="default" >{formatoDinheiroReal(produto.valor)}</Typography>
             </Stack>
 
@@ -137,7 +137,7 @@ export default function MediaCard({ produto }) {
 
       <div onClick={handleClickOpen} style={t}>
         <CardMedia
-          sx={{ height: 260, width: 300, zIndex: 2}}
+          sx={{ height: 260, width: 250, zIndex: 2}}
           style={{filter : !verificarDisponibilidade(produto)  && ' grayscale(1)' ,
           opacity: !verificarDisponibilidade(produto)  && '0.5'}}
           image={process.env.REACT_APP_GATEWAY_URL + "/produto/imagem/" + produto.imagem}

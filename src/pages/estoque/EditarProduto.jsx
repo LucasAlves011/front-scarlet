@@ -6,8 +6,62 @@ import { IMaskInput } from "react-imask";
 import FileUploader from "../../components/FileUploader.jsx";
 import axios from "axios";
 import { AutoComplete, Button, CheckPicker, Form, InputNumber, Stack } from "rsuite";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { formatoDinheiroReal } from "../../utils/NumeroFormaters";
+
+
+function DeleteConfirmDialog(props) {
+   const navigate = useNavigate();
+
+   const { onClose, selectedValue, open } = props;
+
+   const handleClose = () => {
+      onClose(selectedValue);
+   };
+
+   const handleListItemClick = (value) => {
+      onClose(value);
+   };
+   return (
+      <Dialog onClose={handleClose} open={open} className={style2.dialogDelete} >
+         <div style={{ margin: '1em' }}>
+            <DialogTitle style={{ textAlign: 'center' }}>Deletar produto</DialogTitle>
+            <DialogContentText> Tem certeza que deseja <strong>deletar</strong> o produto ?</DialogContentText>
+            <DialogContentText> <span className={style2.griff}>Nome: </span> {props.produto.nome}</DialogContentText>
+            <DialogContentText> <span className={style2.griff}>Marca: </span> {props.produto.marca}</DialogContentText>
+         </div>
+
+         <Stack direction='row' spacing={5} className={style.botoesSubmit}>
+            <Button className={style.botao} appearance="primary" color="green" onClick={() => deleteProduto(props.produto, navigate)}>Confirmar</Button>
+            <Button className={style.botao} appearance="primary" color="red" onClick={handleClose}>Cancelar</Button>
+         </Stack>
+      </Dialog>
+   )
+}
+
+const deleteProduto = (produto, navigate) => {
+   axios.delete(process.env.REACT_APP_GATEWAY_URL + "/estoque/produto/" + produto.id)
+      .then(res => {
+         if (res.status === 200) {
+            setTimeout(() => {
+               navigate('/estoque/' + produto.marca, {
+                  state: { deletado: true, produto: produto }
+               })
+            }, 1000)
+
+         } else {
+            setTimeout(() => {
+               navigate('/estoque/' + produto.marca, {
+                  state: { deletado: false, produto: produto }
+               })
+            }, 1000)
+
+         }
+      })
+      .catch(err => {
+         alert('Erro ao deletar produto!')
+      })
+}
 
 function SimpleDialog(props) {
 
@@ -128,9 +182,9 @@ function SimpleDialog(props) {
                   </DialogContentText>
                }
             </section>
-            <Stack direction='row' spacing={5}>
-               <Button variant="contained" color="success" onClick={() => console.log(props.produto)}>Confirmar</Button>
-               <Button variant="contained" color="error" onClick={handleClose}>Cancelar</Button>
+            <Stack direction='row' spacing={5} className={style.botoesSubmit}>
+               <Button appearance="primary" color="green" onClick={() => console.log(props.produto)} className={style.botao}>Confirmar</Button>
+               <Button appearance="primary" color="red" onClick={handleClose} className={style.botao}>Cancelar</Button>
             </Stack>
          </div >
       </Dialog >
@@ -139,6 +193,7 @@ function SimpleDialog(props) {
 
 function EditarProduto() {
    const [open, setOpen] = useState(false);
+   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
    const { id } = useParams()
    const [produto, setProduto] = useState()
@@ -172,20 +227,18 @@ function EditarProduto() {
       })
    }, [])
 
-   let [categorias, setCategorias] = useState()
-   let [optionsMarcas, setOptionsMarcas] = useState([]);
+   const [categorias, setCategorias] = useState()
+   const [optionsMarcas, setOptionsMarcas] = useState([]);
 
    let [imagem, setImagem] = useState(null)
 
-   const handleClickOpen = () => {
-      setOpen(true);
-   };
 
    const handleClose = (value) => {
       setOpen(false);
+      setOpenDeleteDialog(false)
    };
 
-   const cadastrar = () => {
+   const alterar = () => {
 
       // let formdata = new FormData();
 
@@ -362,12 +415,12 @@ function EditarProduto() {
             </button>
          </Form>}
 
-         <div id={style.botoesSubmit} >
-            <Button appearance="primary" onClick={() => setOpen(true)} id={style.botao}>
+         <div className={style.botoesSubmit} >
+            <Button appearance="primary" onClick={() => setOpen(true)} className={style.botao}>
                Enviar
             </Button>
 
-            <Button onClick={() => cadastrar()} id={style.botao} appearance="primary" color="red">
+            <Button onClick={() => setOpenDeleteDialog(true)} className={style.botao} appearance="primary" color="red">
                Deletar
             </Button>
          </div>
@@ -395,6 +448,12 @@ function EditarProduto() {
             onClose={handleClose}
             produto={model}
             produtoAntigo={produto}
+         />}
+
+         {model && <DeleteConfirmDialog
+            open={openDeleteDialog}
+            onClose={handleClose}
+            produto={model}
          />}
 
       </>

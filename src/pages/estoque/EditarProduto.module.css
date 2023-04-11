@@ -13,3 +13,24 @@
 
 .neutro {
 }
+
+.botoes {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.dialogDelete {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.alert {
+   width: fit-content;
+   position: fixed;
+   z-index: 10;
+   top: 20px;
+   right: 20px;
+}
