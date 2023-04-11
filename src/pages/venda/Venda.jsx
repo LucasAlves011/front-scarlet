@@ -1,10 +1,11 @@
-import { Button, Dialog, DialogContentText, DialogTitle, Divider, FormControl, IconButton, Input, InputAdornment, InputLabel, MenuItem, Select, Stack } from "@mui/material";
+import { Dialog, DialogContentText, DialogTitle, Divider, FormControl, IconButton, Input, InputAdornment, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import style from '../../components/styles/ItemCarrinho.module.css'
 import style2 from '../../components/styles/Venda.module.css'
 import axios from 'axios';
 import { formatoDinheiroReal } from "../../utils/NumeroFormaters";
+import { Button } from "rsuite";
 
 function SimpleDialog(props, parametro) {
    const navigate = useNavigate();
@@ -44,37 +45,37 @@ function SimpleDialog(props, parametro) {
                <DialogContentText>Total: {formatoDinheiroReal(props.total)} </DialogContentText>
             </section>
             <Stack direction='row' spacing={5}>
-               <Button variant="contained" color="success" onClick={() => enviarReq(props.produtos,props.entrega,props.desconto,props.total,props.formaPagamento,navigate)}>Confirmar</Button>
-               <Button variant="contained" color="error" onClick={handleClose}>Cancelar</Button>
+               <Button color="green" appearance="primary" onClick={() => enviarReq(props.produtos, props.entrega, props.desconto, props.total, props.formaPagamento, navigate)}>Confirmar</Button>
+               <Button color="red" appearance="primary" onClick={handleClose}>Cancelar</Button>
             </Stack>
          </div>
       </Dialog>
    );
 }
 
-const enviarReq = (produtos,entrega,desconto,total,formaPagamento,navigate) => {
+const enviarReq = (produtos, entrega, desconto, total, formaPagamento, navigate) => {
 
    let itens = produtos.map(({ produto, tamanhoSelecionado, quantidadeSelecionada }) => ({
       produtoId: produto.id,
       tamanho: tamanhoSelecionado.toUpperCase(),
       quantidade: quantidadeSelecionada,
       valor: produto.valor
-    }));
+   }));
 
-    let objeto = {
+   let objeto = {
       entrega: parseFloat(entrega),
       desconto: parseFloat(desconto),
       total: parseFloat(total),
       formaPagamento: formaPagamento.toUpperCase(),
       itens: itens
-    }
+   }
 
    console.log(objeto)
 
-  let formdata = new FormData();
+   let formdata = new FormData();
    formdata.append("venda", JSON.stringify(objeto));
 
-   axios.post(process.env.REACT_APP_GATEWAY_URL+'/venda/cadastro',formdata, {
+   axios.post(process.env.REACT_APP_GATEWAY_URL + '/venda/cadastro', formdata, {
       headers: {
          'Content-Type': 'multipart/form-data'
       }
@@ -198,10 +199,10 @@ function Venda() {
                </div>
             </td>
             <td>
-               <p>R$ {x.produto.valor}</p>
+               <p>{formatoDinheiroReal(x.produto.valor)}</p>
             </td>
             <td>
-               <p>R$ {parseFloat(parseInt(quantidade) * parseFloat(x.produto.valor))}</p>
+               <p>{formatoDinheiroReal(parseFloat(parseInt(quantidade) * parseFloat(x.produto.valor)))}</p>
             </td>
 
          </tr >
@@ -292,17 +293,14 @@ function Venda() {
                      </FormControl>
 
                      <Button
-                        color="primary"
-                        size="medium"
-                        variant="contained"
                         type="submit"
-                        // onClick={handleClickOpen}
-                        //centralize o botão
-                        sx={{ width: '50%', margin: '5% auto 0 auto', color: 'white', background: '#000', margin: '5% auto' }}
-
+                        style={{ width: '40%', display: 'flex', margin: '5% auto 0 auto', margin: '5% auto' }}
+                        appearance="primary"
+                        color="green"
                      >Finalizar</Button>
 
                   </form>
+
                   <SimpleDialog
                      selectedValue={selectedValue}
                      open={open}

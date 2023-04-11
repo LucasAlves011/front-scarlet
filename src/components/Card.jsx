@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Container, Stack } from '@mui/system';
-import {  Button, Chip, Dialog, DialogContentText, DialogTitle } from '@mui/material';
-import { formatoDinheiroReal } from '../utils/NumeroFormaters';
+import { Button, Chip, Dialog, DialogContentText, DialogTitle } from '@mui/material';
+import { formatoDinheiroReal, verificarDisponibilidade } from '../utils/NumeroFormaters';
 import { Avatar } from 'rsuite';
 
 function SimpleDialog(props) {
@@ -34,8 +34,8 @@ function SimpleDialog(props) {
 
 export default function MediaCard({ produto }) {
 
-  const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState();
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,10 +50,10 @@ export default function MediaCard({ produto }) {
     switch (tipoTamanho) {
       case 'avulso':
         return (
-          <Container style={{  display: 'flex', flexDirection: 'row', margin: 'auto',justifyContent: 'center',padding: 0 }}>
+          <Container style={{ display: 'flex', flexDirection: 'row', margin: 'auto', justifyContent: 'center', padding: 0 }}>
 
             <Stack direction="row" gap={4} sx={{ padding: "0px 0px 0px 0px" }} >
-            <Chip style={{backgroundColor: produto.quantidade > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.quantidade} size="medium" avatar={<Avatar circle style={{fontSize: '1.008em' , backgroundColor: '#C2C2C2'}}></Avatar>} />
+              <Chip style={{ backgroundColor: produto.quantidade > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.quantidade} size="medium" avatar={<Avatar circle style={{ fontSize: '1.008em', backgroundColor: '#C2C2C2' }}></Avatar>} />
               <Typography variant="body1" color="default" >{formatoDinheiroReal(produto.valor)}</Typography>
             </Stack>
 
@@ -63,7 +63,7 @@ export default function MediaCard({ produto }) {
       case 'nominal':
         return (
           <>
-            <Stack fontSize={20} direction="row" gap={2} sx={{ padding: "0px", justifyContent: 'center', marginTop: 1   }} >
+            <Stack fontSize={20} direction="row" gap={2} sx={{ padding: "0px", justifyContent: 'center', marginTop: 1 }} >
               <Typography variant="body1">{produto.quantidade} <Typography variant='caption' fontSize={14}>un.</Typography> </Typography>
 
               <Typography variant="body1">{formatoDinheiroReal(produto.valor)}</Typography>
@@ -71,12 +71,12 @@ export default function MediaCard({ produto }) {
             </Stack>
 
             <Stack direction="row" spacing={1} style={{ justifyContent: 'space-evenly', marginTop: "10px" }}>
-              <Chip style={{backgroundColor: produto.p > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.p} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>P</Avatar>} />
+              <Chip style={{ backgroundColor: produto.p > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.p} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>P</Avatar>} />
 
-              <Chip style={{backgroundColor: produto.m > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.m} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}} >M</Avatar>} />
-              <Chip style={{backgroundColor: produto.g > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.g} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>G</Avatar>} />
+              <Chip style={{ backgroundColor: produto.m > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.m} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }} >M</Avatar>} />
+              <Chip style={{ backgroundColor: produto.g > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.g} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>G</Avatar>} />
 
-              <Chip style={{backgroundColor: produto.gg > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.gg} size="small" avatar={<Avatar circle >GG</Avatar>} />
+              <Chip style={{ backgroundColor: produto.gg > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.gg} size="small" avatar={<Avatar circle >GG</Avatar>} />
 
             </Stack>
 
@@ -94,23 +94,23 @@ export default function MediaCard({ produto }) {
 
             <div style={{ display: 'flex', flexWrap: 'wrap', maxWidth: '240px', justifyContent: 'space-evenly' }}>
               <Stack direction="row" spacing={2} >
-                <Chip style={{backgroundColor: produto.t36 > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.t36} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>36</Avatar>} />
+                <Chip style={{ backgroundColor: produto.t36 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t36} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>36</Avatar>} />
 
-                <Chip style={{backgroundColor: produto.t38 > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.t38} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>38</Avatar>} />
+                <Chip style={{ backgroundColor: produto.t38 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t38} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>38</Avatar>} />
 
-                <Chip style={{backgroundColor: produto.t40 > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.t40} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>40</Avatar>} />
+                <Chip style={{ backgroundColor: produto.t40 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t40} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>40</Avatar>} />
 
-                <Chip style={{backgroundColor: produto.t42 > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.t42} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>42</Avatar>} />
+                <Chip style={{ backgroundColor: produto.t42 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t42} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>42</Avatar>} />
 
               </Stack>
               <Stack direction="row" spacing={2} style={{ marginTop: 4 }} >
-                <Chip style={{backgroundColor: produto.t44 > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.t44} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>44</Avatar>} />
+                <Chip style={{ backgroundColor: produto.t44 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t44} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>44</Avatar>} />
 
-                <Chip style={{backgroundColor: produto.t46 > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.t46} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>46</Avatar>} />
+                <Chip style={{ backgroundColor: produto.t46 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t46} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>46</Avatar>} />
 
-                <Chip style={{backgroundColor: produto.t48 > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.t48} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>48</Avatar>} />
+                <Chip style={{ backgroundColor: produto.t48 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t48} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>48</Avatar>} />
 
-                <Chip style={{backgroundColor: produto.t50 > 0 ? '#ebebeb' : '#ff9b96'}} label={produto.t50} size="small" avatar={<Avatar circle style={{fontSize: '1.008em'}}>50</Avatar>} />
+                <Chip style={{ backgroundColor: produto.t50 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t50} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>50</Avatar>} />
 
               </Stack>
             </div>
@@ -127,7 +127,7 @@ export default function MediaCard({ produto }) {
     backgroundColor: '#bbbabf',
     hover: {
       backgroundColor: 'blue',
-      boxShadow: '4 4 4 1.2rem rgba(0,123,255,.5)',
+      boxShadow: '4 4 4 1.2rem rba(0,123,255,.5g)',
     },
     cursor: 'pointer'
   }
@@ -137,19 +137,22 @@ export default function MediaCard({ produto }) {
 
       <div onClick={handleClickOpen} style={t}>
         <CardMedia
-          sx={{ height: 260, width: 300 }}
+          sx={{ height: 260, width: 300, zIndex: 2}}
+          style={{filter : !verificarDisponibilidade(produto)  && ' grayscale(1)' ,
+          opacity: !verificarDisponibilidade(produto)  && '0.5'}}
           image={process.env.REACT_APP_GATEWAY_URL + "/produto/imagem/" + produto.imagem}
           title={produto.nome}
         />
+
       </div>
 
       <CardContent style={{ padding: 0, alignContent: 'center', width: 250, height: 110 }} >
 
         <div style={{ display: 'flex', flexDirection: 'column', alignContent: 'space-around', width: 250, height: 110 }}>
 
-          <abbr title={produto.nome} style={{textDecoration: 'none' , textAlign: 'center' , overflow: 'hidden'}}>
-            <Typography variant='h5' style={{ margin: '0px auto 0px auto', padding: 'auto auto auto auto', width: 'auto', fontSize: '19px',  }} component="div">
-             {produto.nome}
+          <abbr title={produto.nome} style={{ textDecoration: 'none', textAlign: 'center', overflow: 'hidden' }}>
+            <Typography variant='h5' style={{ margin: '0px auto 0px auto', padding: 'auto auto auto auto', width: 'auto', fontSize: '19px', }} component="div">
+              {produto.nome}
             </Typography>
           </abbr>
 

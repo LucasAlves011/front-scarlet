@@ -1,19 +1,22 @@
 import { Avatar, Checkbox, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Card from "../../components/Card";
 import MultiSelect from "../../components/MultiSelect";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { FiEdit3 } from 'react-icons/fi';
 
 function Estoque2({ car }) {
+   const navigate = useNavigate()
+
    const { marca } = useParams();
 
    const [produtos, setProdutos] = useState();
    const [produtos2, setProdutos2] = useState();
    const [categorias, setCategorias] = useState();
    const [filtros, setFiltros] = useState([]);
-   const [parametro,setParametro] = useState();
+   const [parametro, setParametro] = useState();
 
 
    const [hoveredProdutoId, setHoveredProdutoId] = useState(null);
@@ -32,7 +35,7 @@ function Estoque2({ car }) {
    let [selectedCategorias, setSelectedCategorias] = useState();
 
    useEffect(() => {
-      fetch(process.env.REACT_APP_GATEWAY_URL+"/produto/marca/" + marca).then((response) => response.json()).then((x) => {
+      fetch(process.env.REACT_APP_GATEWAY_URL + "/produto/marca/" + marca).then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
       })
@@ -126,14 +129,6 @@ function Estoque2({ car }) {
       }
    }
 
-   const addCarrinho = () => {
-      let a = produtos2.filter((x) => x.id === hoveredProdutoId)
-      console.log("valor de a")
-      console.log(a)
-      setParametro(a[0])
-   }
-
-
 
    return (
       <>
@@ -186,7 +181,7 @@ function Estoque2({ car }) {
                      onMouseLeave={handleMouseLeave}
                      style={{ position: 'relative' }}
                   >
-                     {<IconButton  size="small" aria-label="addCarrinho" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10 ,backgroundColor:'white', color:'#1565c0'}} onClick={addCarrinho}><AddShoppingCartIcon  ></AddShoppingCartIcon></IconButton>}
+                     {<IconButton size="small" aria-label="editProduto" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: '#1565c0' }} onClick={()=> navigate("/estoque/alterar-produto/"+ produto.id)}><FiEdit3  > </FiEdit3></IconButton>}
 
                      <Card produto={produto}></Card>
                   </section>

@@ -9,9 +9,10 @@ import Cadastro from './pages/cadastro/Cadastro';
 import Catalogo from './pages/venda/Catalogo.jsx';
 import Venda from './pages/venda/Venda.jsx';
 import Teste2 from './pages/tests/Teste2.jsx';
-import PosVenda from './pages/venda/PosVenda';
-import Relatorio1 from './pages/relatório/Relatorio1';
-import DetalhesVenda from './pages/relatório/DetalhesVenda';
+import PosVenda from './pages/venda/PosVenda.jsx';
+import Relatorio1 from './pages/relatório/Relatorio1.jsx';
+import DetalhesVenda from './pages/relatório/DetalhesVenda.jsx';
+import EditarProduto from './pages/estoque/EditarProduto.jsx';
 
 function App() {
   return (
@@ -20,9 +21,9 @@ function App() {
 
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/estoque/:marca" element={<Estoque2 />} />
         <Route path="/estoque" element={<Estoque1 />} />
-        <Route path="/tabela" element={<TabelaTeste />} />
+        <Route path="/estoque/:marca" element={<Estoque2 />} />
+        <Route path="/estoque/alterar-produto/:id" element={<EditarProduto />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/venda" element={<Venda />} />

@@ -104,7 +104,7 @@ function Estoque1() {
         {tabela2 !== undefined && tabela2.map((row) => {
           return (
             <ListItem key={row.marca} itemID={row.marca} >
-              <Link to={"produto/" + row.marca}> </Link>
+              {/* <Link to={"produto/" + row.marca}> </Link> */}
               <ListItemButton style={{ backgroundColor: row.cor }} onClick={() => mudarRota(row.marca)} sx={{ padding: 1.8, border: '1px solid #e0e0e0', borderRadius: '5px', }} itemID={row.marca}>
                 <Container width={600}> {row.marca} </Container>
                 <Container width={100}> {row.produtos} {row.produtos > 1 || row.produtos === 0 ? 'produtos' : 'produto'} </Container>

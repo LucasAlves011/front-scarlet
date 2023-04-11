@@ -86,7 +86,7 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
 
          <div id={style.total}>
             <div >Total: {formatoDinheiroReal(total)}</div>
-            <Button color="primary" onClick={() => mudarRota(produtos)} id={style.botaoFinalizar}>finalizar</Button>
+            <Button color="primary" onClick={() => mudarRota(produtos)} id={style.botaoFinalizar}>Finalizar</Button>
          </div>
 
       </div>

@@ -52,5 +52,5 @@ function FileUploader({ reciever }) {
       </section>
    )
 }
-// height={270} width={202}
+
 export default FileUploader

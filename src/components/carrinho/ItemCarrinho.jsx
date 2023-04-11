@@ -32,7 +32,7 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
             return ("t46")
          }
       } else
-         return ("")
+         return ("avulso")
    }
 
    const [quantidadeSelecionada, setQuantidadeSelecionada] = useState(1);
@@ -74,7 +74,7 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
                   }} >+</IconButton>
                </div>
 
-               {/* <div><button onClick={() => remover(item.produto.id)}>remover</button></div> */}
+               {/* //TODO: adicionar botão de remover */}
 
             </>
          case 'nominal':
@@ -97,13 +97,13 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
                      }
                   }} >+</IconButton>
                </div>
-               {/* <div><button onClick={() => remover(item.produto.id)}>remover</button></div> */}
+               {/* TODO: adicionar botão de remover */}
             </>
          case 'numerico':
             return <>
                <select className={style.tamanho} placeholder="Tamanho" value={tamanhoSelecionado} onChange={e => setTamanhoSelecionado(e.target.value)}>
                   {['t36', 't38', 't40', 't42', 't44', 't46', 't48', 't50'].map((e, key) => {
-                     return (<option value={e} key={key} disabled={item.produto[e] > 0 ? false : true} style={item.produto[e] > 0 ? {} : { color: 'red' }}>{e}</option>)
+                     return (<option value={e} key={key} disabled={item.produto[e] > 0 ? false : true} style={item.produto[e] > 0 ? {} : { color: 'red' }}>{e.replace('t','')}</option>)
                   })}
                </select>
 
@@ -120,7 +120,6 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
                      }
                   }} >+</IconButton>
                </div>
-
 
             </>
          default:
@@ -149,9 +148,6 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
          <IconButton onClick={() => remover(item.produto.id)} style={{ float: 'right', margin: 5 }}><DeleteIcon fontSize="small"></DeleteIcon></IconButton>
 
       </section>
-
-
-
    );
 }
 

@@ -50,3 +50,14 @@
    flex-direction: row;
    margin: 0 auto;
 }
+
+#botoesSubmit {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+}
+
+#botoesSubmit > Button {
+   margin: 10px;
+   width: 5em;
+}

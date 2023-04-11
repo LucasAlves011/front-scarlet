@@ -8,7 +8,7 @@ import MultiSelect from "../../components/MultiSelect";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { styled } from '@mui/material/styles';
-
+import { verificarDisponibilidade } from "../../utils/NumeroFormaters";
 
 function EstoqueGeral({ car }) {
    const { marca } = useParams();
@@ -23,7 +23,7 @@ function EstoqueGeral({ car }) {
    const [qtdItens, setQtdItens] = useState(0);
 
    const contarItens = (newNumber) => {
-      setQtdItens(() => 0 +  newNumber)
+      setQtdItens(() => 0 + newNumber)
    }
 
    const [carrinho, setCarrinho] = useState([]);
@@ -45,7 +45,7 @@ function EstoqueGeral({ car }) {
    const [selectedMarcas, setSelectedMarcas] = useState();
 
    useEffect(() => {
-      fetch(process.env.REACT_APP_GATEWAY_URL+"/produto").then((response) => response.json()).then((x) => {
+      fetch(process.env.REACT_APP_GATEWAY_URL + "/produto").then((response) => response.json()).then((x) => {
          setProdutos(x)
          setProdutos2(x)
       })
@@ -147,15 +147,7 @@ function EstoqueGeral({ car }) {
       setParametro(a[0])
    }
 
-   const verificarDisponibilidade = (produto) => {
-      if (produto.tipo === "avulso") {
-         return produto.qtd > 0
-      } else if(produto.tipo === "nominal") {
-         return produto.p > 0 || produto.m > 0 || produto.g > 0 || produto.gg > 0
-      }else {
-         return produto.t36 > 0 || produto.t38 > 0 || produto.t40 > 0 || produto.t42 > 0 || produto.t44 > 0 || produto.t46 > 0 || produto.t48 > 0 || produto.t50 > 0
-      }
-   }
+
 
    const StyledBadge = styled(Badge)(({ theme }) => ({
       '& .MuiBadge-badge': {
@@ -174,9 +166,9 @@ function EstoqueGeral({ car }) {
 
          <Typography variant="h1" align="center" sx={{ fontSize: '4.5em' }}>Estoque </Typography>
 
-         <IconButton aria-label="cart" style={{left:'90vw'}} onClick={() => setBagVisible(true)}>
+         <IconButton aria-label="cart" style={{ left: '90vw' }} onClick={() => setBagVisible(true)}>
             <StyledBadge badgeContent={qtdItens} color="primary" >
-               <ShoppingBagIcon style={{height:40,width:50}}/>
+               <ShoppingBagIcon style={{ height: 40, width: 50 }} />
             </StyledBadge>
          </IconButton>
 
@@ -222,7 +214,7 @@ function EstoqueGeral({ car }) {
          </div>
 
          <Stack direction="row" gap={4} marginLeft={5} marginTop={2} flexWrap="wrap" marginBottom={6}
-         style={{margin: '4% 4%'}}>
+            style={{ margin: '4% 4%' }}>
             {produtos2 !== undefined && produtos2.map((produto, key) => {
                return (
                   <section
@@ -231,7 +223,7 @@ function EstoqueGeral({ car }) {
                      onMouseLeave={handleMouseLeave}
                      style={{ position: 'relative' }}
                   >
-                     {<IconButton disabled={verificarDisponibilidade(produto)} size="small" aria-label="addCarrinho" style={{ zIndex: 2, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color:  verificarDisponibilidade(produto) ? '#1565c0' : 'red' }}onClick={verificarDisponibilidade(produto) && addCarrinho}><AddShoppingCartIcon  ></AddShoppingCartIcon></IconButton>}
+                     {<IconButton size="small" aria-label="addCarrinho" style={{ zIndex: 3, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: verificarDisponibilidade(produto) ? '#1565c0' : 'red' }} onClick={verificarDisponibilidade(produto) && addCarrinho}><AddShoppingCartIcon  ></AddShoppingCartIcon></IconButton>}
 
                      <Card produto={produto}></Card>
                   </section>
