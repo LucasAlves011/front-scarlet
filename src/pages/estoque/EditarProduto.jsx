@@ -183,7 +183,7 @@ function SimpleDialog(props) {
                }
             </section>
             <Stack direction='row' spacing={5} className={style.botoesSubmit}>
-               <Button appearance="primary" color="green" onClick={() => console.log(props.produto)} className={style.botao}>Confirmar</Button>
+               <Button appearance="primary" color="green" onClick={() => props.enviar()} className={style.botao}>Confirmar</Button>
                <Button appearance="primary" color="red" onClick={handleClose} className={style.botao}>Cancelar</Button>
             </Stack>
          </div >
@@ -246,7 +246,87 @@ function EditarProduto() {
       // formdata.append('imagem', imagem, imagem.name);
       // formdata.append('tipo', produto.tipo);
 
+      console.log('produto')
+      console.log(produto)
+
+      console.log('model')
       console.log(model)
+
+      let objeto = {}
+
+      if (produto.tipo === 'nominal') {
+         objeto = {
+            fotos: model.fotos,
+            id: model.id,
+            tipo: produto.tipo,
+            nome: model.nome,
+            marca: model.marca,
+            categorias: model.categorias,
+            imagem: model.imagem,
+            valor: model.valor,
+            quantidade: (model.p + model.m + model.g + model.gg),
+            nominal: {
+               p: model.p,
+               m: model.m,
+               g: model.g,
+               gg: model.gg
+            }
+         }
+      } else if (produto.tipo === 'numerico') {
+         objeto = {
+            fotos: model.fotos,
+            id: model.id,
+            tipo: produto.tipo,
+            nome: model.nome,
+            marca: model.marca,
+            categorias: model.categorias,
+            imagem: model.imagem,
+            valor: model.valor,
+            quantidade: (model.t36 + model.t38 + model.t40 + model.t42 + model.t44 + model.t46 + model.t48 + model.t50),
+            numerico: {
+               t36: model.t36,
+               t38: model.t38,
+               t40: model.t40,
+               t42: model.t42,
+               t44: model.t44,
+               t46: model.t46,
+               t48: model.t48,
+               t50: model.t50
+            }
+         }
+      } else if (produto.tipo === 'avulso') {
+         objeto = {
+            fotos: model.fotos,
+            id: model.id,
+            tipo: produto.tipo,
+            nome: model.nome,
+            marca: model.marca,
+            categorias: model.categorias,
+            imagem: model.imagem,
+            valor: model.valor,
+            quantidade: (model.quantidade)
+         }
+      }
+      //TODO: ALTERAR IMAGEM NO FUTURO
+      axios.put(process.env.REACT_APP_GATEWAY_URL + "/estoque/produto/" + produto.id, objeto, {
+         headers: {
+            'Content-Type': 'application/json'
+         }
+      }).then((response) => {
+         if (response.status === 200) {
+            setSucess(true)
+            setTimeout(() => {
+               setSucess(false)
+            }, 6000)
+         } else {
+            setError(true)
+            setTimeout(() => {
+               setError(false)
+            }, 6000)
+         }
+      }).catch((error) => {
+         console.log(error)
+      })
 
       // axios.post(process.env.REACT_APP_GATEWAY_URL + "/produto/cadastro", formdata, {
       //    headers: {
@@ -282,13 +362,13 @@ function EditarProduto() {
             <Form.Group controlId="nomeCateValor" style={{ width: '33%' }} className={style.nomeCateValor}>
                <Form.Group controlId="name">
                   <Form.ControlLabel>Nome do produto</Form.ControlLabel>
-                  <Form.Control name="name" value={model && model.nome} onChange={value => setModel(model => ({ ...model, nome: value }))}
+                  <Form.Control style={{width: '25vw'}} name="name" value={model && model.nome} onChange={value => setModel(model => ({ ...model, nome: value }))}
                   />
                   <Form.HelpText>Nome é obrigatório</Form.HelpText>
                </Form.Group>
                <Form.Group controlId="marca" >
                   <Form.ControlLabel>Marca</Form.ControlLabel>
-                  {optionsMarcas && <AutoComplete data={optionsMarcas} value={model && model.marca} onChange={value => setModel(model => ({ ...model, marca: value }))}
+                  {optionsMarcas && <AutoComplete data={optionsMarcas} style={{width: '15vw'}} value={model && model.marca} onChange={value => setModel(model => ({ ...model, marca: value }))}
                   />}
                </Form.Group>
                <Form.Group controlId="categorias" >
@@ -298,7 +378,7 @@ function EditarProduto() {
                </Form.Group>
                <Form.Group controlId="valor">
                   <Form.ControlLabel>Valor</Form.ControlLabel>
-                  <InputNumber prefix="R$" onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} value={model && model.valor} />
+                  <InputNumber prefix="R$" min={0} style={{width: '11vw'}} onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} value={model && model.valor} />
                </Form.Group>
             </Form.Group>
             <div style={{ width: '33%' }}>
@@ -448,6 +528,7 @@ function EditarProduto() {
             onClose={handleClose}
             produto={model}
             produtoAntigo={produto}
+            enviar={alterar}
          />}
 
          {model && <DeleteConfirmDialog

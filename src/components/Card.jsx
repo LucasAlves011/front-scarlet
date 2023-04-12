@@ -20,8 +20,8 @@ function SimpleDialog(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open} style={{position:'fixed',zIndex: 4}}>
-      <DialogTitle style={{textAlign: 'center'}}>{props.nome}</DialogTitle>
+    <Dialog onClose={handleClose} open={open} style={{ position: 'fixed', zIndex: 4 }}>
+      <DialogTitle style={{ textAlign: 'center' }}>{props.nome}</DialogTitle>
       <DialogContentText>{formatoDinheiroReal(props.valor)}</DialogContentText>
       <CardMedia
         sx={{ height: '86vh', width: '53vh' }}
@@ -137,9 +137,11 @@ export default function MediaCard({ produto }) {
 
       <div onClick={handleClickOpen} style={t}>
         <CardMedia
-          sx={{ height: 260, width: 250, zIndex: 2}}
-          style={{filter : !verificarDisponibilidade(produto)  && ' grayscale(1)' ,
-          opacity: !verificarDisponibilidade(produto)  && '0.5'}}
+          sx={{ height: 260, width: 250, zIndex: 2 }}
+          style={{
+            filter: !verificarDisponibilidade(produto) && ' grayscale(1)',
+            opacity: !verificarDisponibilidade(produto) && '0.5'
+          }}
           image={process.env.REACT_APP_GATEWAY_URL + "/produto/imagem/" + produto.imagem}
           title={produto.nome}
         />
