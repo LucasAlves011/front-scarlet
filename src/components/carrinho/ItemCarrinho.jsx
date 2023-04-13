@@ -43,11 +43,6 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
    const [tamanhoSelecionado, setTamanhoSelecionado] = useState(verificarPrimeiroTamanhoDisponivel());
 
    useEffect(() => {
-      console.log(quantidadeSelecionada);
-   }, [quantidadeSelecionada])
-
-
-   useEffect(() => {
       item.quantidadeSelecionada = quantidadeSelecionada
       item.tamanhoSelecionado = tamanhoSelecionado
       setAtt(!att)
@@ -115,16 +110,21 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
             <div id={style.titulo}>{item.produto.nome}</div>
 
             <div id={style.dentroInfo}>
-               <span id={style.preco}>{formatoDinheiroReal(item.produto.valor)}</span>
-               {definirTipo(item.produto.tipo)}
+
+               <div className={style.precoNome}>
+                  <span id={style.preco}>{formatoDinheiroReal(item.produto.valor)}</span>
+                  {definirTipo(item.produto.tipo)}
+               </div>
+
+
                <div className={style.maisMenos}>
-                  <IconButton onClick={() => {
+                  <IconButton id={style.menos} onClick={() => {
                      if (quantidadeSelecionada > 1) {
                         setQuantidadeSelecionada(quantidadeSelecionada - 1)
                      }
                   }} >-</IconButton>
                   <span id="mostrar">{quantidadeSelecionada}</span>
-                  <IconButton onClick={() => {
+                  <IconButton id={style.mais} onClick={() => {
                      if (quantidadeSelecionada < item.produto[tamanhoSelecionado]) {
                         setQuantidadeSelecionada(quantidadeSelecionada + 1)
                      }
@@ -134,7 +134,7 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
 
          </div>
 
-         <IconButton onClick={() => remover(item.produto.id)} style={{ float: 'right', margin: 5 }}><DeleteIcon fontSize="small"></DeleteIcon></IconButton>
+         <IconButton onClick={() => remover(item.produto.id)} style={{ float: 'right', margin: 5 }}><DeleteIcon fontSize="small"/></IconButton>
 
       </section>
    );

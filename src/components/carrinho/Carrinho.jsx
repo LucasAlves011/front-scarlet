@@ -49,10 +49,6 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
       contarItens()
    }
 
-   useEffect(() => {
-      console.log("total  " + total)
-   }, [total])
-
    const handleFinalizarCompra = () => {
       console.log(produtos)
    }
@@ -70,8 +66,8 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
 
    return (
       <div id={style.principal}>
-         <IconButton style={{ float: 'right', margin: 5 }} type="reset" >
-            <CloseIcon onClick={() => setBagVisible(false)} />
+         <IconButton style={{ float: 'right', margin: 5 }} type="reset" onClick={() => setBagVisible(false)}>
+            <CloseIcon/>
          </IconButton>
 
          <h1 style={{ textAlign: 'center', fontFamily: 'Roboto, sans-serif' }}>Carrinho</h1>
@@ -86,7 +82,7 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
 
          <div id={style.total}>
             <div >Total: {formatoDinheiroReal(total)}</div>
-            <Button color="primary" onClick={() => mudarRota(produtos)} id={style.botaoFinalizar}>Finalizar</Button>
+            <Button appearance="primary" onClick={() => mudarRota(produtos)} id={style.botaoFinalizar}>Finalizar</Button>
          </div>
 
       </div>

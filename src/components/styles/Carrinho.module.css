@@ -26,6 +26,7 @@
 }
 
 #total {
+   font-size: 1.2em;
    display: flex;
    flex-direction: row;
    justify-content: space-evenly;

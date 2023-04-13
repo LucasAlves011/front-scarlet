@@ -63,17 +63,46 @@ function EstoqueGeral({ car }) {
    }, [produtos])
 
    useEffect(() => {
-      if (selectedCategorias !== undefined && selectedCategorias.length > 0) {
+      if (selectedCategorias !== undefined && selectedCategorias.length > 0 && selectedMarcas !== undefined && selectedMarcas.length > 0) {
+         let auxProd = []
+         // selectedCategorias.forEach((e) => {
+         //    auxProd.push(...produtos.filter((x) => x.categorias.includes(e)))
+         // }) FUNCIONA
+
+         selectedCategorias.forEach((e) => {
+            auxProd.push(...produtos.filter((x) => x.categorias.includes(e)))
+         })
+
+         let a = []
+         selectedMarcas.forEach((e) => {
+             a.push(...auxProd.filter((x) => x.marca === e))
+         })
+
+         // setProdutos2([...new Set(auxProd)])
+         setProdutos2([...new Set(a)])
+
+      } else if (selectedMarcas !== undefined && selectedMarcas.length > 0) {
+         console.log("entrou aqui")
+         let auxProd = []
+         selectedMarcas.forEach((e) => {
+            auxProd.push(...produtos.filter((x) => x.marca === e))
+         })
+         setProdutos2([...new Set(auxProd)])
+      }
+      else if (selectedCategorias !== undefined && selectedCategorias.length > 0) {
+         console.log("entrou nas categorias")
          let auxProd = []
          selectedCategorias.forEach((e) => {
             auxProd.push(...produtos.filter((x) => x.categorias.includes(e)))
          })
          setProdutos2([...new Set(auxProd)])
-      } else if (selectedCategorias !== undefined && selectedCategorias.length === 0) {
+      }
+      else if (selectedCategorias !== undefined && selectedCategorias.length === 0) {
          setProdutos2(produtos)
       }
 
-   }, [selectedCategorias])
+   }, [selectedCategorias, selectedMarcas])
+
 
    useEffect(() => {
       let auxProd = []
@@ -208,7 +237,7 @@ function EstoqueGeral({ car }) {
 
          </div>
 
-         <div style={{ flexDirection: "row" }}>
+         <div style={{ display: "flex", flexDirection: "row", alignItems: 'center', justifyContent: 'center' }}>
             <MultiSelect dados={categorias !== undefined ? categorias : []} placeholder="Selecione as categorias" reciever={setSelectedCategorias}></MultiSelect>
             <MultiSelect dados={marcas !== undefined ? marcas : []} placeholder="Selecione as marcas" reciever={setSelectedMarcas}></MultiSelect>
          </div>
@@ -223,7 +252,7 @@ function EstoqueGeral({ car }) {
                      onMouseLeave={handleMouseLeave}
                      style={{ position: 'relative' }}
                   >
-                     {<IconButton size="small" aria-label="addCarrinho" style={{ zIndex: 3, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: verificarDisponibilidade(produto) ? '#1565c0' : 'red' }} onClick={verificarDisponibilidade(produto) && addCarrinho}><AddShoppingCartIcon  ></AddShoppingCartIcon></IconButton>}
+                     {<IconButton size="small" aria-label="addCarrinho" style={{ zIndex: 3, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: verificarDisponibilidade(produto) ? '#1565c0' : 'red' }} onClick={verificarDisponibilidade(produto) && addCarrinho}><AddShoppingCartIcon /></IconButton>}
 
                      <Card produto={produto}></Card>
                   </section>

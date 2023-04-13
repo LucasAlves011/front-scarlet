@@ -13,14 +13,10 @@ function Cadastro() {
 
     useEffect(() => {
         fetch(process.env.REACT_APP_GATEWAY_URL + "/produto/marcas").then((res) => res.json()).then((res) => {
-            console.log('marcas')
-            console.log(res)
             setOptionsMarcas(res)
         })
 
         fetch(process.env.REACT_APP_GATEWAY_URL + "/categoria").then((res) => res.json()).then((res) => {
-            console.log('categorias')
-            console.log(res)
             setCategorias(res)
         })
     }, [])
@@ -118,10 +114,6 @@ function Cadastro() {
         formdata.append('imagem', imagem, imagem.name);
         formdata.append('tipo', tipo);
 
-        console.log(produto)
-        console.log(tipo)
-
-        console.log(formdata)
         axios.post(process.env.REACT_APP_GATEWAY_URL + "/produto/cadastro", formdata, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -174,7 +166,7 @@ function Cadastro() {
                     </Form.Group>
                     <Form.Group controlId="valor">
                         <Form.ControlLabel>Valor</Form.ControlLabel>
-                        <InputNumber prefix="R$" onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} style={{width: '30%'}}/>
+                        <InputNumber prefix="R$" min={0} onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} style={{width: '30%'}}/>
                     </Form.Group>
                 </Form.Group>
                 <div style={{ width: '33%' }}>

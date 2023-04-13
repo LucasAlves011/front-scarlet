@@ -41,7 +41,8 @@ function CardDia2({ dia }) {
          <p id={style.diaPorExtenso}>
             {format(parseISO(dia.data), "ccc", { locale: ptBR }).charAt(0).toUpperCase() + format(parseISO(dia.data), "ccc", { locale: ptBR }).slice(1)}
          </p>
-         <p>{dia.quantidadeVendas} vendas</p>
+         <p>{dia.quantidadeVendas} {dia.quantidadeVendas === 1 ? 'venda' : 'vendas'}</p>
+         <p id={style.total}>{formatoDinheiroReal(dia.total)}</p>
          <div className={style.figura2}>
             <BsFillCreditCard2BackFill />
             <p>{formatoDinheiroReal(dia.cartao)}</p>
@@ -54,7 +55,7 @@ function CardDia2({ dia }) {
             <FaMoneyBillWave />
             <p>{formatoDinheiroReal(dia.dinheiro)}</p>
          </div>
-         <p id={style.total}>{formatoDinheiroReal(dia.total)}</p>
+
       </section>
    )
 }
@@ -86,10 +87,11 @@ function Relatorio1() {
       <>
          <section className={style.todoDasMetades}>
             {vendasHoje && <section className={style.metade} >
-               <h1>Resumo de hoje: </h1>
-               <p >{format(new Date(), "dd/MM/yyyy")}</p>
+               <h1>Resumo de hoje ({format(new Date(), "dd/MM/yyyy")}) </h1>
+               {/* <p ></p> */}
 
-               <h2>{vendasHoje.quantidadeVendas === 0 ? 'Nenhuma venda realizada.' : vendasHoje.quantidadeVendas + ' vendas realizadas.'}</h2>
+               <h2>{vendasHoje.quantidadeVendas === 0 ? 'Nenhuma venda realizada.' : vendasHoje.quantidadeVendas === 1 ?  vendasHoje.quantidadeVendas + ' venda realizada. '  : vendasHoje.quantidadeVendas + ' vendas realizadas.'}</h2>
+               <h3>{formatoDinheiroReal(vendasHoje.total)}</h3>
                <div className={style.cartoes}>
 
                   Cartão
@@ -111,16 +113,16 @@ function Relatorio1() {
                   </div>
                </div>
 
-               <h3>{formatoDinheiroReal(vendasHoje.total)}</h3>
+
 
 
                <Button appearance='link' onClick={() => {
-                  navigate('/vendas/' + format(new Date(), "dd-MM-yyyy"))
+                  navigate( format((new Date()), "dd-MM-yyyy"))
                }}>detalhes</Button>
             </section>}
 
             <section className={style.metade}>
-               <DateRangePicker placeholder="Selecione as datas " locale={CalendarLocaleType} format='dd/MM/yyyy' />
+               {/* <DateRangePicker placeholder="Selecione as datas " locale={CalendarLocaleType} format='dd/MM/yyyy' /> */}
             </section>
          </section>
          <div className={style.resumoSemana}>

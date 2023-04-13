@@ -177,7 +177,7 @@ function Venda() {
                <p>{x.tamanhoSelecionado === '' ? 'único' : x.tamanhoSelecionado.replace('t', '').toUpperCase()}</p>
             </td>
             <td>
-               <div className={style.maisMenos} style={{ borderRight: '-20px', padding: 0 }}>
+               <div className={style.maisMenos} style={{ margin: 'auto'} }>
                   <IconButton onClick={() => {
                      if (quantidade > 1) {
                         setQuantidade(quantidade - 1);
@@ -320,13 +320,13 @@ function Venda() {
                   <table style={style2.tabela}>
                      <thead>
                         <tr>
-                           <th>imagem</th>
-                           <th>nome</th>
-                           <th>marca</th>
-                           <th>tamanho</th>
-                           <th>quantidade</th>
-                           <th>valor</th>
-                           <th>total</th>
+                           <th>Imagem</th>
+                           <th>Nome</th>
+                           <th>Marca</th>
+                           <th>Tamanho</th>
+                           <th>Quantidade</th>
+                           <th>Valor</th>
+                           <th>Total</th>
                         </tr>
                      </thead>
 

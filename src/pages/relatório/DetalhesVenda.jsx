@@ -112,7 +112,7 @@ function ControlledAccordions({ itens }) {
    }
 
    return (
-      <div className={style.acordeon}>
+     <div className={style.acordeon}>
          {itens.map((item, key) => (
             <Accordion >
                <AccordionSummary
@@ -153,7 +153,6 @@ function DetalhesVenda() {
 
    useEffect(() => {
       if (data) {
-         console.log(data)
          fetch(process.env.REACT_APP_GATEWAY_URL + "/venda/vendas-dia?data=" + data)
             .then(res => res.json())
             .then(res => {
@@ -166,7 +165,7 @@ function DetalhesVenda() {
 
    return (
       <>
-         {data && <h1 className={style.h1Data}>Vendas do dia {format(new Date(data), 'dd/MM/yyyy')}</h1>}
+         {data && <h1 className={style.h1Data}>Vendas do dia {data.replaceAll("-",'/')}</h1>}
          {venda && <ControlledAccordions itens={venda} />}
       </>
 

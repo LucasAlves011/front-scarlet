@@ -87,7 +87,6 @@ function SimpleDialog(props) {
 
    return (
       <Dialog onClose={handleClose} open={open} >
-         {console.log(props)}
          <div style={{ padding: '15px' }}>
             <DialogTitle style={{ textAlign: 'center' }}>Confirmar alteração</DialogTitle>
             <section style={{ margin: '10px 5px 15px 15px', height: '40vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
@@ -205,13 +204,11 @@ function EditarProduto() {
 
    useEffect(() => {
       if (id) {
-         console.log(id)
          fetch(process.env.REACT_APP_GATEWAY_URL + "/estoque/produto/" + id)
             .then(res => res.json())
             .then(res => {
                setModel(res)
                setProduto(res)
-               console.log(res)
             })
       }
    }, [id])
@@ -245,12 +242,6 @@ function EditarProduto() {
       // formdata.append('produto', JSON.stringify(produto));
       // formdata.append('imagem', imagem, imagem.name);
       // formdata.append('tipo', produto.tipo);
-
-      console.log('produto')
-      console.log(produto)
-
-      console.log('model')
-      console.log(model)
 
       let objeto = {}
 
@@ -362,13 +353,13 @@ function EditarProduto() {
             <Form.Group controlId="nomeCateValor" style={{ width: '33%' }} className={style.nomeCateValor}>
                <Form.Group controlId="name">
                   <Form.ControlLabel>Nome do produto</Form.ControlLabel>
-                  <Form.Control style={{width: '25vw'}} name="name" value={model && model.nome} onChange={value => setModel(model => ({ ...model, nome: value }))}
+                  <Form.Control style={{ width: '25vw' }} name="name" value={model && model.nome} onChange={value => setModel(model => ({ ...model, nome: value }))}
                   />
                   <Form.HelpText>Nome é obrigatório</Form.HelpText>
                </Form.Group>
                <Form.Group controlId="marca" >
                   <Form.ControlLabel>Marca</Form.ControlLabel>
-                  {optionsMarcas && <AutoComplete data={optionsMarcas} style={{width: '15vw'}} value={model && model.marca} onChange={value => setModel(model => ({ ...model, marca: value }))}
+                  {optionsMarcas && <AutoComplete data={optionsMarcas} style={{ width: '15vw' }} value={model && model.marca} onChange={value => setModel(model => ({ ...model, marca: value }))}
                   />}
                </Form.Group>
                <Form.Group controlId="categorias" >
@@ -378,7 +369,7 @@ function EditarProduto() {
                </Form.Group>
                <Form.Group controlId="valor">
                   <Form.ControlLabel>Valor</Form.ControlLabel>
-                  <InputNumber prefix="R$" min={0} style={{width: '11vw'}} onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} value={model && model.valor} />
+                  <InputNumber prefix="R$" min={0} style={{ width: '11vw' }} onChange={value => setModel(model => ({ ...model, valor: parseFloat(value) }))} value={model && model.valor} />
                </Form.Group>
             </Form.Group>
             <div style={{ width: '33%' }}>
@@ -444,10 +435,7 @@ function EditarProduto() {
                            <Form.Group controlId="t50" className={style.inputNumerico}>
                               <Form.ControlLabel>50</Form.ControlLabel>
                               <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0} value={model.t50}
-                                 onChange={(e) => {
-                                    setModel({ ...model, t50: parseInt(e) })
-                                    console.log(model)
-                                 }}
+                                 onChange={(e) => setModel({ ...model, t50: parseInt(e) })}
                               />
                            </Form.Group>
                         </div>

@@ -1,22 +1,26 @@
 .maisMenos {
+   display: flex;
+   flex-direction: row;
    width: fit-content;
-   height: fit-content;
+   height: min-content;
    background-color: rgb(194, 194, 194);
    border-radius: 20px;
+   height: 1.8rem;
+   align-items: center;
+   font-size: 1em;
+   font-family: monospace;
 }
 
 .maisMenos > span {
+   font-family: "Roboto";
    margin: 10px;
    padding: 2px;
-   font-size: 1.2rem;
+   font-size: 1rem;
 }
 
-.maisMenos > IconButton {
-   background-color: #f0f0f0;
-   padding: 2px;
-   font-size: 1.2rem;
-   cursor: pointer;
-   background-color: grey;
+.maisMenos > #menos , #mais {
+   margin-right: 0px;
+   padding: 3px;
 
 }
 
@@ -30,25 +34,36 @@
 }
 
 .container {
+   height: 8rem;
    display: flex;
    align-items: flex-start;
 }
 
 #titulo {
-   font-size: 1.25rem;
+   font-size: 1rem;
+   margin-bottom: 5px;
+   font-family: 'Roboto', sans-serif;
+   text-align: center;
+   overflow-x: hidden;
+}
+
+.precoNome {
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-evenly;
+   align-items: baseline;
+}
+
+#preco {
+   font-size: 0.9rem;
    margin-bottom: 5px;
    font-family: 'Roboto', sans-serif;
 }
 
-#preco {
-   font-size: 1.2rem;
-   margin-bottom: 5px;
-   font-family: 'Roboto'  , sans-serif;
-}
-
 #dentroInfo {
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    margin-top: 20px;
    margin-left: 10px;
    justify-content: space-around;
