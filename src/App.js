@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link, NavLink, Navigate, useNavigate } from 'react-router-dom'
-import style from './App.module.css'
 
 import Home from "./pages/Home.jsx";
 import Estoque1 from "./pages/estoque/Estoque1.jsx";
@@ -33,12 +32,12 @@ const CustomNavbar = () => {
 
 
   return (
-    <Navbar className={style.navbar} id='teste'>
+    <Navbar id='teste'>
       <Navbar.Brand href="/catalogo">
         {/* <img src={process.env.REACT_APP_GATEWAY_URL+"/estoque/produto/logo"} alt="foto" /> */}
         <img src="src\apMultimarcas32x.png" alt="foto" />
         AP Multimarcas</Navbar.Brand>
-      <Nav className={style.navbar}>
+      <Nav >
         <Nav.Item href="/catalogo">Catálogo</Nav.Item>
         <Nav.Item href="/vendas">Vendas</Nav.Item>
         <Nav.Menu title="Produtos">
@@ -59,7 +58,7 @@ function App() {
     <>
 
       <Router>
-        <CustomNavbar className={`${style.navbar} navbar-custom`} ></CustomNavbar>
+        <CustomNavbar ></CustomNavbar>
 
         <Routes>
           <Route exact path="/" element={<Home />} />
