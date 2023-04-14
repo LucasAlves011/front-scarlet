@@ -33,8 +33,7 @@ const CustomNavbar = () => {
   return (
     <Navbar id='teste'>
       <Navbar.Brand href="/catalogo">
-        {/* <img src={process.env.REACT_APP_GATEWAY_URL+"/estoque/produto/logo"} alt="foto" /> */}
-        <img src="src\apMultimarcas32x.png" alt="foto" />
+        <img src={process.env.REACT_APP_GATEWAY_URL+"/estoque/produto/logo"} alt="foto" />
         AP Multimarcas</Navbar.Brand>
       <Nav >
         <Nav.Item href="/catalogo">Catálogo</Nav.Item>
