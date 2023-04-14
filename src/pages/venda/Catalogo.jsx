@@ -176,8 +176,6 @@ function EstoqueGeral({ car }) {
       setParametro(a[0])
    }
 
-
-
    const StyledBadge = styled(Badge)(({ theme }) => ({
       '& .MuiBadge-badge': {
          right: 7,
@@ -193,7 +191,7 @@ function EstoqueGeral({ car }) {
             <Carrinho prop={carrinho} produtoAdd={parametro} resetAdd={setParametro} setBagVisible={setBagVisible} setQtdItens={contarItens}></Carrinho>
          </div>
 
-         <Typography variant="h1" align="center" sx={{ fontSize: '4.5em' }}>Estoque </Typography>
+         <Typography variant="h1" align="center" sx={{ fontSize: '4.5em' }}>Catálogo </Typography>
 
          <IconButton aria-label="cart" style={{ left: '90vw' }} onClick={() => setBagVisible(true)}>
             <StyledBadge badgeContent={qtdItens} color="primary" >

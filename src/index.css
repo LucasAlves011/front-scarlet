@@ -16,3 +16,9 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 }
+
+#teste {
+  background-color: #000;
+  color: #fff;
+  margin-bottom: 1em;
+}
