@@ -113,7 +113,7 @@ function ControlledAccordions({ itens }) {
 
    return (
      <div className={style.acordeon}>
-         {itens.map((item, key) => (
+         {itens && itens.map((item, key) => (
             <Accordion >
                <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}

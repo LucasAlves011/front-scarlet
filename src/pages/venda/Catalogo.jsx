@@ -9,6 +9,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { styled } from '@mui/material/styles';
 import { verificarDisponibilidade } from "../../utils/NumeroFormaters";
+import style from "./Catalogo.module.css"
 
 function EstoqueGeral({ car }) {
    const { marca } = useParams();

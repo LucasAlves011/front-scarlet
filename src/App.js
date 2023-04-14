@@ -14,7 +14,6 @@ import Relatorio1 from './pages/relatório/Relatorio1.jsx';
 import DetalhesVenda from './pages/relatório/DetalhesVenda.jsx';
 import EditarProduto from './pages/estoque/EditarProduto.jsx';
 import { Nav, Navbar } from 'rsuite';
-import CogIcon from '@rsuite/icons/legacy/Cog';
 import { useEffect, useState } from 'react';
 
 
@@ -61,7 +60,7 @@ function App() {
         <CustomNavbar ></CustomNavbar>
 
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Catalogo />} />
           <Route path="/estoque" element={<Estoque1 />} />
           <Route path="/estoque/:marca" element={<Estoque2 />} />
           <Route path="/estoque/alterar-produto/:id" element={<EditarProduto />} />

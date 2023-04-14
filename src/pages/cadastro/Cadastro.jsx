@@ -263,7 +263,7 @@ function Cadastro() {
                                     <Form.Group controlId="G" className={style.inputNumerico}>
                                         <Form.ControlLabel>G</Form.ControlLabel>
                                         <InputNumber min={0} max={99} style={{ width: 60 }} defaultValue={0}
-                                            onChange={(e) => setNominal({ ...nominal, g: parseInt(e)(e) })}
+                                            onChange={(e) => setNominal({ ...nominal, g: parseInt(e)})}
                                         />
                                     </Form.Group>
                                     <div className="col-md-3">

@@ -88,7 +88,6 @@ function Relatorio1() {
          <section className={style.todoDasMetades}>
             {vendasHoje && <section className={style.metade} >
                <h1>Resumo de hoje ({format(new Date(), "dd/MM/yyyy")}) </h1>
-               {/* <p ></p> */}
 
                <h2>{vendasHoje.quantidadeVendas === 0 ? 'Nenhuma venda realizada.' : vendasHoje.quantidadeVendas === 1 ?  vendasHoje.quantidadeVendas + ' venda realizada. '  : vendasHoje.quantidadeVendas + ' vendas realizadas.'}</h2>
                <h3>{formatoDinheiroReal(vendasHoje.total)}</h3>
@@ -122,7 +121,7 @@ function Relatorio1() {
             </section>}
 
             <section className={style.metade}>
-               {/* <DateRangePicker placeholder="Selecione as datas " locale={CalendarLocaleType} format='dd/MM/yyyy' /> */}
+               <DateRangePicker placeholder="Selecione as datas " locale={CalendarLocaleType} format='dd/MM/yyyy' />
             </section>
          </section>
          <div className={style.resumoSemana}>
