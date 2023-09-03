@@ -1,3 +1,4 @@
+import React from "react";
 import { Alert, AlertTitle, Fade } from "@mui/material";
 import { useState, useEffect } from "react";
 import style from "./Cadastro.module.css";

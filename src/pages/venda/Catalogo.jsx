@@ -1,3 +1,4 @@
+import React from "react";
 import { Avatar, Badge, Checkbox, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,7 +9,6 @@ import MultiSelect from "../../components/MultiSelect";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { styled } from '@mui/material/styles';
-import { verificarDisponibilidade } from "../../utils/NumeroFormaters";
 
 function EstoqueGeral({ car }) {
    const { marca } = useParams();
@@ -27,17 +27,6 @@ function EstoqueGeral({ car }) {
    }
 
    const [carrinho, setCarrinho] = useState([]);
-
-   const [hoveredProdutoId, setHoveredProdutoId] = useState(null);
-
-
-   function handleMouseEnter(id) {
-      setHoveredProdutoId(id);
-   }
-
-   function handleMouseLeave() {
-      setHoveredProdutoId(null);
-   }
 
    let nominal = ['P', 'M', 'G', 'GG']
 
@@ -171,11 +160,6 @@ function EstoqueGeral({ car }) {
       }
    }
 
-   const addCarrinho = () => {
-      let a = produtos2.filter((x) => x.id === hoveredProdutoId)
-      setParametro(a[0])
-   }
-
    const StyledBadge = styled(Badge)(({ theme }) => ({
       '& .MuiBadge-badge': {
          right: 7,
@@ -246,13 +230,10 @@ function EstoqueGeral({ car }) {
                return (
                   <section
                      key={produto.id}
-                     onMouseEnter={() => handleMouseEnter(produto.id)}
-                     onMouseLeave={handleMouseLeave}
                      style={{ position: 'relative' }}
                   >
-                     {<IconButton size="small" aria-label="addCarrinho" style={{ zIndex: 3, position: 'absolute', top: 10, right: 10, backgroundColor: 'white', color: verificarDisponibilidade(produto) ? '#1565c0' : 'red' }} onClick={verificarDisponibilidade(produto) && addCarrinho}><AddShoppingCartIcon /></IconButton>}
 
-                     <Card produto={produto}></Card>
+                     <Card produto={produto} addCarrinho={setParametro}></Card>
                   </section>
                )
             })}

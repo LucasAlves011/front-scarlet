@@ -1,12 +1,13 @@
+import React from "react";
 import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Container, Stack } from '@mui/system';
-import { Button, Chip, Dialog, DialogContentText, DialogTitle } from '@mui/material';
+import { Chip, Dialog, DialogContentText, DialogTitle } from '@mui/material';
 import { formatoDinheiroReal, verificarDisponibilidade } from '../utils/NumeroFormaters';
-import { Avatar } from 'rsuite';
+import Avatar from '@mui/material/Avatar';
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -32,7 +33,24 @@ function SimpleDialog(props) {
   );
 }
 
-export default function MediaCard({ produto }) {
+export default function MediaCard({ produto, addCarrinho }) {
+
+  const paletaCorChip = (quantidade) => {
+    return {
+      backgroundColor: quantidade > 0 ? '#3498ff' : '#ebebeb',
+      color: quantidade > 0 ? '#ffff' : '#616161',
+      cursor: quantidade > 0 ? 'pointer' : 'not-allowed',
+    }
+  }
+
+  const paletaCorAvatar = (quantidade) => {
+    return {
+      fontSize: '1.008em',
+      backgroundColor: quantidade > 0 ? '#ffff' : '#d9d9d9',
+      color: quantidade > 0 ? '#616161' : 'black',
+      cursor: quantidade > 0 ? 'pointer' : 'not-allowed',
+    }
+  }
 
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState();
@@ -53,7 +71,7 @@ export default function MediaCard({ produto }) {
           <Container style={{ display: 'flex', flexDirection: 'row', margin: 'auto', justifyContent: 'center', padding: 0 }} >
 
             <Stack direction="row" gap={4} sx={{ padding: "0px 0px 0px 0px" }}  >
-              <Chip style={{ backgroundColor: produto.quantidade > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.quantidade} size="medium" avatar={<Avatar circle style={{ fontSize: '1.008em', backgroundColor: '#C2C2C2' }} onClick={() => console.log('teste')}></Avatar>} />
+              <Chip onClick={() => { produto.quantidade > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "" }) }} style={paletaCorChip(produto.quantidade)} label={produto.quantidade} size="medium" avatar={<Avatar circle style={paletaCorAvatar(produto.quantidade)} onClick={() => console.log('teste')}>x</Avatar>} />
               <Typography variant="body1" color="default" >{formatoDinheiroReal(produto.valor)}</Typography>
             </Stack>
 
@@ -71,12 +89,12 @@ export default function MediaCard({ produto }) {
             </Stack>
 
             <Stack direction="row" spacing={1} style={{ justifyContent: 'space-evenly', marginTop: "10px" }}>
-              <Chip style={{ backgroundColor: produto.p > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.p} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>P</Avatar>} />
+              <Chip onClick={() => { produto.p > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "p" }) }} style={paletaCorChip(produto.p)} label={produto.p} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.p)}>P</Avatar>} />
 
-              <Chip style={{ backgroundColor: produto.m > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.m} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }} >M</Avatar>} />
-              <Chip style={{ backgroundColor: produto.g > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.g} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>G</Avatar>} />
+              <Chip onClick={() => { produto.m > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "m" }) }} style={paletaCorChip(produto.m)} label={produto.m} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.m)} >M</Avatar>} />
+              <Chip onClick={() => { produto.g > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "g" }) }} style={paletaCorChip(produto.g)} label={produto.g} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.g)}>G</Avatar>} />
 
-              <Chip style={{ backgroundColor: produto.gg > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.gg} size="small" avatar={<Avatar circle >GG</Avatar>} />
+              <Chip onClick={() => { produto.gg > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "gg" }) }} style={paletaCorChip(produto.gg)} label={produto.gg} size="small" avatar={<Avatar circle style={{ ...paletaCorAvatar(produto.gg), fontSize: "0.85em" }} >GG</Avatar>} />
 
             </Stack>
 
@@ -94,23 +112,23 @@ export default function MediaCard({ produto }) {
 
             <div style={{ display: 'flex', flexWrap: 'wrap', maxWidth: '240px', justifyContent: 'space-evenly' }}>
               <Stack direction="row" spacing={2} >
-                <Chip style={{ backgroundColor: produto.t36 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t36} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>36</Avatar>} />
+                <Chip onClick={() => { produto.t36 > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "t36" }) }} style={paletaCorChip(produto.t36)} label={produto.t36} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.t36)}>36</Avatar>} />
 
-                <Chip style={{ backgroundColor: produto.t38 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t38} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>38</Avatar>} />
+                <Chip onClick={() => { produto.t38 > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "t38" }) }} style={paletaCorChip(produto.t38)} label={produto.t38} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.t38)}>38</Avatar>} />
 
-                <Chip style={{ backgroundColor: produto.t40 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t40} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>40</Avatar>} />
+                <Chip onClick={() => { produto.t40 > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "t40" }) }} style={paletaCorChip(produto.t40)} label={produto.t40} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.t40)}>40</Avatar>} />
 
-                <Chip style={{ backgroundColor: produto.t42 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t42} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>42</Avatar>} />
+                <Chip onClick={() => { produto.t42 > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "t42" }) }} style={paletaCorChip(produto.t42)} label={produto.t42} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.t42)}>42</Avatar>} />
 
               </Stack>
               <Stack direction="row" spacing={2} style={{ marginTop: 4 }} >
-                <Chip style={{ backgroundColor: produto.t44 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t44} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>44</Avatar>} />
+                <Chip onClick={() => { produto.t44 > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "t44" }) }} style={paletaCorChip(produto.t44)} label={produto.t44} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.t44)}>44</Avatar>} />
 
-                <Chip style={{ backgroundColor: produto.t46 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t46} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>46</Avatar>} />
+                <Chip onClick={() => { produto.t46 > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "t46" }) }} style={paletaCorChip(produto.t46)} label={produto.t46} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.t46)}>46</Avatar>} />
 
-                <Chip style={{ backgroundColor: produto.t48 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t48} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>48</Avatar>} />
+                <Chip onClick={() => { produto.t48 > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "t48" }) }} style={paletaCorChip(produto.t48)} label={produto.t48} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.t48)}>48</Avatar>} />
 
-                <Chip style={{ backgroundColor: produto.t50 > 0 ? '#ebebeb' : '#ff9b96' }} label={produto.t50} size="small" avatar={<Avatar circle style={{ fontSize: '1.008em' }}>50</Avatar>} />
+                <Chip onClick={() => { produto.t50 > 0 && addCarrinho({ ...produto, tamanhoSelecionado: "t50" }) }} style={paletaCorChip(produto.t50)} label={produto.t50} size="small" avatar={<Avatar circle style={paletaCorAvatar(produto.t50)}>50</Avatar>} />
 
               </Stack>
             </div>

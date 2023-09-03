@@ -1,3 +1,4 @@
+import React from "react";
 import { Dialog, DialogContentText, DialogTitle, Divider, FormControl, IconButton, Input, InputAdornment, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,6 +7,7 @@ import style2 from '../../components/styles/Venda.module.css'
 import axios from 'axios';
 import { formatoDinheiroReal } from "../../utils/NumeroFormaters";
 import { Button } from "rsuite";
+
 
 function SimpleDialog(props, parametro) {
    const navigate = useNavigate();
@@ -35,7 +37,6 @@ function SimpleDialog(props, parametro) {
 
    return (
       <Dialog onClose={handleClose} open={open} >
-         {console.log(props)}
          <div style={{ padding: '15px' }}>
             <DialogTitle style={{ textAlign: 'center' }}>Confirmar venda</DialogTitle>
             <section style={{ margin: '10px 5px 15px 15px', height: '130px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
@@ -55,9 +56,9 @@ function SimpleDialog(props, parametro) {
 
 const enviarReq = (produtos, entrega, desconto, total, formaPagamento, navigate) => {
 
-   let itens = produtos.map(({ produto, tamanhoSelecionado, quantidadeSelecionada }) => ({
+   let itens = produtos.map(({ produto, quantidadeSelecionada }) => ({
       produtoId: produto.id,
-      tamanho: tamanhoSelecionado.toUpperCase(),
+      tamanho: produto.tamanhoSelecionado === '' ? 'AVULSO' : produto.tamanhoSelecionado.toUpperCase(),
       quantidade: quantidadeSelecionada,
       valor: produto.valor
    }));
@@ -174,10 +175,10 @@ function Venda() {
                <p>{x.produto.marca}</p>
             </td>
             <td>
-               <p>{x.tamanhoSelecionado === '' ? 'único' : x.tamanhoSelecionado.replace('t', '').toUpperCase()}</p>
+               <p>{x.produto.tamanhoSelecionado === '' ? 'único' : x.produto.tamanhoSelecionado.replace('t', '').toUpperCase()}</p>
             </td>
             <td>
-               <div className={style.maisMenos} style={{ margin: 'auto'} }>
+               <div className={style.maisMenos} style={{ margin: 'auto' }}>
                   <IconButton onClick={() => {
                      if (quantidade > 1) {
                         setQuantidade(quantidade - 1);
@@ -186,11 +187,11 @@ function Venda() {
                   <span id="mostrar">{quantidade}</span>
                   <IconButton
                      onClick={() => {
-                        if (x.tamanhoSelecionado === '' && quantidade < x.produto.quantidade) {
+                        if (x.produto.tamanhoSelecionado === '' && quantidade < x.produto.quantidade) {
                            setQuantidade(quantidade + 1);
                            produtos.find(item => item.produto.id === x.produto.id).quantidadeSelecionada = quantidade;
                         }
-                        else if (quantidade < x.produto[x.tamanhoSelecionado]) {
+                        else if (quantidade < x.produto[x.produto.tamanhoSelecionado]) {
                            setQuantidade(quantidade + 1);
                            x.quantidadeSelecionada = quantidade;
                         }
@@ -242,7 +243,7 @@ function Venda() {
                <div style={styles.fixedContent}>
                   <h1>Resumo da compra</h1>
                   <div style={{ position: 'relative', width: '50w', margin: 'auto', textAlign: 'center', fontFamily: 'Roboto', fontSize: '3.5em' }}>
-                     R$ {total}
+                     {formatoDinheiroReal(total)}
                   </div>
 
                   <form style={{ margin: '5% 0 0 5%' }} onSubmit={enviar}>

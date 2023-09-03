@@ -1,3 +1,4 @@
+import React from "react";
 import style from './DetalhesVenda.module.css'
 import { Accordion, AccordionDetails, AccordionSummary, Chip } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -111,6 +112,11 @@ function ControlledAccordions({ itens }) {
       }
    }
 
+   const contarItens = (arrayProdutos) => {
+      let a = arrayProdutos.reduce((acc, a) => { return acc + a.item.quantidade},0)
+      return a > 1 ? a + " itens" : a + " item"
+   }
+
    return (
      <div className={style.acordeon}>
          {itens && itens.map((item, key) => (
@@ -121,9 +127,13 @@ function ControlledAccordions({ itens }) {
                   id={key}
                >
                   <div style={{ width: '5%', alignSelf: 'center' }}> {key + 1}. </div>
-                  <div style={{ width: '20%', alignSelf: 'center' }}>
-                     {format(parseISO(item.dataHora), "kk:mm:ss")}
+
+                  <div style={{ width: '10%', alignSelf: 'center' }}>
+                     {format(parseISO(item.dataHora), "HH:mm:ss")}
                   </div>
+
+                  <div style={{ width: '10%', alignSelf: 'center' }}>{contarItens(item.itemMaisNomeList)}</div>
+
                   <div style={{ width: '20%', alignSelf: 'center' }} >
                      Total: <span style={{ fontWeight: item.total > 0 && 'bold', fontSize: '1.1em' }}>{formatoDinheiroReal(item.total)}</span>
                   </div>
@@ -131,7 +141,7 @@ function ControlledAccordions({ itens }) {
                      Entrega: <span style={{ fontWeight: item.entrega > 0 && 'bold' }}> {formatoDinheiroReal(item.entrega)}</span>
                   </div>
                   <div style={{ width: '20%', alignSelf: 'center' }}>
-                     Desconto: <span style={{ fontWeight: item.desconto > 0 && 'bold' }}>{formatoDinheiroReal(item.desconto)}</span>
+                     Desconto: <span style={{ fontWeight: item.desconto > 0 && 'bold' , color: item.desconto > 0 ? 'red' : 'black' }}>{formatoDinheiroReal(item.desconto)}</span>
                   </div>
                   <div style={{ width: '20%', alignSelf: 'center' }}>
                      <span>{getChipFormaPagamento(item.formaPagamento)}</span>

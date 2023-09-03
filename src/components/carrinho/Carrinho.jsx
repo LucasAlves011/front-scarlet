@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import style from "../styles/Carrinho.module.css"
 import ItemCarrinho from "./ItemCarrinho";
@@ -23,9 +24,9 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
    // Essa é a função que adiciona o produto no carrinho
    const novoArrayDeitens = (novoProduto) => {
       if (novoProduto !== undefined) {
-         novoProduto = { produto: { ...produtoAdd }, tamanhoSelecionado: null, quantidadeSelecionada: null }
+         novoProduto = { produto: { ...produtoAdd }, quantidadeSelecionada: 1 }
          // -1 significa que não existe o produto no carrinho
-         let i = produtos.findIndex((e) => (e.produto.id === novoProduto.produto.id && e.produto.tamanho === novoProduto.produto.tamanho))
+         let i = produtos.findIndex((e) => (e.produto.id === novoProduto.produto.id && e.produto.tamanhoSelecionado === novoProduto.produto.tamanhoSelecionado))
 
          if (i === -1) {
             setProdutos([...produtos, novoProduto])
@@ -43,8 +44,10 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
    }, [produtos, att])
 
 
-   const remover = (id) => {
-      let aux = produtos.filter((e) => e.produto.id !== id)
+   const remover = (id,tamanho) => {
+      let aux = produtos.filter((e) => {
+         return e.produto.id !== id || e.produto.tamanhoSelecionado !== tamanho
+         })
       setProdutos(aux)
       contarItens()
    }
@@ -61,7 +64,12 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
    }
 
    const mudarRota = (produtos) => {
-      navigate("/venda", { state: { carrinho: produtos } })
+      console.log(produtos)
+      if(produtos.length > 0){
+         navigate("/venda", { state: { carrinho: produtos } })
+      }else {
+         alert("Adicione um produto ao carrinho.");
+      }
    }
 
    return (
@@ -73,9 +81,9 @@ function Carrinho({ prop, produtoAdd, setBagVisible, setQtdItens }) {
          <h1 style={{ textAlign: 'center', fontFamily: 'Roboto, sans-serif' }}>Carrinho</h1>
          <div id={style.lista}>
 
-            {produtos.map((e, key) => {
+            {produtos.map((item, key) => {
                return (
-                  <ItemCarrinho item={e} key={key} receberNovoProduto={novoArrayDeitens} remover={remover} setAtt={setAtt} att={att} />
+                  <ItemCarrinho item={item} key={key} receberNovoProduto={novoArrayDeitens} remover={remover} setAtt={setAtt} att={att} />
                )
             })}
          </div>

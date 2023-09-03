@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from 'react'
 import style from './styles/FileUpload.module.css'
 import FileUploadIcon from '@mui/icons-material/FileUpload';

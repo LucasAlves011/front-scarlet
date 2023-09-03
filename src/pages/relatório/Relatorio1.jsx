@@ -1,3 +1,4 @@
+import React from "react";
 import { format, parseISO } from 'date-fns';
 import style from './Relatorio1.module.css'
 import { useState, useEffect } from 'react';

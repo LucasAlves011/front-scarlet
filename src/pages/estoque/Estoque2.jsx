@@ -1,3 +1,4 @@
+import React from "react";
 import { Alert, AlertTitle, Avatar, Checkbox, Fade, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -193,7 +194,7 @@ function Estoque2({ car, state }) {
             })}
 
          </div>
-         
+
          {/* TODO: IMPLEMENTAR NO FUTURO */}
          {/* <MultiSelect dados={categorias !== undefined ? categorias : []} placeholder="Selecione as categorias" reciever={setSelectedCategorias}></MultiSelect> */}
 
