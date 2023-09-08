@@ -103,7 +103,6 @@ function Venda() {
    const [entrega, setEntrega] = useState(0);
    const [desconto, setDesconto] = useState(0);
 
-
    const calcularSubtotal = () => {
       return produtos.reduce((acc, item) => {
          let valor = item.produto.valor * item.quantidadeSelecionada;
@@ -131,8 +130,8 @@ function Venda() {
    }, []);
 
    useEffect(() => {
-      let b = subTotal + parseFloat(entrega) - desconto
-      b > 0 ? setTotal(b) : setTotal(0);
+         let b = subTotal + parseFloat(entrega === '' ? 0 : entrega) - (desconto === '' ? 0 : desconto)
+         b > 0 ? setTotal(b) : setTotal(0);
    }, [desconto, entrega, subTotal]);
 
    const handleClickOpen = () => {

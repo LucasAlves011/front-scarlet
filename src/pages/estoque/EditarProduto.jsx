@@ -101,7 +101,7 @@ function SimpleDialog(props) {
                   </ul>
                </DialogContentText>
                {props.produto.tipo === 'avulso' &&
-                  <DialogContentText> <span className={style2.griff}>Tamanhos: </span> <br /> <span className={style2.griff}>Único=</span> {props.produto.quantidade} <span className={props.produto.quantidade - props.produtoAntigo.quantidade > 0 ? style2.incremento : props.produto.quantidade - props.produtoAntigo.quantidade < 0 ? style2.decremento : style2.neutro}> {diferenca(props.produto.quantidade, props.produtoAntigo.t38)}</span> </DialogContentText>}
+                  <DialogContentText> <span className={style2.griff}>Tamanhos: </span> <br /> <span className={style2.griff}>Único=</span> {props.produto.quantidade} <span className={props.produto.quantidade - props.produtoAntigo.quantidade > 0 ? style2.incremento : props.produto.quantidade - props.produtoAntigo.quantidade < 0 ? style2.decremento : style2.neutro}> {diferenca(props.produto.quantidade, props.produtoAntigo.quantidade)}</span> </DialogContentText>}
 
                {props.produto.tipo === 'numerico' &&
                   <DialogContentText>
@@ -110,7 +110,7 @@ function SimpleDialog(props) {
                         <tr>
                            <td><span className={style2.griff}>36= </span> {props.produto.t36}
                               <span className={props.produto.t36 - props.produtoAntigo.t36 > 0 ? style2.incremento : props.produto.t36 - props.produtoAntigo.t36 < 0
-                                 ? style2.decremento : style2.neutro}> {diferenca(props.produto.t38, props.produtoAntigo.t38)}</span></td>
+                                 ? style2.decremento : style2.neutro}> {diferenca(props.produto.t36, props.produtoAntigo.t36)}</span></td>
 
                            <td><span className={style2.griff}>38= </span> {props.produto.t38}
                               <span className={props.produto.t38 - props.produtoAntigo.t38 > 0 ? style2.incremento : props.produto.t38 - props.produtoAntigo.t38 < 0
@@ -296,7 +296,9 @@ function EditarProduto() {
             categorias: model.categorias,
             imagem: model.imagem,
             valor: model.valor,
-            quantidade: (model.quantidade)
+            avulso: {
+               quantidade: model.quantidade
+            }
          }
       }
       //TODO: ALTERAR IMAGEM NO FUTURO

@@ -10,6 +10,7 @@ import { FaMoneyBillWave } from 'react-icons/fa';
 import { MdPix } from 'react-icons/md';
 import { BsFillCreditCard2BackFill } from 'react-icons/bs';
 import { Table } from 'rsuite';
+import Chart from "react-google-charts";
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -102,11 +103,11 @@ function ControlledAccordions({ itens }) {
    const getChipFormaPagamento = (formaPagamento) => {
       switch (formaPagamento) {
          case "DINHEIRO":
-            return <Chip label={formaPagamento} color="success" icon={<FaMoneyBillWave />} />
+            return <Chip label={formaPagamento} style={{backgroundColor: '#2ecc71'}} color="success" icon={<FaMoneyBillWave />} />
          case "CARTAO":
-            return <Chip label={formaPagamento} color="error" icon={<BsFillCreditCard2BackFill />} />
+            return <Chip label={formaPagamento} style={{backgroundColor: '#e74c3c'}} color="error" icon={<BsFillCreditCard2BackFill />} />
          case "PIX":
-            return <Chip label={formaPagamento} color="primary" icon={<MdPix />} />
+            return <Chip label={formaPagamento} style={{backgroundColor: '#3498db'}} color="primary" icon={<MdPix />} />
          default:
             return <Chip label={formaPagamento} color="warning" />
       }
@@ -118,7 +119,7 @@ function ControlledAccordions({ itens }) {
    }
 
    return (
-     <div className={style.acordeon}>
+      <div className={style.acordeon}>
          {itens && itens.map((item, key) => (
             <Accordion >
                <AccordionSummary
@@ -161,6 +162,11 @@ function DetalhesVenda() {
    const { data } = useParams()
    const [venda, setVenda] = useState(null)
 
+   const [categoriasDados, setCategoriasDados] = useState([])
+   const [dadosFormatados, setDadosFormatados] = useState([])
+
+   const [pagamentosDados, setPagamentosDados] = useState([])
+
    useEffect(() => {
       if (data) {
          fetch(process.env.REACT_APP_GATEWAY_URL + "/venda/vendas-dia?data=" + data)
@@ -172,10 +178,123 @@ function DetalhesVenda() {
       }
    }, [data])
 
+   useEffect(() => {
+      fetch(process.env.REACT_APP_GATEWAY_URL + `/venda/venda-por-categorias?data1=${data}`)
+         .then((res) => res.json())
+         .then((res) => {
+            setCategoriasDados(res)
+         })
+   }, [])
+
+   const testData = [
+      ["Element", "Density", { role: "style" }],
+      ["Copper", 8.94, "#b87333"], // RGB value
+      ["Silver", 10.49, "silver"], // English color name
+      ["Gold", 19.3, "gold"],
+      ["Platinum", 21.45, "color: #e5e4e2"], // CSS-style declaration
+   ];
+
+   useEffect(() => {
+      construirDadosCategorias()
+   }, [categoriasDados])
+
+   useEffect(() => {
+      if (venda !== null){
+         construirDadosPagamentos()
+      }
+   }, [venda])
+
+   const construirDadosCategorias = () => {
+      const contagemCategorias = {};
+
+      // Preencha o objeto de contagem de categorias
+      categoriasDados.forEach((produto) => {
+         produto.categorias.forEach((categoria) => {
+            if (contagemCategorias[categoria]) {
+               contagemCategorias[categoria]++;
+            } else {
+               contagemCategorias[categoria] = 1;
+            }
+         });
+      });
+
+      // Crie um array de arrays com os dados no formato desejado
+      const dataset = [["Categoria", "Qtd"]];
+      for (const categoria in contagemCategorias) {
+         dataset.push([categoria, contagemCategorias[categoria]]);
+      }
+      console.log(dataset)
+      setDadosFormatados(dataset)
+   }
+
+   const construirDadosPagamentos = () => {
+      const contagemPagamentos = {};
+      venda.forEach((venda) => {
+         if (contagemPagamentos[venda.formaPagamento]) {
+            contagemPagamentos[venda.formaPagamento]++;
+         } else {
+            contagemPagamentos[venda.formaPagamento] = 1;
+         }
+      });
+
+      const dataset = [];
+
+      dataset.push(["Pagamento", "Qtd"])
+      dataset.push(["DINHEIRO", contagemPagamentos["DINHEIRO"]])
+      dataset.push(["PIX", contagemPagamentos["PIX"]])
+      dataset.push(["CARTAO", contagemPagamentos["CARTAO"]])
+
+      setPagamentosDados(dataset)
+   }
+
 
    return (
+
+
       <>
-         {data && <h1 className={style.h1Data}>Vendas do dia {data.replaceAll("-",'/')}</h1>}
+         {data && <h1 className={style.h1Data}>Vendas do dia {data.replaceAll("-", '/')}</h1>}
+         <div style={{ display: 'flex', flexDirection: 'row', maxWidth: '100%' }}>
+            <Chart
+               width='100%'
+               height='400px'
+               chartType="BarChart"
+               loader={<div>Loading Chart</div>}
+               data={testData}
+            />
+
+            {dadosFormatados && <Chart
+               chartType="PieChart"
+               width="100%"
+               height="400px"
+               data={dadosFormatados}
+               options={{
+                  title: "Categorias mais vendida do dia",
+                  pieHole: 0.4,
+                  is3D: false,
+               }}
+            />}
+
+            {pagamentosDados && <Chart
+               chartType="PieChart"
+               width="100%"
+               height="400px"
+               data={pagamentosDados}
+               options={{
+                  title: "Formas de pagamento",
+                  is3D: false,
+                  // colors: ['#2ecc71', '#e74c3c', '#3498db'],
+                  legend: "para todos aqueles ",
+                  slices: {
+                     0: { color: '#2ecc71' },
+                     1: { color: '#3498db' },
+                     2: { color: '#e74c3c' },
+                   }
+               }}
+            />
+            }
+         </div>
+
+         <h4 style={{textAlign: 'center'}}>Vendas detalhadas</h4>
          {venda && <ControlledAccordions itens={venda} />}
       </>
 

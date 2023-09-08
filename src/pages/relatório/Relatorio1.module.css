@@ -103,6 +103,12 @@ li>.cardDia2 {
    cursor: pointer;
 }
 
+#marcadorOntem {
+   background-color: red;
+   color: white;
+   
+}
+
 /*--------------------------------*/
 
 .todoDasMetades {

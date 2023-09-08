@@ -34,7 +34,7 @@ function ItemCarrinho({ item, receberNovoProduto, remover, setAtt, att }) {
 
                <div className={style.precoNome}>
                   <span id={style.preco}>{formatoDinheiroReal(item.produto.valor)}</span>
-                  <div>{item.produto.tipo === "avulso" ? "Tamanho único" : item.produto.tamanhoSelecionado.replace('t', '').toUpperCase()}</div>
+                  <div><strong>{item.produto.tipo === "avulso" ? "Tamanho único" : item.produto.tamanhoSelecionado.replace('t', '').toUpperCase()}</strong></div>
                </div>
 
 
