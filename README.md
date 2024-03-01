@@ -6,7 +6,7 @@ Um sistema gerenciador de vendas e estoque desenvolvido para as necessidades da 
 
 ## Arquitetura de Microserviços
 
-![arquitetura](https://github.com/LucasAlves011/front-scarlet/blob/master/Projeto%20Sistemas%20Distribu%C3%ADdos.drawio.png)
+![arquitetura](https://github.com/LucasAlves011/front-scarlet/blob/master/Projeto%20Sistemas%20Distribu%C3%ADdos%20(2).jpg)
 
 A arquitetura escolhida foi a de microserviços, composta por 5 módulos, sendo eles 2 módulos de **serviços** e 2 módulos de **infraestutura** e 1 módulo **client**. 
 O link do repositórios de cada módulo estarão disponíveis no fim do documento.
