@@ -1,6 +1,6 @@
 import React from "react";
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link, NavLink, Navigate, useNavigate } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Link, NavLink, Navigate, useNavigate, useLocation } from 'react-router-dom'
 
 import Home from "./pages/Home.jsx";
 import Estoque1 from "./pages/estoque/Estoque1.jsx";
@@ -16,15 +16,20 @@ import DetalhesVenda from './pages/relatório/DetalhesVenda.jsx';
 import EditarProduto from './pages/estoque/EditarProduto.jsx';
 import { Nav, Navbar } from 'rsuite';
 import { useEffect, useState } from 'react';
+import Login from "./pages/Login.jsx";
 
 
 const CustomNavbar = () => {
 
   const [marcas, setMarcas] = useState([])
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_GATEWAY_URL + "/produto/quantidade-marcas").then((data) => data.json()).then((val) => {
+    fetch(process.env.REACT_APP_GATEWAY_URL + "/produto/quantidade-marcas", {
+      method: 'GET',
+      mode: 'no-cors'
+    }).then((data) => data.json()).then((val) => {
       setMarcas(val.map(({ marca }) => marca))
     })
 
@@ -32,24 +37,26 @@ const CustomNavbar = () => {
 
 
   return (
-    <Navbar id='teste'>
-      <Navbar.Brand href="/catalogo">
-        <img src={process.env.REACT_APP_GATEWAY_URL+"/estoque/produto/logo"} alt="foto" />
-        AP Multimarcas</Navbar.Brand>
-      <Nav >
-        <Nav.Item href="/catalogo">Catálogo</Nav.Item>
-        <Nav.Item href="/vendas">Vendas</Nav.Item>
-        <Nav.Menu title="Produtos">
-          <Nav.Item onClick={() => navigate("/cadastro")}  >
-            Cadastro
-          </Nav.Item>
-          <Nav.Item onClick={() => navigate("/estoque")}>Estoque
-          </Nav.Item>
-        </Nav.Menu>
-      </Nav>
-    </Navbar>
+    ( location.pathname  !== '/' && <Navbar id='teste'>
+        <Navbar.Brand href="/catalogo">
+          <img src={process.env.REACT_APP_GATEWAY_URL + "/estoque/produto/logo"} alt="foto" />
+          AP Multimarcas</Navbar.Brand>
+        <Nav >
+          <Nav.Item href="/catalogo">Catálogo</Nav.Item>
+          <Nav.Item href="/vendas">Vendas</Nav.Item>
+          <Nav.Menu title="Produtos">
+            <Nav.Item onClick={() => navigate("/cadastro")}  >
+              Cadastro
+            </Nav.Item>
+            <Nav.Item onClick={() => navigate("/estoque")}>Estoque
+            </Nav.Item>
+          </Nav.Menu>
+        </Nav>
+      </Navbar>)
   );
 };
+
+
 
 function App() {
   return (
@@ -57,10 +64,9 @@ function App() {
     <>
 
       <Router>
-        <CustomNavbar ></CustomNavbar>
-
+        <CustomNavbar/>
         <Routes>
-          <Route exact path="/" element={<Catalogo />} />
+          <Route exact path="/" element={<Login />} />
           <Route path="/estoque" element={<Estoque1 />} />
           <Route path="/estoque/:marca" element={<Estoque2 />} />
           <Route path="/estoque/alterar-produto/:id" element={<EditarProduto />} />

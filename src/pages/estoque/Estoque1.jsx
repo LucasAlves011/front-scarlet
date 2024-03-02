@@ -17,7 +17,10 @@ function Estoque1() {
   let [carrinho, setCarrinho] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_GATEWAY_URL+"/produto/quantidade-marcas").then((data) => data.json()).then((val) => {
+    fetch(process.env.REACT_APP_GATEWAY_URL + "/produto/quantidade-marcas",{
+      method: 'GET',
+      mode: 'no-cors'
+    }).then((data) => data.json()).then((val) => {
       setMarcas(val.map((x, key) => { return { id: key, value: x.marca } }))
       setTabela(val.map((a) => { return { ...a, cor: "white" } }))
       setTabela2(val.map((a) => { return { ...a, cor: "white" } }))
