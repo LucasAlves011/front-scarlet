@@ -21,8 +21,9 @@ label {
    font-weight: bold;
 }
 
-input[type="text"],
-input[type="password"] {
+;
+
+.formGroup input {
    width: 100%;
    padding: 10px;
    border: 1px solid #ccc;
@@ -30,7 +31,7 @@ input[type="password"] {
    box-sizing: border-box;
 }
 
-button {
+.btn {
    width: 100%;
    padding: 10px;
    background-color: #007bff;
@@ -40,8 +41,10 @@ button {
    cursor: pointer;
    transition: background-color 0.3s ease;
    max-width: 20%;
+   text-align: center;
    margin: auto;
 }
+
 
 button:hover {
    background-color: #0056b3;
